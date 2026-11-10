@@ -1,0 +1,6 @@
+/* Optional host layout and focus styles, scoped to an explicit container. */
+.stats-map { position: relative; min-width: 0; }
+.stats-map > svg { display: block; max-width: 100%; height: auto; }
+.stats-map [tabindex]:focus-visible,
+.stats-map button:focus-visible,
+.stats-map input:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }

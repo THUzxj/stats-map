@@ -1,0 +1,14 @@
+export { StatsMapError, validateResource, validateGeography, validateDataset, validateMapSpec, validateBundle, DatasetView, MapFrame, createMap, createMapFromBundle, inlineResources, classifyDomain, breaks, MapState, layerCapabilities, capabilities, decodeTopology, featureIndex, bounds, projectPoint, fitProjection, anchorIndex, screenAnchors, hitTest, validateGroups, unionGroupMembers, loadBundle, sha256Bytes, fail, assert, refKey, KINDS, LAYER_TYPES, OBSERVATION_STATUSES } from '../types/index.js';
+export type { Geography, Dataset, MapSpec, MapBundle, ResourceKind, ResourceRef } from '../types/index.js';
+export { registerProjection } from '../types/index.js';
+export { resolveProfile } from '../types/index.js';
+export type { MapDecorations, MapInset, MapAnnotation, PresentationProfile, ViewTransform } from '../types/index.js';
+export { createPresentation, resolveTheme, localizedLabel } from '../types/index.js';
+export type { Theme, ThemeName, ThemeTokens, Presentation, LocalizedText, MapLabelOptions, MapLogo } from '../types/index.js';
+export { resolveAnchors, normalizeAnchorPolicy, geometryStatus, ANCHOR_ALGORITHM_VERSION } from '../types/index.js';
+export type { AnchorPolicy, Anchor, ResolvedAnchor, AnchorOptions, AnchorResolution, RegionGeometryStatus, GeometryStatus } from '../types/index.js';
+export { validateRelationSlice, relationSlice, relationSliceView } from '../types/index.js';
+export type { RelationSlice, RelationRegionSlice } from '../types/index.js';
+export { viewRegionIds } from '../types/index.js';
+export { validateRegionSetCatalog, validateRankingRegionSet, resolveRegionSet, applyRankingRegionSet } from '../types/index.js';
+export type { RegionSetSource, RegionSet, RegionSetCatalog, RankingRegionSet, RegionSetResolution } from '../types/index.js';

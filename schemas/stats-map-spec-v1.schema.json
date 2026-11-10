@@ -1,0 +1,2561 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "stats-map-spec-v1.schema.json",
+  "title": "stats-map MapSpec v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "kind",
+    "id",
+    "revision",
+    "geography_ref",
+    "dataset_refs",
+    "layers"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "kind": {
+      "const": "stats-map/spec"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "revision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "geography_ref": {
+      "$ref": "#/$defs/ref"
+    },
+    "dataset_refs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/ref"
+      }
+    },
+    "view": {
+      "type": "object",
+      "properties": {
+        "level_ids": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "region_ids": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "locale": {
+          "type": "string",
+          "minLength": 1
+        },
+        "time_window": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "string",
+                  "minLength": 1
+                }
+              ],
+              "minItems": 2,
+              "maxItems": 2
+            },
+            {
+              "type": "object",
+              "required": [
+                "start_period_id",
+                "end_period_id"
+              ],
+              "properties": {
+                "start_period_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "end_period_id": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "additionalProperties": false
+            }
+          ]
+        },
+        "relation_region_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "layout": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "enum": [
+            "geographic",
+            "grid-square",
+            "grid-hex",
+            "dorling"
+          ]
+        },
+        "grid_layout_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": true,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "dorling"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "radius": {
+                "type": "number",
+                "minimum": 0
+              },
+              "gap": {
+                "type": "number",
+                "minimum": 0
+              },
+              "tolerance": {
+                "type": "number",
+                "minimum": 0
+              },
+              "padding": {
+                "type": "number",
+                "minimum": 0
+              },
+              "iterations": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 10000
+              },
+              "strength": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "maximum": 1
+              },
+              "seed": {
+                "type": "integer"
+              },
+              "worker": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "layers": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "type",
+          "encoding"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "type": "string"
+          },
+          "role": {
+            "enum": [
+              "base",
+              "overlay"
+            ]
+          },
+          "encoding": {
+            "type": "object",
+            "properties": {
+              "relation_slice": {
+                "$ref": "#/$defs/relationSlice"
+              }
+            },
+            "additionalProperties": {
+              "if": {
+                "type": "object"
+              },
+              "then": {
+                "properties": {
+                  "relation_slice": {
+                    "$ref": "#/$defs/relationSlice"
+                  }
+                }
+              }
+            }
+          },
+          "options": {
+            "type": "object"
+          },
+          "classification": {
+            "$ref": "#/$defs/classification"
+          },
+          "tooltip": {
+            "type": "boolean"
+          },
+          "legend": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "$ref": "#/$defs/legend"
+              }
+            ]
+          }
+        },
+        "additionalProperties": true,
+        "allOf": [
+          {
+            "if": {
+              "required": [
+                "type"
+              ],
+              "properties": {
+                "type": {
+                  "enum": [
+                    "choropleth",
+                    "ch",
+                    "categorical",
+                    "ct",
+                    "bivariateChoropleth",
+                    "chbi",
+                    "trivariateChoropleth",
+                    "ternary",
+                    "chtri",
+                    "stripeComposition",
+                    "scomp",
+                    "stripe",
+                    "alpha",
+                    "valueByAlpha",
+                    "bar",
+                    "barComposition"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "role": {
+                  "const": "base"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "required": [
+                "type"
+              ],
+              "properties": {
+                "type": {
+                  "enum": [
+                    "proportionalSymbol",
+                    "proportionalSymbols",
+                    "ps",
+                    "pieChart",
+                    "pie",
+                    "composition",
+                    "sparkline",
+                    "spark",
+                    "sparklines",
+                    "flow",
+                    "flowmap",
+                    "coxcomb",
+                    "polar",
+                    "mushroom",
+                    "waffle"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "role": {
+                  "const": "overlay"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "required": [
+                "type"
+              ],
+              "properties": {
+                "type": {
+                  "enum": [
+                    "flow",
+                    "flowmap"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "options": {
+                  "$ref": "#/$defs/flowOptions"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "required": [
+                "type"
+              ],
+              "properties": {
+                "type": {
+                  "enum": [
+                    "proportionalSymbol",
+                    "proportionalSymbols",
+                    "ps"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "encoding": {
+                  "$ref": "#/$defs/symbolEncoding"
+                },
+                "options": {
+                  "type": "object",
+                  "properties": {
+                    "customShape": {
+                      "$ref": "#/$defs/customShape"
+                    },
+                    "shape": {
+                      "enum": [
+                        "circle",
+                        "bar",
+                        "square",
+                        "star",
+                        "diamond",
+                        "wye",
+                        "cross",
+                        "triangle",
+                        "spike",
+                        "custom"
+                      ]
+                    },
+                    "scaleMode": {
+                      "enum": [
+                        "area",
+                        "height"
+                      ]
+                    },
+                    "maxRadius": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "minRadius": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "maxValue": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "width": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "barWidth": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "spikeWidth": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "strokeWidth": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "strokeOpacity": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "fillOpacity": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "colorMode": {
+                      "enum": [
+                        "classified",
+                        "continuous",
+                        "diverging"
+                      ]
+                    },
+                    "colorDomain": {
+                      "type": "array",
+                      "items": {
+                        "type": "number"
+                      },
+                      "minItems": 2,
+                      "maxItems": 2
+                    },
+                    "center": {
+                      "type": "number"
+                    },
+                    "colors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "minItems": 1
+                    },
+                    "categoryColors": {
+                      "anyOf": [
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "minItems": 1
+                        },
+                        {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "string"
+                          }
+                        }
+                      ]
+                    },
+                    "offset": {
+                      "type": "object",
+                      "required": [
+                        "x",
+                        "y"
+                      ],
+                      "properties": {
+                        "x": {
+                          "type": "number"
+                        },
+                        "y": {
+                          "type": "number"
+                        }
+                      }
+                    }
+                  },
+                  "if": {
+                    "required": [
+                      "shape"
+                    ],
+                    "properties": {
+                      "shape": {
+                        "const": "custom"
+                      }
+                    }
+                  },
+                  "then": {
+                    "required": [
+                      "customShape"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "required": [
+                "type"
+              ],
+              "properties": {
+                "type": {
+                  "enum": [
+                    "pieChart",
+                    "pie",
+                    "composition"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "options": {
+                  "allOf": [
+                    {
+                      "$ref": "#/$defs/compositionSymbolOptions"
+                    },
+                    {
+                      "properties": {
+                        "mode": {
+                          "enum": [
+                            "pie",
+                            "ring",
+                            "flag",
+                            "segment",
+                            "radar",
+                            "agepyramid",
+                            "halftone"
+                          ]
+                        },
+                        "compositionType": {
+                          "enum": [
+                            "pie",
+                            "ring",
+                            "flag",
+                            "segment",
+                            "radar",
+                            "agepyramid",
+                            "halftone"
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "required": [
+                "type"
+              ],
+              "properties": {
+                "type": {
+                  "enum": [
+                    "waffle"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "options": {
+                  "allOf": [
+                    {
+                      "$ref": "#/$defs/compositionSymbolOptions"
+                    },
+                    {
+                      "properties": {
+                        "cells": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 10000
+                        },
+                        "columns": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 10000
+                        },
+                        "cellPadding": {
+                          "type": "number",
+                          "minimum": 0,
+                          "exclusiveMaximum": 1
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "required": [
+                "type"
+              ],
+              "properties": {
+                "type": {
+                  "enum": [
+                    "bar",
+                    "barComposition"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "options": {
+                  "allOf": [
+                    {
+                      "$ref": "#/$defs/compositionSymbolOptions"
+                    },
+                    {
+                      "properties": {
+                        "mode": {
+                          "enum": [
+                            "grouped",
+                            "stacked"
+                          ]
+                        },
+                        "compositionType": {
+                          "enum": [
+                            "grouped",
+                            "stacked"
+                          ]
+                        },
+                        "sizeBy": false
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "required": [
+                "type"
+              ],
+              "properties": {
+                "type": {
+                  "enum": [
+                    "coxcomb",
+                    "polar"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "options": {
+                  "allOf": [
+                    {
+                      "$ref": "#/$defs/compositionSymbolOptions"
+                    },
+                    {
+                      "properties": {
+                        "mode": {
+                          "const": "stacked"
+                        },
+                        "compositionType": {
+                          "const": "stacked"
+                        },
+                        "sizeBy": false
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "interaction": {
+      "type": "object",
+      "properties": {
+        "reducedMotion": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "const": "auto"
+            }
+          ]
+        },
+        "tooltip": {
+          "type": "boolean"
+        },
+        "relationRegionOnClick": {
+          "type": "boolean"
+        }
+      }
+    },
+    "selection": {
+      "type": "object"
+    },
+    "groups": {
+      "type": "array"
+    },
+    "extensions": {
+      "type": "object"
+    },
+    "insets": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/inset"
+      }
+    },
+    "decorations": {
+      "$ref": "#/$defs/decorations"
+    },
+    "profile": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "subtitle": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "locale": {
+          "type": "string",
+          "minLength": 1
+        },
+        "layout": {
+          "type": "object"
+        },
+        "theme": {
+          "$ref": "#/$defs/theme"
+        },
+        "legend": {
+          "$ref": "#/$defs/legend"
+        },
+        "interaction": {
+          "type": "object"
+        },
+        "decorations": {
+          "$ref": "#/$defs/decorations"
+        },
+        "insets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/inset"
+          }
+        },
+        "messages": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "number_format": {
+          "type": "object"
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "titles": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "anchor_policy": {
+          "$ref": "#/$defs/anchorPolicy"
+        }
+      },
+      "additionalProperties": false
+    },
+    "profile_ref": {
+      "$ref": "#/$defs/ref"
+    },
+    "ranking": {
+      "type": "object",
+      "properties": {
+        "datasetId": {
+          "type": "string"
+        },
+        "seriesId": {
+          "type": "string"
+        },
+        "periodId": {
+          "type": "string"
+        },
+        "layerId": {
+          "type": "string"
+        },
+        "regionIds": {
+          "$ref": "#/$defs/regionIds"
+        },
+        "direction": {
+          "enum": [
+            "ascending",
+            "descending"
+          ]
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        },
+        "width": {
+          "type": "number",
+          "minimum": 64
+        },
+        "rowHeight": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "height": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "shapeHeight": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "labelFontSize": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "boxPadding": {
+          "type": "number",
+          "minimum": 0
+        },
+        "boxOpacity": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "ascending": {
+          "type": "boolean"
+        },
+        "onlyApplyOpacityWhileZoomed": {
+          "type": "boolean"
+        },
+        "title": {
+          "type": "string"
+        },
+        "subtitle": {
+          "type": "string"
+        },
+        "color": {
+          "type": "string"
+        },
+        "categoryLabel": {
+          "type": "string"
+        },
+        "missingLabel": {
+          "type": "string"
+        },
+        "hiddenLabel": {
+          "type": "string"
+        },
+        "decimals": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 20
+        },
+        "bins": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "barLimit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10000
+        },
+        "pageSize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10000
+        },
+        "mode": {
+          "enum": [
+            "auto",
+            "bars",
+            "histogram"
+          ]
+        },
+        "position": {
+          "enum": [
+            "top right",
+            "bottom right",
+            "top left",
+            "bottom left"
+          ]
+        },
+        "labelFormatter": {
+          "type": "null"
+        },
+        "regionSet": {
+          "$ref": "#/$defs/rankingRegionSet"
+        },
+        "countryGroup": false
+      },
+      "additionalProperties": true,
+      "dependentRequired": {
+        "regionSet": [
+          "regionIds"
+        ]
+      }
+    },
+    "locale": {
+      "type": "string",
+      "minLength": 1
+    },
+    "theme": {
+      "$ref": "#/$defs/theme"
+    },
+    "messages": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "number_format": {
+      "type": "object"
+    },
+    "labels": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "titles": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "anchor_policy": {
+      "$ref": "#/$defs/anchorPolicy"
+    },
+    "legend": {
+      "$ref": "#/$defs/legend"
+    }
+  },
+  "$defs": {
+    "classification": {
+      "type": "object",
+      "properties": {
+        "resolvedDomain": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "axes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/classification"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "resolvedDomain"
+            ]
+          },
+          "then": {
+            "required": [
+              "method"
+            ],
+            "properties": {
+              "method": {
+                "const": "threshold"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ref": {
+      "type": "object",
+      "required": [
+        "id",
+        "revision"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": true
+    },
+    "pair": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "regionIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "decorationText": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "text": {
+              "type": "string"
+            },
+            "position": {
+              "$ref": "#/$defs/pair"
+            },
+            "fontSize": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "color": {
+              "type": "string"
+            },
+            "opacity": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "maxWidth": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "labels": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "titles": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "collision": {
+              "enum": [
+                "avoid",
+                "fixed",
+                "none"
+              ]
+            },
+            "priority": {
+              "type": "number"
+            },
+            "anchor": {
+              "enum": [
+                "start",
+                "middle",
+                "end"
+              ]
+            }
+          },
+          "additionalProperties": true
+        }
+      ]
+    },
+    "annotation": {
+      "type": "object",
+      "required": [
+        "text"
+      ],
+      "properties": {
+        "text": {
+          "type": "string"
+        },
+        "region_id": {
+          "type": "string"
+        },
+        "point": {
+          "$ref": "#/$defs/pair"
+        },
+        "position": {
+          "$ref": "#/$defs/pair"
+        },
+        "offset": {
+          "$ref": "#/$defs/pair"
+        },
+        "leader": {
+          "type": "boolean"
+        },
+        "marker": {
+          "type": "boolean"
+        },
+        "fontSize": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "color": {
+          "type": "string"
+        },
+        "opacity": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "maxWidth": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "titles": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "collision": {
+          "enum": [
+            "avoid",
+            "fixed",
+            "none"
+          ]
+        },
+        "priority": {
+          "type": "number"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "anchor": {
+          "enum": [
+            "start",
+            "middle",
+            "end"
+          ]
+        }
+      },
+      "anyOf": [
+        {
+          "required": [
+            "region_id"
+          ]
+        },
+        {
+          "required": [
+            "point"
+          ]
+        },
+        {
+          "required": [
+            "position"
+          ]
+        }
+      ],
+      "additionalProperties": true
+    },
+    "decorations": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "$ref": "#/$defs/decorationText"
+        },
+        "subtitle": {
+          "$ref": "#/$defs/decorationText"
+        },
+        "unit": {
+          "$ref": "#/$defs/decorationText"
+        },
+        "source": {
+          "$ref": "#/$defs/decorationText"
+        },
+        "watermark": {
+          "$ref": "#/$defs/decorationText"
+        },
+        "geographicBackground": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "fill": {
+                  "type": "string"
+                },
+                "stroke": {
+                  "type": "string"
+                },
+                "strokeWidth": {
+                  "type": "number",
+                  "minimum": 0
+                }
+              },
+              "additionalProperties": true
+            }
+          ]
+        },
+        "labels": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "region_ids": {
+                  "$ref": "#/$defs/regionIds"
+                },
+                "offset": {
+                  "$ref": "#/$defs/pair"
+                },
+                "collision": {
+                  "enum": [
+                    "none",
+                    "hide",
+                    "avoid"
+                  ]
+                },
+                "fontSize": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                "maxWidth": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                "step": {
+                  "type": "number",
+                  "minimum": 1
+                },
+                "maxOffset": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1000
+                },
+                "priority": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "number"
+                  }
+                },
+                "leader": {
+                  "type": "boolean"
+                },
+                "text": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                }
+              },
+              "additionalProperties": true
+            }
+          ]
+        },
+        "annotations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/annotation"
+          }
+        },
+        "places": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/annotation"
+          }
+        },
+        "scalebar": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "distance": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                "latitude": {
+                  "type": "number",
+                  "exclusiveMinimum": -85,
+                  "exclusiveMaximum": 85
+                },
+                "position": {
+                  "$ref": "#/$defs/pair"
+                },
+                "collision": {
+                  "enum": [
+                    "avoid",
+                    "fixed",
+                    "none"
+                  ]
+                },
+                "priority": {
+                  "type": "number"
+                }
+              },
+              "additionalProperties": true
+            }
+          ]
+        },
+        "graticule": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "step": {
+                  "type": "array",
+                  "items": {
+                    "type": "number",
+                    "minimum": 0.25
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                "color": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": true
+            }
+          ]
+        },
+        "reference": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "object"
+            }
+          ]
+        },
+        "logos": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "alt",
+              "href",
+              "position",
+              "width",
+              "height"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "alt": {
+                "type": "string",
+                "minLength": 1
+              },
+              "href": {
+                "type": "string",
+                "maxLength": 8388608,
+                "pattern": "^data:image/(png|jpeg|webp|gif);base64,[A-Za-z0-9+/]+={0,2}$"
+              },
+              "position": {
+                "$ref": "#/$defs/pair"
+              },
+              "width": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "height": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "labels": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              },
+              "collision": {
+                "enum": [
+                  "avoid",
+                  "fixed",
+                  "none"
+                ]
+              },
+              "priority": {
+                "type": "number"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "layout": {
+          "type": "object",
+          "properties": {
+            "padding": {
+              "type": "number",
+              "minimum": 0
+            },
+            "gap": {
+              "type": "number",
+              "minimum": 0
+            },
+            "collision": {
+              "enum": [
+                "avoid",
+                "none"
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": true
+    },
+    "inset": {
+      "type": "object",
+      "required": [
+        "id",
+        "x",
+        "y",
+        "width",
+        "height"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        },
+        "width": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "height": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "region_ids": {
+          "$ref": "#/$defs/regionIds"
+        },
+        "visible": {
+          "type": "boolean"
+        },
+        "controls": {
+          "type": "boolean"
+        },
+        "minimap": {
+          "type": "boolean"
+        },
+        "padding": {
+          "type": "number",
+          "minimum": 0
+        },
+        "layout": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "enum": [
+                "geographic",
+                "grid-square",
+                "grid-hex",
+                "dorling"
+              ]
+            },
+            "grid_layout_id": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": true,
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "type": {
+                    "const": "dorling"
+                  }
+                },
+                "required": [
+                  "type"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "radius": {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  "gap": {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  "tolerance": {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  "padding": {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  "iterations": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 10000
+                  },
+                  "strength": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "maximum": 1
+                  },
+                  "seed": {
+                    "type": "integer"
+                  },
+                  "worker": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "transform": {
+          "type": "object",
+          "required": [
+            "zoom",
+            "pan"
+          ],
+          "properties": {
+            "zoom": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "pan": {
+              "$ref": "#/$defs/pair"
+            }
+          }
+        },
+        "decorations": {
+          "$ref": "#/$defs/decorations"
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "titles": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "theme": {
+      "anyOf": [
+        {
+          "enum": [
+            "light",
+            "dark",
+            "high-contrast"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "background": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}$"
+            },
+            "text": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}$"
+            },
+            "mutedText": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}$"
+            },
+            "border": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}$"
+            },
+            "regionStroke": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}$"
+            },
+            "noData": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}$"
+            },
+            "zero": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}$"
+            },
+            "conflict": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}$"
+            },
+            "selection": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}$"
+            },
+            "hover": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}$"
+            },
+            "panelBackground": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}$"
+            },
+            "selectedBackground": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}$"
+            },
+            "hoverBackground": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}$"
+            },
+            "accent": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}$"
+            },
+            "base": {
+              "enum": [
+                "light",
+                "dark",
+                "high-contrast"
+              ]
+            },
+            "fontFamily": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[^<>;{}]+$"
+            },
+            "numericColors": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "pattern": "^#[0-9a-fA-F]{6}$"
+              }
+            },
+            "categoryColors": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "pattern": "^#[0-9a-fA-F]{6}$"
+              }
+            },
+            "compositionColors": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "pattern": "^#[0-9a-fA-F]{6}$"
+              }
+            },
+            "bivariateColors": {
+              "type": "array",
+              "minItems": 9,
+              "items": {
+                "type": "string",
+                "pattern": "^#[0-9a-fA-F]{6}$"
+              },
+              "maxItems": 9
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "anchorPolicy": {
+      "type": "object",
+      "required": [
+        "method",
+        "version"
+      ],
+      "properties": {
+        "method": {
+          "enum": [
+            "none",
+            "interior-point"
+          ]
+        },
+        "version": {
+          "const": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "flowOptions": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "enum": [
+            "curved",
+            "straight",
+            "sankey"
+          ]
+        },
+        "nodeShape": {
+          "enum": [
+            "circle",
+            "donut"
+          ]
+        },
+        "reciprocalMode": {
+          "enum": [
+            "separate",
+            "midpoint",
+            "merged"
+          ]
+        },
+        "order": {
+          "enum": [
+            "angle",
+            "value-ascending",
+            "value-descending",
+            "id"
+          ]
+        },
+        "stack": {
+          "type": "boolean"
+        },
+        "arrows": {
+          "type": "boolean"
+        },
+        "showNodes": {
+          "type": "boolean"
+        },
+        "showInternal": {
+          "type": "boolean"
+        },
+        "gradient": {
+          "type": "boolean"
+        },
+        "opacityGradient": {
+          "type": "boolean"
+        },
+        "widthGradient": {
+          "type": "boolean"
+        },
+        "outline": {
+          "type": "boolean"
+        },
+        "maxWidth": {
+          "type": "number",
+          "minimum": 0
+        },
+        "minWidth": {
+          "type": "number",
+          "minimum": 0
+        },
+        "maxValue": {
+          "type": "number",
+          "minimum": 0
+        },
+        "minValue": {
+          "type": "number",
+          "minimum": 0
+        },
+        "maxNodeValue": {
+          "type": "number",
+          "minimum": 0
+        },
+        "maxNodeRadius": {
+          "type": "number",
+          "minimum": 0
+        },
+        "loopRadius": {
+          "type": "number",
+          "minimum": 0
+        },
+        "nodeGap": {
+          "type": "number",
+          "minimum": 0
+        },
+        "stackGap": {
+          "type": "number",
+          "minimum": 0
+        },
+        "outlineWidth": {
+          "type": "number",
+          "minimum": 0
+        },
+        "bidirectionalGap": {
+          "type": "number",
+          "minimum": 0
+        },
+        "arrowScale": {
+          "type": "number",
+          "minimum": 0
+        },
+        "color": {
+          "type": "string"
+        },
+        "endColor": {
+          "type": "string"
+        },
+        "outlineColor": {
+          "type": "string"
+        },
+        "opacity": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "curvature": {
+          "type": "number",
+          "minimum": -10,
+          "maximum": 10
+        },
+        "topLocations": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "bundling": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          ]
+        },
+        "widthGradientSettings": {
+          "type": "object",
+          "properties": {
+            "startRatio": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "minStartWidth": {
+              "type": "number",
+              "minimum": 0
+            },
+            "samples": {
+              "type": "integer",
+              "minimum": 8,
+              "maximum": 256
+            }
+          },
+          "additionalProperties": false
+        },
+        "curvatureSettings": {
+          "type": "object",
+          "properties": {
+            "gapX": {
+              "type": "number",
+              "minimum": 0
+            },
+            "padX": {
+              "type": "number",
+              "minimum": 0
+            },
+            "padY": {
+              "type": "number",
+              "minimum": 0
+            },
+            "bumpY": {
+              "type": "number",
+              "minimum": 0
+            },
+            "curvature": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "bundleSettings": {
+          "type": "object",
+          "properties": {
+            "iterations": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            },
+            "subdivisions": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 32
+            },
+            "linkIterations": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 8
+            },
+            "alphaDecay": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "linkStrength": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "compatibilityThreshold": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "chargeStrength": {
+              "type": "number",
+              "minimum": -1000,
+              "maximum": 1000
+            },
+            "distanceMax": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                }
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "minNodeRadius": {
+          "type": "number",
+          "minimum": 0
+        },
+        "filterTopLocations": {
+          "type": "boolean"
+        },
+        "topLocationsType": {
+          "enum": [
+            "sum",
+            "origin",
+            "destination"
+          ]
+        },
+        "nodeSizeScale": {
+          "enum": [
+            "area",
+            "radius"
+          ]
+        },
+        "regionColors": {
+          "anyOf": [
+            {
+              "const": false
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 2,
+              "maxItems": 2
+            }
+          ]
+        },
+        "regionLabels": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "topColors": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "internalColor": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nodeLabels": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "content": {
+                  "enum": [
+                    "name",
+                    "value",
+                    "name-value"
+                  ]
+                },
+                "offset": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                "fontSize": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                "maxWidth": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                "collision": {
+                  "enum": [
+                    "none",
+                    "hide",
+                    "avoid"
+                  ]
+                },
+                "maxOffset": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1000
+                },
+                "step": {
+                  "type": "number",
+                  "minimum": 1
+                }
+              },
+              "additionalProperties": false
+            }
+          ]
+        }
+      },
+      "not": {
+        "required": [
+          "mode",
+          "bundling"
+        ],
+        "properties": {
+          "mode": {
+            "const": "sankey"
+          },
+          "bundling": {
+            "anyOf": [
+              {
+                "const": true
+              },
+              {
+                "type": "number",
+                "exclusiveMinimum": 0
+              }
+            ]
+          }
+        }
+      }
+    },
+    "relationSlice": {
+      "type": "object",
+      "required": [
+        "axis"
+      ],
+      "properties": {
+        "axis": {
+          "enum": [
+            "origin",
+            "destination"
+          ]
+        },
+        "region_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "include_internal": {
+          "type": "boolean"
+        },
+        "top": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "legend": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        },
+        "width": {
+          "type": "number",
+          "minimum": 64
+        },
+        "columnWidth": {
+          "type": "number",
+          "minimum": 64
+        },
+        "gap": {
+          "type": "number",
+          "minimum": 0
+        },
+        "collision": {
+          "enum": [
+            "avoid",
+            "none"
+          ]
+        },
+        "visible": {
+          "type": "boolean"
+        },
+        "title": {
+          "type": "string"
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "titles": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "rankingRegionSet": {
+      "type": "object",
+      "required": [
+        "id",
+        "catalog_ref",
+        "geography_ref",
+        "region_ids",
+        "unavailable_region_ids"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "region_ids": {
+          "$ref": "#/$defs/regionIds"
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "title"
+            ],
+            "properties": {
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "url": {
+                "type": "string",
+                "pattern": "^https?://[^\\s]+$"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[a-fA-F0-9]{64}$"
+              }
+            }
+          }
+        },
+        "catalog_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "geography_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "unavailable_region_ids": {
+          "$ref": "#/$defs/regionIds"
+        },
+        "requested_region_ids": {
+          "$ref": "#/$defs/regionIds"
+        }
+      }
+    },
+    "singleSymbolChannel": {
+      "type": "object",
+      "oneOf": [
+        {
+          "required": [
+            "series_id"
+          ]
+        },
+        {
+          "required": [
+            "relation_series_id"
+          ]
+        }
+      ],
+      "properties": {
+        "dataset_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "series_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "relation_series_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "series_ids": false,
+        "relation_slice": {
+          "$ref": "#/$defs/relationSlice"
+        }
+      }
+    },
+    "symbolEncoding": {
+      "type": "object",
+      "oneOf": [
+        {
+          "required": [
+            "size"
+          ],
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "series_id"
+                ]
+              },
+              {
+                "required": [
+                  "series_ids"
+                ]
+              },
+              {
+                "required": [
+                  "relation_series_id"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "not": {
+            "required": [
+              "size"
+            ]
+          },
+          "oneOf": [
+            {
+              "required": [
+                "series_id"
+              ]
+            },
+            {
+              "required": [
+                "series_ids"
+              ]
+            },
+            {
+              "required": [
+                "relation_series_id"
+              ]
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "dataset_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "series_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "series_ids": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "relation_series_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "relation_slice": {
+          "$ref": "#/$defs/relationSlice"
+        },
+        "size": {
+          "$ref": "#/$defs/singleSymbolChannel"
+        },
+        "color": {
+          "$ref": "#/$defs/singleSymbolChannel"
+        }
+      }
+    },
+    "customShape": {
+      "type": "object",
+      "required": [
+        "viewBox",
+        "path"
+      ],
+      "properties": {
+        "viewBox": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            {
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          ],
+          "minItems": 4,
+          "maxItems": 4
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 10000,
+          "pattern": "^\\s*[Mm][MmLlHhVvCcSsQqTtAaZz\\d\\s.,eE+\\-]+[Zz]\\s*$"
+        }
+      }
+    },
+    "compositionSymbolOptions": {
+      "type": "object",
+      "properties": {
+        "size": {
+          "type": "number",
+          "minimum": 0
+        },
+        "radius": {
+          "type": "number",
+          "minimum": 0
+        },
+        "maxRadius": {
+          "type": "number",
+          "minimum": 0
+        },
+        "innerRadius": {
+          "type": "number",
+          "minimum": 0
+        },
+        "width": {
+          "type": "number",
+          "minimum": 0
+        },
+        "agePyramidHeightFactor": {
+          "type": "number",
+          "minimum": 0
+        },
+        "strokeWidth": {
+          "type": "number",
+          "minimum": 0
+        },
+        "gap": {
+          "type": "number",
+          "minimum": 0
+        },
+        "cornerRadius": {
+          "type": "number",
+          "minimum": 0
+        },
+        "maxValue": {
+          "type": "number",
+          "minimum": 0
+        },
+        "totalMaximum": {
+          "type": "number",
+          "minimum": 0
+        },
+        "componentMaximum": {
+          "type": "number",
+          "minimum": 0
+        },
+        "maxWidthValue": {
+          "type": "number",
+          "minimum": 0
+        },
+        "fillOpacity": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "strokeOpacity": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "orientation": {
+          "enum": [
+            "horizontal",
+            "vertical"
+          ]
+        },
+        "offsetAngle": {
+          "type": "number"
+        },
+        "sizeBy": {
+          "const": "total"
+        },
+        "sort": {
+          "enum": [
+            "ascending",
+            "descending",
+            "none"
+          ]
+        },
+        "rings": {
+          "type": "boolean"
+        },
+        "showOther": {
+          "type": "boolean"
+        },
+        "stroke": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scaleMode": {
+          "enum": [
+            "area",
+            "radius"
+          ]
+        },
+        "radarValueMode": {
+          "enum": [
+            "share",
+            "absolute"
+          ]
+        },
+        "sizeLegend": {
+          "oneOf": [
+            {
+              "const": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "values": {
+                  "type": "array",
+                  "minItems": 1,
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  }
+                }
+              },
+              "additionalProperties": false
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "sizeLegend"
+            ],
+            "properties": {
+              "sizeLegend": {
+                "type": "object"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "sizeBy"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "additionalProperties": true
+}

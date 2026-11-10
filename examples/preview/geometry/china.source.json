@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "title": "中国省级边界预览样本",
+  "origin": "DataV GeoAtlas，全国省级边界归档快照",
+  "source_url": "https://geo.datav.aliyun.com/areas_v3/bound/100000_full.json",
+  "retrieved_at": "2026-11-06T17:06:04.379649+00:00",
+  "raw_sha256": "99adfeded5223848bbe37a0a12f8023e11ee12161c7800521c27db42fdeac275",
+  "original_host_archive": "catalog/maps/geometry/province.geojson",
+  "derived": {
+    "path": "examples/preview/geometry/china.geojson",
+    "sha256": "99adfeded5223848bbe37a0a12f8023e11ee12161c7800521c27db42fdeac275"
+  },
+  "transformation": "按原归档 GeoJSON 字节复制；34 个具名省级地区。无名称附属几何只作参考，不生成模拟统计记录。",
+  "purpose": "仅作真实轮廓的可视化演示，统计值均由虚构夹具生成。"
+}

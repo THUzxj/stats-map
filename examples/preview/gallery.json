@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "title": "中国与欧洲统计地图画廊",
+  "subtitle": "真实中国省级与欧洲国家轮廓 · 14 类图型 · 四种布局",
+  "geographies": [
+    {
+      "id": "china",
+      "adapter": "china",
+      "label": "中国 · 省级地图",
+      "subtitle": "34 个具名省级地区 · 模拟统计数据",
+      "path": "examples/preview/geometry/china.geojson",
+      "source_path": "examples/preview/geometry/china.source.json",
+      "sha256": "99adfeded5223848bbe37a0a12f8023e11ee12161c7800521c27db42fdeac275",
+      "id_property": "adcode",
+      "label_property": "name",
+      "level": "province",
+      "projection": "equirectangular",
+      "attribution": "边界：DataV GeoAtlas 归档快照，34 个具名省级地区；无名称附属几何仅作参考。数值均为模拟。",
+      "grid_layouts_path": "examples/preview/geometry/china.grids.json",
+      "grid_layouts_sha256": "8dea96ff2d11727dff89e109be7fca6eeda087caef6cf56fa23fedb0292b51af"
+    },
+    {
+      "id": "europe",
+      "adapter": "euro",
+      "label": "欧洲 · 国家地图",
+      "subtitle": "41 个国家轮廓 · 模拟统计数据",
+      "path": "examples/preview/geometry/europe.geojson",
+      "source_path": "examples/preview/geometry/europe.source.json",
+      "sha256": "728eaa7c2aaee1815ff285506c5a79e44b7d648d597221d709d84a10da899462",
+      "id_property": "region_id",
+      "label_property": "name",
+      "level": "country",
+      "projection": "mercator",
+      "attribution": "Eurostat / GISCO · 2024 · 1:60M；© EuroGeographics for the administrative boundaries。选取欧洲视窗内 41 国，不含海外部分，并非欧洲全覆盖；数值均为模拟。",
+      "grid_layouts_path": "examples/preview/geometry/europe.grids.json",
+      "grid_layouts_sha256": "d0fbd4dea8be8690624987d1a125750193a8ec9e7fbfb009774fe85873018288"
+    }
+  ]
+}

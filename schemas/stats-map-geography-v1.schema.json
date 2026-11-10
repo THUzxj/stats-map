@@ -1,0 +1,400 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "stats-map-geography-v1.schema.json",
+  "title": "stats-map Geography v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "kind",
+    "id",
+    "revision",
+    "title",
+    "levels",
+    "regions",
+    "coordinate_space",
+    "features"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "kind": {
+      "const": "stats-map/geography"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "revision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "levels": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "label"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "order": {
+            "type": "number"
+          },
+          "labels": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "titles": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "regions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "level_id"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "level_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "parent_id": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "labels": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "titles": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "coordinate_space": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "crs",
+            "units"
+          ],
+          "properties": {
+            "type": {
+              "const": "geographic"
+            },
+            "crs": {
+              "type": "string",
+              "minLength": 1
+            },
+            "units": {
+              "const": "degree"
+            }
+          },
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "units",
+            "y_direction"
+          ],
+          "properties": {
+            "type": {
+              "const": "cartesian"
+            },
+            "units": {
+              "enum": [
+                "unit",
+                "metre",
+                "kilometre"
+              ]
+            },
+            "y_direction": {
+              "enum": [
+                "up",
+                "down"
+              ]
+            }
+          },
+          "additionalProperties": true
+        }
+      ]
+    },
+    "features": {
+      "type": "object",
+      "required": [
+        "type",
+        "features"
+      ],
+      "properties": {
+        "type": {
+          "const": "FeatureCollection"
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "type",
+              "properties",
+              "geometry"
+            ],
+            "properties": {
+              "type": {
+                "const": "Feature"
+              },
+              "id": {},
+              "properties": {
+                "type": "object",
+                "required": [
+                  "role"
+                ],
+                "properties": {
+                  "role": {
+                    "enum": [
+                      "region",
+                      "boundary",
+                      "reference",
+                      "decoration"
+                    ]
+                  },
+                  "region_id": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": true
+              },
+              "geometry": {
+                "type": [
+                  "object",
+                  "null"
+                ]
+              }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "anchors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "region_id",
+          "point",
+          "role",
+          "method"
+        ],
+        "properties": {
+          "region_id": {
+            "type": "string"
+          },
+          "point": {
+            "type": "array",
+            "minItems": 2,
+            "items": {
+              "type": "number"
+            }
+          },
+          "role": {
+            "enum": [
+              "symbol",
+              "label"
+            ]
+          },
+          "method": {
+            "type": "string",
+            "minLength": 1
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "sources": {
+      "type": "array"
+    },
+    "source_refs": {
+      "type": "array"
+    },
+    "extensions": {
+      "type": "object"
+    },
+    "labels": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "titles": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "default_locale": {
+      "type": "string",
+      "minLength": 1
+    },
+    "anchor_policy": {
+      "type": "object",
+      "required": [
+        "method",
+        "version"
+      ],
+      "properties": {
+        "method": {
+          "enum": [
+            "none",
+            "interior-point"
+          ]
+        },
+        "version": {
+          "const": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "grid_layouts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/savedGridLayout"
+      }
+    }
+  },
+  "additionalProperties": true,
+  "$defs": {
+    "savedGridLayout": {
+      "type": "object",
+      "required": [
+        "id",
+        "type",
+        "geography_ref",
+        "reference_region_ids",
+        "positions"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "enum": [
+            "grid-square",
+            "grid-hex"
+          ]
+        },
+        "geography_ref": {
+          "type": "object",
+          "required": [
+            "id",
+            "revision"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "revision": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "reference_region_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "positions": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+              "type": "integer"
+            }
+          }
+        },
+        "input_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "algorithm": {
+          "type": "object",
+          "required": [
+            "name",
+            "version"
+          ],
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "version": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}

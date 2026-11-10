@@ -1,0 +1,2398 @@
+{
+  "schema_version": 1,
+  "upstream": {
+    "project": "eurostat-map",
+    "commit": "b866ca20b3346c0037215ecaeaa7deb74d9d6c8f",
+    "version": "4.13.1"
+  },
+  "renderers": [
+    {
+      "id": "V01",
+      "type": "choropleth",
+      "status": "implemented",
+      "tests": [
+        "core.test.js:renderer registry and deterministic dorling are complete",
+        "classification.test.js:natural-break classifiers match exhaustive weighted optimum and retain large offsets",
+        "color.test.js:continuous and diverging colors map endpoints, center and constants to the legend domain",
+        "color.test.js:classification dot and square textures use shared classes without implying point counts",
+        "color.test.js:implicit diverging domains include the center while explicit incompatible domains fail",
+        "adapter-matrix.test.js"
+      ],
+      "baseline_evidence": "data/audits/stats-map/adapter_matrix_20261108/browser_result.json"
+    },
+    {
+      "id": "V02",
+      "type": "proportionalSymbol",
+      "status": "implemented",
+      "tests": [
+        "core.test.js:proportional symbols use one bounded scale, preserve zero area and support every registered shape",
+        "encoding.test.js:symbol area and height encodings share the actual symbol geometry with the legend",
+        "symbol-options.test.js",
+        "symbol-color.test.js",
+        "adapter-matrix.test.js"
+      ],
+      "style_evidence": "data/audits/stats-map/symbol_options_20261109/VALIDATION.md",
+      "option_evidence": "data/audits/stats-map/symbol_color_20261109/VALIDATION.md",
+      "baseline_evidence": "data/audits/stats-map/adapter_matrix_20261108/browser_result.json",
+      "optional_checks": [
+        "complete upstream declarative migration and visual equivalence"
+      ]
+    },
+    {
+      "id": "V03",
+      "type": "categorical",
+      "status": "implemented",
+      "tests": [
+        "core.test.js:classification handles constant and missing values",
+        "color.test.js:categorical renderer and legend share the complete registered dictionary and stable colors",
+        "legend-filter.test.js:bivariate cell and categorical filters keep missing separate and dispatch legend events without region selection",
+        "adapter-matrix.test.js"
+      ],
+      "baseline_evidence": "data/audits/stats-map/adapter_matrix_20261108/browser_result.json"
+    },
+    {
+      "id": "V04",
+      "type": "bivariateChoropleth",
+      "status": "implemented",
+      "tests": [
+        "core.test.js:multivariate legends expose the same classes and colors as their renderers",
+        "channels.test.js:independent bivariate and alpha channels resolve colliding series ids in different datasets",
+        "color.test.js:bivariate threshold axes reject palettes beyond three classes in map and legend",
+        "adapter-matrix.test.js"
+      ],
+      "baseline_evidence": "data/audits/stats-map/adapter_matrix_20261108/browser_result.json"
+    },
+    {
+      "id": "V05",
+      "type": "trivariateChoropleth",
+      "status": "implemented",
+      "tests": [
+        "core.test.js:trivariate colors mix all three components and render incomplete records as missing",
+        "core.test.js:multivariate legends expose the same classes and colors as their renderers",
+        "ternary.test.js:ternary equal and geometric mean centers normalize consistently and keep zero/missing invalid",
+        "ternary.test.js:ternary sextants cover all six relative component patterns with a distinct center",
+        "ternary.test.js:ternary HCL color parameters and spread are bounded and reproducible",
+        "adapter-matrix.test.js"
+      ],
+      "baseline_evidence": "data/audits/stats-map/adapter_matrix_20261108/browser_result.json"
+    },
+    {
+      "id": "V06",
+      "type": "stripeComposition",
+      "status": "implemented",
+      "tests": [
+        "encoding.test.js:stripe composition fills polygon boundaries and holes with proportional repeating stripes",
+        "encoding.test.js:stripe composition keeps missing totals, absent components, excess totals and zero distinct",
+        "encoding.test.js:stripe patterns follow square, hexagonal and Dorling region shapes",
+        "adapter-matrix.test.js"
+      ],
+      "baseline_evidence": "data/audits/stats-map/adapter_matrix_20261108/browser_result.json"
+    },
+    {
+      "id": "V07",
+      "type": "pieChart",
+      "modes": [
+        "pie",
+        "ring",
+        "flag",
+        "segment",
+        "radar",
+        "agepyramid",
+        "halftone"
+      ],
+      "status": "implemented",
+      "tests": [
+        "core.test.js:composition keeps incomplete components missing",
+        "composition.test.js:composition modes preserve explicit totals, Other and component values",
+        "composition.test.js:complete circular sectors and rings use two outer arcs and area-proportional inner radii",
+        "composition.test.js:absolute radar radii use the same cross-region domain while share mode remains explicit",
+        "adapter-matrix.test.js",
+        "composition-legend.test.js"
+      ],
+      "baseline_evidence": "data/audits/stats-map/adapter_matrix_20261108/browser_result.json",
+      "size_legend_evidence": "data/audits/stats-map/composition_legend_20261109/VALIDATION.md"
+    },
+    {
+      "id": "V08",
+      "type": "sparkline",
+      "status": "implemented",
+      "tests": [
+        "core.test.js:composition does not fill missing components and sparklines break at missing periods",
+        "encoding.test.js:sparklines render line, area and bar modes in declared time order with missing breaks",
+        "temporal.test.js:sparkline axes use actual declared intervals and one common numeric range",
+        "temporal.test.js:time windows constrain points, scale and legend and reject invalid period ranges",
+        "adapter-matrix.test.js"
+      ],
+      "baseline_evidence": "data/audits/stats-map/adapter_matrix_20261108/browser_result.json"
+    },
+    {
+      "id": "V09",
+      "type": "flow",
+      "status": "implemented",
+      "tests": [
+        "core.test.js:renderer marker namespaces are instance scoped",
+        "flow.test.js:flow statistics separate incoming, outgoing and internal and retain missing geometry diagnostics",
+        "flow.test.js:horizontal reciprocal flow paths separate spatially and end before covering node centers",
+        "flow.test.js:flow filters disclose before and after totals without mutating source edges",
+        "flow.test.js:flow gradients, outlines, bundling, stacking and donut nodes preserve edge identities",
+        "adapter-matrix.test.js"
+      ],
+      "baseline_evidence": "data/audits/stats-map/adapter_matrix_20261108/browser_result.json"
+    },
+    {
+      "id": "V10",
+      "type": "coxcomb",
+      "status": "implemented",
+      "tests": [
+        "composition.test.js:Coxcomb stacks time by category on one area scale and preserves incomplete period gaps",
+        "adapter-matrix.test.js"
+      ],
+      "baseline_evidence": "data/audits/stats-map/adapter_matrix_20261108/browser_result.json"
+    },
+    {
+      "id": "V11",
+      "type": "alpha",
+      "status": "implemented",
+      "tests": [
+        "core.test.js:multivariate legends expose the same classes and colors as their renderers",
+        "core.test.js:alpha renderer marks either absent channel as missing",
+        "channels.test.js:independent bivariate and alpha channels resolve colliding series ids in different datasets",
+        "adapter-matrix.test.js"
+      ],
+      "baseline_evidence": "data/audits/stats-map/adapter_matrix_20261108/browser_result.json"
+    },
+    {
+      "id": "V12",
+      "type": "mushroom",
+      "status": "implemented",
+      "tests": [
+        "encoding.test.js:mushroom halves use a common area scale in both orientations and in their legend",
+        "encoding.test.js:mushroom distinguishes zero from absent halves and rejects incompatible units",
+        "adapter-matrix.test.js"
+      ],
+      "baseline_evidence": "data/audits/stats-map/adapter_matrix_20261108/browser_result.json"
+    },
+    {
+      "id": "V13",
+      "type": "waffle",
+      "status": "implemented",
+      "tests": [
+        "core.test.js:composition and symbol math preserve totals and area semantics",
+        "composition.test.js:waffle rounding conserves cell count and leaves undisplayed explicit remainder visible",
+        "adapter-matrix.test.js",
+        "composition-legend.test.js"
+      ],
+      "baseline_evidence": "data/audits/stats-map/adapter_matrix_20261108/browser_result.json",
+      "size_legend_evidence": "data/audits/stats-map/composition_legend_20261109/VALIDATION.md"
+    },
+    {
+      "id": "V14",
+      "type": "bar",
+      "status": "implemented",
+      "tests": [
+        "composition.test.js:grouped and stacked bars use common scales across regions",
+        "composition.test.js:bar width is an independent numeric channel with a common domain and missing-state marker",
+        "adapter-matrix.test.js"
+      ],
+      "baseline_evidence": "data/audits/stats-map/adapter_matrix_20261108/browser_result.json"
+    }
+  ],
+  "layouts": [
+    {
+      "id": "L01",
+      "type": "geographic",
+      "status": "implemented",
+      "tests": [
+        "presentation.test.js"
+      ]
+    },
+    {
+      "id": "L02",
+      "type": "grid-square",
+      "status": "verified",
+      "tests": [
+        "core.test.js:grid and dorling layouts drive geometry and hit testing"
+      ]
+    },
+    {
+      "id": "L03",
+      "type": "grid-hex",
+      "status": "verified",
+      "tests": [
+        "core.test.js:third-party fictional geography renders without adapter changes"
+      ]
+    },
+    {
+      "id": "L04",
+      "type": "dorling",
+      "status": "verified",
+      "tests": [
+        "core.test.js:grid and dorling layouts drive geometry and hit testing",
+        "core.test.js:Dorling worker requests settle on cancellation and ignore stale replies",
+        "dorling-glyphs.test.js"
+      ],
+      "browser_evidence": "data/audits/stats-map/dorling_glyphs_20261108/browser_result.json",
+      "verified_scope": "Deterministic renderer-sized pixel envelopes, bounded displacement, real Worker replacement/cancellation and residual diagnostics; 135 synthetic source/mode cases"
+    }
+  ],
+  "adapters": {
+    "china": "implemented",
+    "euro": "implemented",
+    "third_party_fixture": "verified"
+  },
+  "host": {
+    "asset_manifest": "verified",
+    "shared_renderer_geometry": "verified",
+    "metric_period_and_level_updates": "verified",
+    "province_and_city_geometry": "verified",
+    "selection": "verified",
+    "desktop_browser": "verified",
+    "mobile_browser": "verified",
+    "dom_regression": "verified"
+  },
+  "orchestration": [
+    {
+      "id": "C01",
+      "type": "multiple-layers",
+      "status": "implemented",
+      "tests": [
+        "legend-filter.test.js:each layer gets a scoped legend and composition filtering retains geometry, shares and totals",
+        "channels.test.js:independent bivariate and alpha channels resolve colliding series ids in different datasets",
+        "channels.test.js:surface renderers default to base and reject incompatible explicit roles",
+        "channels.test.js:all renderer role capabilities agree with validation and omitted roles sort bases before overlays"
+      ],
+      "optional_checks": [
+        "all channel combinations and visual layout acceptance"
+      ]
+    },
+    {
+      "id": "C02",
+      "type": "linked-maps",
+      "status": "implemented",
+      "tests": [
+        "orchestration.test.js:linked selection and hover propagate without loops while different layouts keep independent zoom",
+        "orchestration-lifecycle.test.js",
+        "data/audits/stats-map/orchestration_20261109/browser_check.py"
+      ],
+      "optional_checks": [
+        "other browser engines and assistive-technology linked-map acceptance"
+      ]
+    },
+    {
+      "id": "C03",
+      "type": "small-multiples",
+      "status": "implemented",
+      "tests": [
+        "orchestration.test.js:small multiples lock classification domains, retain empty panels and dispose paginated instances",
+        "comparison.test.js:small multiple proportional symbols and mushroom halves retain a common maximum across periods",
+        "comparison.test.js:small multiples share both bivariate axes, continuous colors and alpha domains",
+        "comparison.test.js:small multiples lock composition size, radar, bar height/width and temporal domains",
+        "comparison.test.js:constant shared class domains retain their labels in empty panels and resolved exports",
+        "orchestration-lifecycle.test.js",
+        "data/audits/stats-map/orchestration_20261109/browser_check.py"
+      ],
+      "optional_checks": [
+        "dense-layout collision, all cross-dataset/option combinations and full upstream example comparison acceptance"
+      ]
+    },
+    {
+      "id": "C04",
+      "type": "story-map",
+      "status": "implemented",
+      "tests": [
+        "orchestration.test.js:story chapters derive from the base spec and retain sources and plain-text captions",
+        "orchestration-lifecycle.test.js",
+        "data/audits/stats-map/orchestration_20261109/browser_check.py"
+      ],
+      "optional_checks": [
+        "full upstream chapters/profiles/options, other browser engines and assistive-technology acceptance"
+      ]
+    },
+    {
+      "id": "C05",
+      "type": "time-playback",
+      "status": "implemented",
+      "tests": [
+        "orchestration.test.js:time playback keeps declared empty periods and clears timers on pause, end and map destruction",
+        "orchestration.test.js:time controls follow external view and data updates and pause on playback errors",
+        "time-controller.test.js",
+        "tooltip-time-brush.test.js",
+        "data/audits/stats-map/tooltip_time_20261108/browser_check.py",
+        "data/audits/stats-map/time_playback_20261109/browser_check.py"
+      ],
+      "optional_checks": [
+        "full renderer/adapter combinations, other browser engines and assistive-technology playback acceptance"
+      ]
+    }
+  ],
+  "examples": {
+    "count": 109,
+    "upstream_inventory": "examples/_inventory.json",
+    "entries": [
+      {
+        "path": "bar-chart/bar-chart.html",
+        "source_paths": [
+          "bar-chart/bar-chart.html"
+        ],
+        "capability_ids": [
+          "L02",
+          "V14"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "bivariate/pop-unemploy-bivariate.html",
+        "source_paths": [
+          "bivariate/pop-unemploy-bivariate.html"
+        ],
+        "capability_ids": [
+          "V04",
+          "X04"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "cartogram/dorling.html",
+        "source_paths": [
+          "cartogram/dorling.html"
+        ],
+        "capability_ids": [
+          "L04",
+          "V02"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "cartogram/grid/bivariate-choropleth.html",
+        "source_paths": [
+          "cartogram/grid/bivariate-choropleth.html"
+        ],
+        "capability_ids": [
+          "L02",
+          "V04"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "cartogram/grid/choropleth.html",
+        "source_paths": [
+          "cartogram/grid/choropleth.html"
+        ],
+        "capability_ids": [
+          "L02",
+          "V01"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "cartogram/grid/coxcomb.html",
+        "source_paths": [
+          "cartogram/grid/coxcomb.html"
+        ],
+        "capability_ids": [
+          "L02",
+          "V10"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "cartogram/grid/degurba.html",
+        "source_paths": [
+          "cartogram/grid/degurba.html"
+        ],
+        "capability_ids": [
+          "L02",
+          "L04",
+          "V14"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "cartogram/grid/grid-cartogram.html",
+        "source_paths": [
+          "cartogram/grid/grid-cartogram.html"
+        ],
+        "capability_ids": [
+          "L02",
+          "V01"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "cartogram/grid/pie.html",
+        "source_paths": [
+          "cartogram/grid/pie.html"
+        ],
+        "capability_ids": [
+          "L02",
+          "V07"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "cartogram/grid/sparklines.html",
+        "source_paths": [
+          "cartogram/grid/sparklines.html"
+        ],
+        "capability_ids": [
+          "L02",
+          "V08",
+          "V14"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "cartogram/grid/stripe.html",
+        "source_paths": [
+          "cartogram/grid/stripe.html"
+        ],
+        "capability_ids": [
+          "L02",
+          "V06"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "cartogram/grid/waffle.html",
+        "source_paths": [
+          "cartogram/grid/waffle.html"
+        ],
+        "capability_ids": [
+          "L02",
+          "V13"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "cartogram/trade-asymmetry/index.html",
+        "source_paths": [
+          "cartogram/trade-asymmetry/index.html",
+          "cartogram/trade-asymmetry/data.js"
+        ],
+        "capability_ids": [
+          "L02",
+          "V01",
+          "X04"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "categorical/categorical.html",
+        "source_paths": [
+          "categorical/categorical.html"
+        ],
+        "capability_ids": [
+          "V03"
+        ],
+        "mapping_kind": "direct",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "choropleth/annotations.html",
+        "source_paths": [
+          "choropleth/annotations.html"
+        ],
+        "capability_ids": [
+          "V01",
+          "X04"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "choropleth/basic.html",
+        "source_paths": [
+          "choropleth/basic.html"
+        ],
+        "capability_ids": [
+          "V01"
+        ],
+        "mapping_kind": "direct",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "choropleth/continuous.html",
+        "source_paths": [
+          "choropleth/continuous.html"
+        ],
+        "capability_ids": [
+          "V01"
+        ],
+        "mapping_kind": "direct",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "choropleth/EU_only.html",
+        "source_paths": [
+          "choropleth/EU_only.html"
+        ],
+        "capability_ids": [
+          "V01"
+        ],
+        "mapping_kind": "direct",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "choropleth/gdp-per-inhabitant.html",
+        "source_paths": [
+          "choropleth/gdp-per-inhabitant.html"
+        ],
+        "capability_ids": [
+          "V01"
+        ],
+        "mapping_kind": "direct",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "choropleth/labelling.html",
+        "source_paths": [
+          "choropleth/labelling.html"
+        ],
+        "capability_ids": [
+          "V01"
+        ],
+        "mapping_kind": "direct",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "choropleth/labels.html",
+        "source_paths": [
+          "choropleth/labels.html"
+        ],
+        "capability_ids": [
+          "V01"
+        ],
+        "mapping_kind": "direct",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "choropleth/linked_maps.html",
+        "source_paths": [
+          "choropleth/linked_maps.html"
+        ],
+        "capability_ids": [
+          "C02",
+          "V01"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "choropleth/population-change.html",
+        "source_paths": [
+          "choropleth/population-change.html"
+        ],
+        "capability_ids": [
+          "V01"
+        ],
+        "mapping_kind": "direct",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "choropleth/population-density.html",
+        "source_paths": [
+          "choropleth/population-density.html"
+        ],
+        "capability_ids": [
+          "V01"
+        ],
+        "mapping_kind": "direct",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "choropleth/small_multiple.html",
+        "source_paths": [
+          "choropleth/small_multiple.html"
+        ],
+        "capability_ids": [
+          "C03",
+          "V01"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "choropleth/spain.html",
+        "source_paths": [
+          "choropleth/spain.html"
+        ],
+        "capability_ids": [
+          "V01"
+        ],
+        "mapping_kind": "direct",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "choropleth/world.html",
+        "source_paths": [
+          "choropleth/world.html"
+        ],
+        "capability_ids": [
+          "V01"
+        ],
+        "mapping_kind": "direct",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "composition/composition.html",
+        "source_paths": [
+          "composition/composition.html"
+        ],
+        "capability_ids": [
+          "L04",
+          "V07"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "coxcomb/coxcomb.html",
+        "source_paths": [
+          "coxcomb/coxcomb.html"
+        ],
+        "capability_ids": [
+          "L04",
+          "V10"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "dot-density/population-dot-density.html",
+        "source_paths": [
+          "dot-density/population-dot-density.html"
+        ],
+        "capability_ids": [
+          "V01"
+        ],
+        "mapping_kind": "direct",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "flow/flights/flights.html",
+        "source_paths": [
+          "flow/flights/flights.html",
+          "flow/flights/parse.js"
+        ],
+        "capability_ids": [
+          "C07",
+          "V09"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "flow/flowmap.html",
+        "source_paths": [
+          "flow/flowmap.html"
+        ],
+        "capability_ids": [
+          "V09"
+        ],
+        "mapping_kind": "direct",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "index.html",
+        "source_paths": [
+          "index.html",
+          "scripts/example-manifest.js"
+        ],
+        "capability_ids": [],
+        "mapping_kind": "container",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "misc/annotations.html",
+        "source_paths": [
+          "misc/annotations.html"
+        ],
+        "capability_ids": [
+          "V01",
+          "X04"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "misc/custom-geometries.html",
+        "source_paths": [
+          "misc/custom-geometries.html"
+        ],
+        "capability_ids": [
+          "C07",
+          "V01"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "misc/custom-stats.html",
+        "source_paths": [
+          "misc/custom-stats.html"
+        ],
+        "capability_ids": [
+          "V01"
+        ],
+        "mapping_kind": "direct",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "misc/export.html",
+        "source_paths": [
+          "misc/export.html"
+        ],
+        "capability_ids": [
+          "V01",
+          "X07"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "misc/hatching.html",
+        "source_paths": [
+          "misc/hatching.html"
+        ],
+        "capability_ids": [
+          "V01"
+        ],
+        "mapping_kind": "direct",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "misc/locations.html",
+        "source_paths": [
+          "misc/locations.html"
+        ],
+        "capability_ids": [
+          "C07",
+          "V01"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "misc/minimap.html",
+        "source_paths": [
+          "misc/minimap.html"
+        ],
+        "capability_ids": [
+          "V01",
+          "X02"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "misc/mixed-nuts-levels.html",
+        "source_paths": [
+          "misc/mixed-nuts-levels.html"
+        ],
+        "capability_ids": [
+          "C07",
+          "L04",
+          "V02"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "misc/placenames.html",
+        "source_paths": [
+          "misc/placenames.html"
+        ],
+        "capability_ids": [
+          "V01",
+          "X04"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "misc/projection.html",
+        "source_paths": [
+          "misc/projection.html"
+        ],
+        "capability_ids": [
+          "V01"
+        ],
+        "mapping_kind": "direct",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "misc/scalebar.html",
+        "source_paths": [
+          "misc/scalebar.html"
+        ],
+        "capability_ids": [
+          "V01",
+          "X04"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "misc/stamp.html",
+        "source_paths": [
+          "misc/stamp.html"
+        ],
+        "capability_ids": [
+          "V01"
+        ],
+        "mapping_kind": "direct",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "misc/story-map/index.html",
+        "source_paths": [
+          "misc/story-map/index.html",
+          "misc/story-map/main.js"
+        ],
+        "capability_ids": [
+          "C04",
+          "V01"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "multi-layer/choropleth-with-proportional-symbols.html",
+        "source_paths": [
+          "multi-layer/choropleth-with-proportional-symbols.html"
+        ],
+        "capability_ids": [
+          "V01",
+          "V02"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "mushroom/mushroom.html",
+        "source_paths": [
+          "mushroom/mushroom.html"
+        ],
+        "capability_ids": [
+          "L04",
+          "V12"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "pie-charts/prop-piecharts.html",
+        "source_paths": [
+          "pie-charts/prop-piecharts.html"
+        ],
+        "capability_ids": [
+          "L04",
+          "V07"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "proportional-symbols/population-change.html",
+        "source_paths": [
+          "proportional-symbols/population-change.html"
+        ],
+        "capability_ids": [
+          "L04",
+          "V02"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "proportional-symbols/population-total.html",
+        "source_paths": [
+          "proportional-symbols/population-total.html"
+        ],
+        "capability_ids": [
+          "V02"
+        ],
+        "mapping_kind": "direct",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "proportional-symbols/prop-circles.html",
+        "source_paths": [
+          "proportional-symbols/prop-circles.html"
+        ],
+        "capability_ids": [
+          "L04",
+          "V02"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "proportional-symbols/prop-symbols.html",
+        "source_paths": [
+          "proportional-symbols/prop-symbols.html"
+        ],
+        "capability_ids": [
+          "V02"
+        ],
+        "mapping_kind": "direct",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "RYB/2026/CH02/CH02M02.html",
+        "source_paths": [
+          "RYB/2026/CH02/CH02M02.html",
+          "RYB/2026/common/insets/overseas.js",
+          "RYB/2026/common/responsive-map.js",
+          "RYB/2026/common/dropdown-choropleth.js"
+        ],
+        "capability_ids": [
+          "V01",
+          "X04"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "RYB/2026/CH02/CH02M03.html",
+        "source_paths": [
+          "RYB/2026/CH02/CH02M03.html",
+          "RYB/2026/common/insets/overseas.js",
+          "RYB/2026/common/responsive-map.js"
+        ],
+        "capability_ids": [
+          "L04",
+          "V07",
+          "X04"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "RYB/2026/CH02/static/CH02M03.html",
+        "source_paths": [
+          "RYB/2026/CH02/static/CH02M03.html",
+          "RYB/2026/common/insets/overseas.js"
+        ],
+        "capability_ids": [
+          "L04",
+          "V07",
+          "X04"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "RYB/2026/CH03/CH03M02.html",
+        "source_paths": [
+          "RYB/2026/CH03/CH03M02.html",
+          "RYB/2026/common/insets/overseas.js",
+          "RYB/2026/common/export.js",
+          "RYB/2026/common/responsive-map.js"
+        ],
+        "capability_ids": [
+          "V05",
+          "X04"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "RYB/2026/CH03/static/static.html",
+        "source_paths": [
+          "RYB/2026/CH03/static/static.html",
+          "RYB/2026/common/insets/overseas.js",
+          "RYB/2026/common/export.js"
+        ],
+        "capability_ids": [
+          "V01",
+          "V05",
+          "X04"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "RYB/2026/CH04/CH04M03.html",
+        "source_paths": [
+          "RYB/2026/CH04/CH04M03.html",
+          "RYB/2026/common/insets/overseas.js",
+          "RYB/2026/common/responsive-map.js",
+          "RYB/2026/common/dropdown-choropleth.js"
+        ],
+        "capability_ids": [
+          "V01",
+          "X04"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "RYB/2026/CH08/CH08M03.html",
+        "source_paths": [
+          "RYB/2026/CH08/CH08M03.html",
+          "RYB/2026/common/insets/overseas.js",
+          "RYB/2026/common/responsive-map.js",
+          "RYB/2026/common/dropdown-choropleth.js"
+        ],
+        "capability_ids": [
+          "V01",
+          "X04"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "RYB/2026/CH08/CH08M04.html",
+        "source_paths": [
+          "RYB/2026/CH08/CH08M04.html",
+          "RYB/2026/common/insets/overseas.js",
+          "RYB/2026/common/responsive-map.js",
+          "RYB/2026/common/dropdown-choropleth.js"
+        ],
+        "capability_ids": [
+          "V01",
+          "X04"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "RYB/2026/CH10/CH10M02.html",
+        "source_paths": [
+          "RYB/2026/CH10/CH10M02.html",
+          "RYB/2026/common/insets/overseas.js",
+          "RYB/2026/common/responsive-map.js"
+        ],
+        "capability_ids": [
+          "L04",
+          "V10",
+          "X04"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "RYB/2026/CH10/CH10M06.html",
+        "source_paths": [
+          "RYB/2026/CH10/CH10M06.html",
+          "RYB/2026/common/insets/overseas.js",
+          "RYB/2026/common/responsive-map.js"
+        ],
+        "capability_ids": [
+          "L04",
+          "V10",
+          "X04"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "RYB/2026/CH10/static/CH10M02.html",
+        "source_paths": [
+          "RYB/2026/CH10/static/CH10M02.html",
+          "RYB/2026/common/insets/overseas.js"
+        ],
+        "capability_ids": [
+          "L04",
+          "V10",
+          "X04"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "RYB/2026/CH10/static/CH10M06.html",
+        "source_paths": [
+          "RYB/2026/CH10/static/CH10M06.html",
+          "RYB/2026/common/insets/overseas.js"
+        ],
+        "capability_ids": [
+          "L04",
+          "V10",
+          "X04"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "RYB/2026/CH11/CH11M04.html",
+        "source_paths": [
+          "RYB/2026/CH11/CH11M04.html",
+          "RYB/2026/CH11/exportAnnotations.js",
+          "RYB/2026/common/responsive-map.js"
+        ],
+        "capability_ids": [
+          "L04",
+          "V12",
+          "X04"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "RYB/2026/CH11/CH11M05.html",
+        "source_paths": [
+          "RYB/2026/CH11/CH11M05.html",
+          "RYB/2026/CH11/exportAnnotations.js",
+          "RYB/2026/common/responsive-map.js"
+        ],
+        "capability_ids": [
+          "L04",
+          "V12",
+          "X04"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "RYB/2026/CH11/static/CH11M04.html",
+        "source_paths": [
+          "RYB/2026/CH11/static/CH11M04.html",
+          "RYB/2026/CH11/static/exportAnnotations.js"
+        ],
+        "capability_ids": [
+          "L04",
+          "V12",
+          "X04"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "RYB/2026/CH11/static/CH11M05.html",
+        "source_paths": [
+          "RYB/2026/CH11/static/CH11M05.html",
+          "RYB/2026/CH11/static/exportAnnotations.js"
+        ],
+        "capability_ids": [
+          "L04",
+          "V12",
+          "X04"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "RYB/2026/CH13/CH13M02.html",
+        "source_paths": [
+          "RYB/2026/CH13/CH13M02.html",
+          "RYB/2026/common/insets/overseas.js",
+          "RYB/2026/common/responsive-map.js",
+          "RYB/2026/common/dropdown-choropleth.js"
+        ],
+        "capability_ids": [
+          "V01",
+          "X04"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "RYB/2026/index.html",
+        "source_paths": [
+          "RYB/2026/index.html"
+        ],
+        "capability_ids": [],
+        "mapping_kind": "container",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "sparklines/sparklines-grid-cartogram.html",
+        "source_paths": [
+          "sparklines/sparklines-grid-cartogram.html"
+        ],
+        "capability_ids": [
+          "L02",
+          "V08"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "sparklines/sparklines.html",
+        "source_paths": [
+          "sparklines/sparklines.html"
+        ],
+        "capability_ids": [
+          "V08"
+        ],
+        "mapping_kind": "direct",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "statistics-explained/business/construction/choropleth/index.html",
+        "source_paths": [
+          "statistics-explained/business/construction/choropleth/index.html",
+          "statistics-explained/business/construction/choropleth/dropdown/dropdown.js",
+          "statistics-explained/business/construction/choropleth/ch-map.js",
+          "statistics-explained/business/construction/choropleth/dropdown/ewc-singleselect.js"
+        ],
+        "capability_ids": [
+          "L04",
+          "V01"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "statistics-explained/business/construction/proportional-circle/index.html",
+        "source_paths": [
+          "statistics-explained/business/construction/proportional-circle/index.html",
+          "statistics-explained/business/construction/proportional-circle/dropdown/dropdown.js",
+          "statistics-explained/business/construction/proportional-circle/ps-map.js",
+          "statistics-explained/business/construction/proportional-circle/dropdown/ewc-singleselect.js"
+        ],
+        "capability_ids": [
+          "L04",
+          "V02"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "statistics-explained/business/distributive-trade/choropleth/index.html",
+        "source_paths": [
+          "statistics-explained/business/distributive-trade/choropleth/index.html",
+          "statistics-explained/business/distributive-trade/choropleth/dropdown/dropdown.js",
+          "statistics-explained/business/distributive-trade/choropleth/ch-map.js",
+          "statistics-explained/business/distributive-trade/choropleth/dropdown/ewc-singleselect.js",
+          "statistics-explained/business/distributive-trade/spinner.js"
+        ],
+        "capability_ids": [
+          "L04",
+          "V01"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "statistics-explained/business/distributive-trade/proportional-circle/index.html",
+        "source_paths": [
+          "statistics-explained/business/distributive-trade/proportional-circle/index.html",
+          "statistics-explained/business/distributive-trade/proportional-circle/dropdown/dropdown.js",
+          "statistics-explained/business/distributive-trade/proportional-circle/ps-map.js",
+          "statistics-explained/business/distributive-trade/proportional-circle/dropdown/ewc-singleselect.js",
+          "statistics-explained/business/distributive-trade/spinner.js"
+        ],
+        "capability_ids": [
+          "L04",
+          "V02"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "statistics-explained/business/human-services/choropleth/index.html",
+        "source_paths": [
+          "statistics-explained/business/human-services/choropleth/index.html",
+          "statistics-explained/business/human-services/choropleth/dropdown/dropdown.js",
+          "statistics-explained/business/human-services/choropleth/ch-map.js",
+          "statistics-explained/business/human-services/choropleth/dropdown/ewc-singleselect.js"
+        ],
+        "capability_ids": [
+          "L04",
+          "V01"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "statistics-explained/business/human-services/proportional-circle/index.html",
+        "source_paths": [
+          "statistics-explained/business/human-services/proportional-circle/index.html",
+          "statistics-explained/business/human-services/proportional-circle/dropdown/dropdown.js",
+          "statistics-explained/business/human-services/proportional-circle/ps-map.js",
+          "statistics-explained/business/human-services/proportional-circle/dropdown/ewc-singleselect.js"
+        ],
+        "capability_ids": [
+          "L04",
+          "V02"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "statistics-explained/business/manufacturing/choropleth/index.html",
+        "source_paths": [
+          "statistics-explained/business/manufacturing/choropleth/index.html",
+          "statistics-explained/business/manufacturing/choropleth/dropdown/dropdown.js",
+          "statistics-explained/business/manufacturing/choropleth/ch-map.js",
+          "statistics-explained/business/manufacturing/choropleth/dropdown/ewc-singleselect.js",
+          "statistics-explained/business/manufacturing/spinner.js"
+        ],
+        "capability_ids": [
+          "L04",
+          "V01"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "statistics-explained/business/manufacturing/proportional-circle/index.html",
+        "source_paths": [
+          "statistics-explained/business/manufacturing/proportional-circle/index.html",
+          "statistics-explained/business/manufacturing/proportional-circle/dropdown/dropdown.js",
+          "statistics-explained/business/manufacturing/proportional-circle/ps-map.js",
+          "statistics-explained/business/manufacturing/proportional-circle/dropdown/ewc-singleselect.js",
+          "statistics-explained/business/manufacturing/spinner.js"
+        ],
+        "capability_ids": [
+          "L04",
+          "V02"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "statistics-explained/business/NACE/choropleth/index.html",
+        "source_paths": [
+          "statistics-explained/business/NACE/choropleth/index.html",
+          "statistics-explained/business/NACE/choropleth/dropdown/dropdown.js",
+          "statistics-explained/business/NACE/choropleth/ch-map.js",
+          "statistics-explained/business/NACE/choropleth/dropdown/ewc-singleselect.js"
+        ],
+        "capability_ids": [
+          "L04",
+          "V01"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "statistics-explained/business/NACE/proportional-circle/index.html",
+        "source_paths": [
+          "statistics-explained/business/NACE/proportional-circle/index.html",
+          "statistics-explained/business/NACE/proportional-circle/dropdown/dropdown.js",
+          "statistics-explained/business/NACE/proportional-circle/ps-map.js",
+          "statistics-explained/business/NACE/proportional-circle/dropdown/ewc-singleselect.js"
+        ],
+        "capability_ids": [
+          "L04",
+          "V02"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "statistics-explained/business/services/choropleth/index.html",
+        "source_paths": [
+          "statistics-explained/business/services/choropleth/index.html",
+          "statistics-explained/business/services/choropleth/dropdown/dropdown.js",
+          "statistics-explained/business/services/choropleth/ch-map.js",
+          "statistics-explained/business/services/choropleth/dropdown/ewc-singleselect.js"
+        ],
+        "capability_ids": [
+          "L04",
+          "V01"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "statistics-explained/business/services/proportional-circle/index.html",
+        "source_paths": [
+          "statistics-explained/business/services/proportional-circle/index.html",
+          "statistics-explained/business/services/proportional-circle/dropdown/dropdown.js",
+          "statistics-explained/business/services/proportional-circle/ps-map.js",
+          "statistics-explained/business/services/proportional-circle/dropdown/ewc-singleselect.js"
+        ],
+        "capability_ids": [
+          "L04",
+          "V02"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "statistics-explained/transport/air/airports/index.html",
+        "source_paths": [
+          "statistics-explained/transport/air/airports/index.html",
+          "statistics-explained/transport/air/airports/airportLabels.js",
+          "statistics-explained/transport/air/airports/configs.js"
+        ],
+        "capability_ids": [
+          "V09",
+          "X02",
+          "X04"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "statistics-explained/transport/air/freight/index.html",
+        "source_paths": [
+          "statistics-explained/transport/air/freight/index.html",
+          "statistics-explained/transport/air/freight/regionLabels.js",
+          "statistics-explained/transport/air/freight/regions.js",
+          "statistics-explained/transport/air/freight/configs.js"
+        ],
+        "capability_ids": [
+          "C07",
+          "V09"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "statistics-explained/transport/air/passengers/index.html",
+        "source_paths": [
+          "statistics-explained/transport/air/passengers/index.html",
+          "statistics-explained/transport/air/passengers/regionLabels.js",
+          "statistics-explained/transport/air/passengers/regions.js",
+          "statistics-explained/transport/air/passengers/configs.js"
+        ],
+        "capability_ids": [
+          "C07",
+          "V09"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "statistics-explained/transport/maritime/flows/index.html",
+        "source_paths": [
+          "statistics-explained/transport/maritime/flows/index.html",
+          "statistics-explained/proj4-src.js",
+          "statistics-explained/transport/maritime/flows/maritimeFlowGraph.js"
+        ],
+        "capability_ids": [
+          "C07",
+          "V09",
+          "X04"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "statistics-explained/transport/maritime/flows/static/index.html",
+        "source_paths": [
+          "statistics-explained/transport/maritime/flows/static/index.html",
+          "statistics-explained/proj4-src.js",
+          "statistics-explained/transport/maritime/flows/maritimeFlowGraph.js"
+        ],
+        "capability_ids": [
+          "V09",
+          "X04"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "statistics-explained/transport/maritime/ports/index.html",
+        "source_paths": [
+          "statistics-explained/transport/maritime/ports/index.html",
+          "statistics-explained/proj4-src.js",
+          "statistics-explained/transport/maritime/ports/portsData.js",
+          "statistics-explained/transport/maritime/ports/annotations.js",
+          "statistics-explained/transport/maritime/ports/ranking.js",
+          "statistics-explained/transport/maritime/ports/insets.js",
+          "statistics-explained/transport/maritime/ports/projections.js"
+        ],
+        "capability_ids": [
+          "V02",
+          "X04"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "statistics-explained/transport/maritime/ports/static/index.html",
+        "source_paths": [
+          "statistics-explained/transport/maritime/ports/static/index.html",
+          "statistics-explained/proj4-src.js",
+          "statistics-explained/transport/maritime/ports/portsData.js",
+          "statistics-explained/transport/maritime/ports/static/insetsStatic.js",
+          "statistics-explained/transport/maritime/ports/projections.js",
+          "statistics-explained/transport/maritime/ports/static/exportAnnotations.js"
+        ],
+        "capability_ids": [
+          "V02",
+          "X04"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "stripe/farm_size.html",
+        "source_paths": [
+          "stripe/farm_size.html"
+        ],
+        "capability_ids": [
+          "V06"
+        ],
+        "mapping_kind": "direct",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "stripe/livestock_composition.html",
+        "source_paths": [
+          "stripe/livestock_composition.html"
+        ],
+        "capability_ids": [
+          "V06"
+        ],
+        "mapping_kind": "direct",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "trivariate/trivariate.html",
+        "source_paths": [
+          "trivariate/trivariate.html"
+        ],
+        "capability_ids": [
+          "V05"
+        ],
+        "mapping_kind": "direct",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "URE/2026/gdp-change.html",
+        "source_paths": [
+          "URE/2026/gdp-change.html",
+          "URE/2026/common/rural-demography-map.js"
+        ],
+        "capability_ids": [
+          "V04"
+        ],
+        "mapping_kind": "direct",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "URE/2026/index.html",
+        "source_paths": [
+          "URE/2026/index.html"
+        ],
+        "capability_ids": [],
+        "mapping_kind": "container",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "URE/2026/natural-population-change.html",
+        "source_paths": [
+          "URE/2026/natural-population-change.html",
+          "URE/2026/common/rural-demography-map.js"
+        ],
+        "capability_ids": [
+          "V04"
+        ],
+        "mapping_kind": "direct",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "URE/2026/net-migration.html",
+        "source_paths": [
+          "URE/2026/net-migration.html",
+          "URE/2026/common/rural-demography-map.js"
+        ],
+        "capability_ids": [
+          "V04"
+        ],
+        "mapping_kind": "direct",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "URE/2026/old-age-dependency-ratio.html",
+        "source_paths": [
+          "URE/2026/old-age-dependency-ratio.html",
+          "URE/2026/common/rural-demography-map.js"
+        ],
+        "capability_ids": [
+          "V04"
+        ],
+        "mapping_kind": "direct",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "URE/2026/population-change.html",
+        "source_paths": [
+          "URE/2026/population-change.html",
+          "URE/2026/common/rural-demography-map.js"
+        ],
+        "capability_ids": [
+          "V04"
+        ],
+        "mapping_kind": "direct",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "URE/2026/poverty-or-social-exclusion-rate.html",
+        "source_paths": [
+          "URE/2026/poverty-or-social-exclusion-rate.html"
+        ],
+        "capability_ids": [
+          "L02",
+          "L04",
+          "V14"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "URE/2026/poverty-rate.html",
+        "source_paths": [
+          "URE/2026/poverty-rate.html"
+        ],
+        "capability_ids": [
+          "L02",
+          "L04",
+          "V14"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "URE/2026/severe-material-social-deprivation-rate.html",
+        "source_paths": [
+          "URE/2026/severe-material-social-deprivation-rate.html"
+        ],
+        "capability_ids": [
+          "L02",
+          "L04",
+          "V14"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "URE/2026/unemployment.html",
+        "source_paths": [
+          "URE/2026/unemployment.html"
+        ],
+        "capability_ids": [
+          "L02",
+          "L04",
+          "V14"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "URE/2026/very-low-work-intensity.html",
+        "source_paths": [
+          "URE/2026/very-low-work-intensity.html"
+        ],
+        "capability_ids": [
+          "L02",
+          "L04",
+          "V14"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "view.html",
+        "source_paths": [
+          "view.html"
+        ],
+        "capability_ids": [],
+        "mapping_kind": "container",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "waffle/livestock.html",
+        "source_paths": [
+          "waffle/livestock.html"
+        ],
+        "capability_ids": [
+          "L04",
+          "V13"
+        ],
+        "mapping_kind": "combination",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      },
+      {
+        "path": "waffle/waffle.html",
+        "source_paths": [
+          "waffle/waffle.html"
+        ],
+        "capability_ids": [
+          "V13"
+        ],
+        "mapping_kind": "direct",
+        "status": "reference-only",
+        "reason": "Reference capability mapping; per-example execution and visual equivalence are outside the current acceptance scope."
+      }
+    ],
+    "purpose": "reference-index",
+    "acceptance_required": false
+  },
+  "capability_acceptance": {
+    "S01": {
+      "status": "implemented",
+      "tests": [
+        "classification.test.js",
+        "color.test.js"
+      ]
+    },
+    "S02": {
+      "status": "implemented",
+      "tests": [
+        "color.test.js"
+      ]
+    },
+    "S03": {
+      "status": "implemented",
+      "tests": [
+        "exceptions.test.js"
+      ],
+      "optional_checks": [
+        "full adapter/renderer exception combinations"
+      ]
+    },
+    "S04": {
+      "status": "implemented",
+      "tests": [
+        "encoding.test.js"
+      ]
+    },
+    "S05": {
+      "status": "implemented",
+      "tests": [
+        "ternary.test.js"
+      ]
+    },
+    "S06": {
+      "status": "implemented",
+      "tests": [
+        "composition.test.js"
+      ]
+    },
+    "S07": {
+      "status": "implemented",
+      "tests": [
+        "composition.test.js"
+      ]
+    },
+    "S08": {
+      "status": "implemented",
+      "tests": [
+        "composition.test.js"
+      ]
+    },
+    "S09": {
+      "status": "implemented",
+      "tests": [
+        "composition.test.js"
+      ]
+    },
+    "S10": {
+      "status": "implemented",
+      "tests": [
+        "composition.test.js",
+        "encoding.test.js"
+      ],
+      "optional_checks": [
+        "all additional color and independent channel combinations"
+      ]
+    },
+    "S11": {
+      "status": "implemented",
+      "tests": [
+        "temporal.test.js",
+        "tooltip-time-brush.test.js",
+        "data/audits/stats-map/tooltip_time_20261108/browser_check.py",
+        "adapter-matrix.test.js"
+      ],
+      "browser_evidence": "data/audits/stats-map/adapter_matrix_20261108/browser_result.json",
+      "optional_checks": [
+        "per-mode native time-point interaction with every source/layout pair and complete upstream temporal options; all three baseline modes now export and reopen in all nine pairs"
+      ]
+    },
+    "S12": {
+      "status": "implemented",
+      "tests": [
+        "flow.test.js",
+        "flow-layout.test.js",
+        "data/audits/stats-map/flow_layout_20261108/flow_browser_check.py"
+      ],
+      "optional_checks": [
+        "all upstream flow example, source adapter, inset and dense routing combinations"
+      ],
+      "compatibility_notes": [
+        "upstream D3-force trajectory parity is not claimed; deterministic bounded compatible-route solver is used"
+      ]
+    },
+    "S13": {
+      "status": "implemented",
+      "tests": [
+        "flow.test.js",
+        "flow-layout.test.js",
+        "data/audits/stats-map/flow_layout_20261108/flow_browser_check.py",
+        "flow-merged.test.js",
+        "data/audits/stats-map/flow_merged_20261108/merged_flow_browser_check.py",
+        "flow-categories.test.js",
+        "data/audits/stats-map/flow_categories_20261108/categories_browser_check.py"
+      ],
+      "compatibility_notes": [
+        "full upstream example/source-adapter/dense-layout visual matrix; documented declarative scales replace upstream executable node-size callbacks"
+      ]
+    },
+    "S14": {
+      "status": "implemented",
+      "tests": [
+        "composition.test.js"
+      ]
+    },
+    "S15": {
+      "status": "implemented",
+      "tests": [
+        "composition.test.js"
+      ]
+    },
+    "L05": {
+      "status": "verified",
+      "tests": [
+        "encoding.test.js",
+        "adapter-matrix.test.js"
+      ],
+      "browser_evidence": "data/audits/stats-map/adapter_matrix_20261108/browser_result.json",
+      "verified_scope": "46 declared configurations across all 14 renderers on geographic, square-grid and hexagonal-grid layouts, with three synthetic source inputs",
+      "optional_checks": [
+        "complete upstream option/example and dense-layout visual acceptance beyond this baseline"
+      ]
+    },
+    "L06": {
+      "status": "verified",
+      "tests": [
+        "dorling-glyphs.test.js",
+        "svg-path.test.js"
+      ],
+      "browser_evidence": "data/audits/stats-map/dorling_glyphs_20261108/browser_result.json",
+      "verified_scope": "45 built-in renderer configurations through Euro, China and canonical planar input; measured SVG geometry, frozen legend sizes, standalone SVG/PNG, native keyboard/touch and displaced inset hit testing",
+      "custom_path_evidence": "data/audits/stats-map/custom_paths_20261109/browser_result.json",
+      "optional_checks": [
+        "dense multi-layer labels, inter-node flow paths and full upstream example visual acceptance"
+      ]
+    },
+    "C06": {
+      "status": "implemented",
+      "tests": [
+        "relation-slice.test.js",
+        "data/audits/stats-map/relation_slice_20261108/relation_slice_browser_check.py"
+      ],
+      "implementation": [
+        "declarative origin/destination relation_slice shared by renderer, legend, tooltip, ranking, region list, accessibility and comparison domains",
+        "independent interactive anchor and relationregionchange across map, keyboard, touch, inset and native list/ranking controls",
+        "raw OD default CSV and explicit evidence-preserving slice CSV"
+      ],
+      "optional_checks": [
+        "full upstream example visual matrix"
+      ]
+    },
+    "C07": {
+      "status": "implemented",
+      "tests": [
+        "euro.test.js",
+        "view-scope.test.js",
+        "data/audits/stats-map/view_scope_20261108/view_scope_browser_check.py"
+      ],
+      "optional_checks": [
+        "complete upstream custom-geometry and Euro/China adapter combination acceptance"
+      ]
+    },
+    "X01": {
+      "status": "implemented",
+      "tests": [
+        "accessibility.test.js",
+        "interaction.test.js",
+        "anchors.test.js",
+        "data/audits/stats-map/anchors_20261108/browser_check.py",
+        "tooltip-time-brush.test.js",
+        "data/audits/stats-map/tooltip_time_20261108/browser_check.py"
+      ],
+      "optional_checks": [
+        "full renderer/layout/adapter and assistive-technology tooltip acceptance"
+      ]
+    },
+    "X02": {
+      "status": "implemented",
+      "tests": [
+        "presentation.test.js",
+        "gestures.test.js",
+        "dorling-glyphs.test.js"
+      ],
+      "optional_checks": [
+        "mobile browser cancellation, dense overlapping insets and nonstandard projection interaction stress acceptance"
+      ]
+    },
+    "X03": {
+      "status": "implemented",
+      "tests": [
+        "legend-filter.test.js",
+        "text-layout.test.js",
+        "locale-theme.test.js",
+        "legend-layout.test.js",
+        "svg-path.test.js",
+        "composition-legend.test.js"
+      ],
+      "browser_evidence": "data/audits/stats-map/legend_layout_20261108/browser_result.json",
+      "custom_path_evidence": "data/audits/stats-map/custom_paths_20261109/browser_result.json",
+      "optional_checks": [
+        "full upstream per-field legend options and dense impossible layouts"
+      ],
+      "composition_size_evidence": "data/audits/stats-map/composition_legend_20261109/browser_result.json"
+    },
+    "X04": {
+      "status": "implemented",
+      "tests": [
+        "presentation.test.js",
+        "geometry.test.js",
+        "text-layout.test.js",
+        "locale-theme.test.js",
+        "anchors.test.js",
+        "data/audits/stats-map/anchors_20261108/browser_check.py",
+        "legend-layout.test.js",
+        "decoration-layout.test.js"
+      ],
+      "browser_evidence": "data/audits/stats-map/decoration_layout_20261108/browser_result.json",
+      "optional_checks": [
+        "full upstream per-field decoration option parity and font-specific stress acceptance"
+      ]
+    },
+    "X05": {
+      "status": "implemented",
+      "tests": [
+        "presentation.test.js",
+        "ranking.test.js",
+        "region-sets.test.js"
+      ],
+      "browser_evidence": "data/audits/stats-map/ranking_layout_20261108/browser_result.json",
+      "region_set_evidence": "data/audits/stats-map/region_sets_20261109/browser_result.json",
+      "optional_checks": [
+        "Complete upstream per-example visual acceptance"
+      ]
+    },
+    "X06": {
+      "status": "implemented",
+      "tests": [
+        "accessibility.test.js",
+        "orchestration.test.js:responsive maps preserve normalized zoom and disconnect observers on remount and destruction",
+        "locale-theme.test.js",
+        "anchors.test.js",
+        "data/audits/stats-map/anchors_20261108/browser_check.py"
+      ],
+      "optional_checks": [
+        "broader mobile/browser responsive, touch and assistive-technology acceptance; locale/theme coverage for all upstream options"
+      ]
+    },
+    "X07": {
+      "status": "implemented",
+      "tests": [
+        "raster.test.js"
+      ],
+      "optional_checks": [
+        "every renderer/layout and independent viewer export acceptance"
+      ]
+    },
+    "X08": {
+      "status": "verified",
+      "tests": [
+        "core.test.js",
+        "../tests/map_model.test.cjs",
+        "../tests/web/map_dom.test.cjs"
+      ],
+      "evidence": "data/audits/stats-map/browser_distribution_20261109/host_node.log",
+      "verification_scope": "23 host model/DOM contracts cover raw CSV, grouping/overlap, old specs and selection tools; reused while those implementations are unchanged."
+    },
+    "X09": {
+      "status": "implemented",
+      "optional_checks": [
+        "all profile parameters and complete independent reopening for every renderer/layout combination"
+      ]
+    },
+    "X10": {
+      "status": "implemented",
+      "tests": [
+        "orchestration.test.js",
+        "loader.test.js",
+        "time-controller.test.js",
+        "data/audits/stats-map/time_playback_20261109/browser_check.py",
+        "orchestration-lifecycle.test.js",
+        "data/audits/stats-map/orchestration_20261109/browser_check.py"
+      ],
+      "optional_checks": [
+        "broader resource/renderer failure combinations, other browser engines and long-running memory acceptance"
+      ]
+    }
+  },
+  "adapter_evidence": {
+    "euro": {
+      "status": "implemented",
+      "tests": [
+        "euro.test.js",
+        "adapter-matrix.test.js"
+      ],
+      "baseline_evidence": "data/audits/stats-map/adapter_matrix_20261108/browser_result.json",
+      "optional_checks": [
+        "full upstream profiles/projections/insets",
+        "source-specific profiles, alternate geometry, channel combinations and complete upstream examples beyond the 46-configuration baseline"
+      ]
+    },
+    "china": {
+      "status": "implemented",
+      "tests": [
+        "core.test.js",
+        "adapter-matrix.test.js"
+      ],
+      "baseline_evidence": "data/audits/stats-map/adapter_matrix_20261108/browser_result.json",
+      "optional_checks": [
+        "source-specific profiles, alternate geometry, channel combinations and complete upstream examples beyond the 46-configuration baseline"
+      ]
+    }
+  },
+  "package_evidence": {
+    "status": "verified-standalone",
+    "command": "npm run verify-package",
+    "scope": [
+      "offline tarball install",
+      "all documented ESM subpaths",
+      "independent source rebuild",
+      "manifest SHA checks",
+      "external strict NodeNext TypeScript consumer using pinned TypeScript by default",
+      "classic script, per-renderer exports, CSS and module Worker paths"
+    ],
+    "evidence": "data/audits/stats-map/build_ci_20261109/VALIDATION.md",
+    "remaining": [],
+    "host_delivery_evidence": "data/audits/stats-map/host_workbench_20261109/delivery.json"
+  },
+  "presentation_validation": {
+    "date": "2026-11-08",
+    "evidence": "data/audits/stats-map/presentation_20261108",
+    "scope": "Synthetic shared Euro/China/third-map presentation unit tests; Chrome keyboard, inset wheel, minimap, native pinch/pan and independent SVG/PNG decoding. Not full upstream example acceptance."
+  },
+  "locale_theme_validation": {
+    "date": "2026-11-08",
+    "evidence": "data/audits/stats-map/locale_theme_20261108",
+    "scope": "Instance locales, theme palettes, controls, translated adapters, collision-aware labels, embedded raster logos and common legend wrapping. Chrome offline SVG decoding and actual text bounds. This earlier checkpoint did not implement explicit anchor derivation; see anchor_validation. Specialized dense layouts and full upstream example acceptance remain open."
+  },
+  "anchor_validation": {
+    "date": "2026-11-08",
+    "evidence": "data/audits/stats-map/anchors_20261108",
+    "scope": "Explicit versioned main-face interior points; registered Point/anchor precedence; no random Dorling positions for unplaced regions; anchor-only fit and hit testing; geometry availability separate from statistical coverage; keyboard region list retains unplaced and categorical rows. Full upstream visual, wrapping/projection and very large dataset acceptance remain open."
+  },
+  "tooltip_time_validation": {
+    "date": "2026-11-08",
+    "evidence": "data/audits/stats-map/tooltip_time_20261108",
+    "scope": "Shared tooltip models retain reported/rollup/ratio evidence and coverage, explicit remainder, flow node/edge semantics and enlarged sparklines. Chrome pointer/focus/keyboard and native touch taps, brush drags/cancellation, actual playback, inset identity, locale/theme and narrow-screen bounds. Euro/China actual-time adapter unit checks. Complete renderer/layout/adapter combinations and assistive-technology acceptance remain open."
+  },
+  "flow_layout_validation": {
+    "date": "2026-11-08",
+    "evidence": "data/audits/stats-map/flow_layout_20261108",
+    "scope": "Fixed geographic nodes, centered two-side incoming/outgoing ports, reciprocal midpoint halves, sampled filled ribbons and local obstacle bypass; deterministic bounded compatible-route force bundling with pinned endpoints; shared width legends; raw OD CSV with missing/zero/evidence. Synthetic numerical and Chrome focus/inset/SVG/PNG checks. Merged reciprocal display routes and complete upstream example/adapter/dense-graph combinations remain open."
+  },
+  "flow_merged_validation": {
+    "date": "2026-11-08",
+    "evidence": "data/audits/stats-map/flow_merged_20261108",
+    "scope": "Explicit unordered display-route sum after raw edge filtering; independent route identity/events, neutral no-arrow marks, original per-direction values/zero/missing/evidence, raw node totals and OD CSV; shared aggregate domains, resolved specs, source-id collision handling; Chrome focus/data/locale/inset/native-touch/SVG/PNG acceptance. Region coloring/labels/top-location selector combinations and all upstream example/adapter combinations remain open."
+  },
+  "flow_categories_validation": {
+    "date": "2026-11-08",
+    "evidence": "data/audits/stats-map/flow_categories_20261108",
+    "scope": "Cross-boundary sum/origin/destination ranking with scoped deterministic ties; categorical routes/donut groups retaining original OD records; filtered net region fills, explicit area/radius node scales and shared legends; label wrapping/avoidance reuses common placement against nodes/ports/routes/main legends/insets; neutral merged routes across mixed categories; keyboard/native touch/inset/locale/theme/SVG/PNG. Full upstream adapter/example/dense graph acceptance remains open."
+  },
+  "orchestration_validation": {
+    "date": "2026-11-09",
+    "evidence": "data/audits/stats-map/orchestration_20261109",
+    "scope": "Overlapping/cyclic link transactions retain original IDs, update each same-version map once, isolate failures, respect layouts and release destroyed instances. Small-multiple pages stage before replacing, retain old views on failure and preserve native pagination focus; shared axes reject incompatible statistical semantics and retain constant/empty class extent snapshots. Stories guard reentrant updates/destruction, restore rejected native controls and retain presentation/source snapshots. Chrome 46 configurations times three adapters with rotating layouts, 12 native source/layout stress cases, real Worker failure/recovery and emulated touch. Full upstream fields/examples, dense layouts, screen readers and other engines remain open."
+  },
+  "time_playback_validation": {
+    "date": "2026-11-09",
+    "evidence": "data/audits/stats-map/time_playback_20261109",
+    "scope": "Explicit driver dataset timeline, unequal period domains, source missing/zero/suppressed semantics; deduplicated driver/version/availability events; generation guarded callbacks and reentrant scheduler lifecycle; source replacement and recovery, form-safe native controls and cleanup. Twelve Chrome adapter/layout cases, 1452 stale-callback checks, actual playback and Dorling Worker replacement, native keyboard and emulated touch, SVG/PNG/spec reopening. Full renderer combinations, screen readers and other engines remain open."
+  },
+  "adapter_matrix_validation": {
+    "status": "verified",
+    "scope": "functional baseline; not full upstream visual or profile equivalence",
+    "configurations": 46,
+    "renderers": 14,
+    "layouts": [
+      "geographic",
+      "grid-square",
+      "grid-hex"
+    ],
+    "inputs": [
+      "euro-json-stat",
+      "china-v1",
+      "canonical-planar"
+    ],
+    "cases": 414,
+    "native_keyboard_pairs": 9,
+    "native_touch_pairs": 9,
+    "tests": [
+      "adapter-matrix.test.js"
+    ],
+    "artifacts": "data/audits/stats-map/adapter_matrix_20261108/",
+    "canonical_extensions": [
+      "category dictionary and observations",
+      "OD observations with suppressed status, source flags and evidence"
+    ],
+    "optional_checks": [
+      "Dorling glyph collision radii and dense layouts",
+      "full upstream option/profile/example matrix",
+      "assistive technology combinations"
+    ],
+    "execution": "historical-expanded-opt-in",
+    "current_default": {
+      "cases": 22,
+      "test": "adapter-matrix.test.js",
+      "policy": "14 canonical renderer cases rotating four layouts, plus four source-family cases per Euro/China adapter."
+    }
+  },
+  "composition_options_validation": {
+    "date": "2026-11-09",
+    "evidence": "data/audits/stats-map/composition_options_20261109",
+    "scope": "Seven pieChart modes and waffle share square-root total sizing across both axes; shared styles, visible stroke envelopes, fixed status and reference-ring envelopes; fractional waffle padding and pixel corners; transactional empty-period/scope option validation, positive-domain guards, effective manual scale labels. Synthetic Chrome 14 configurations times three source adapters times four layouts and native interactions. Full upstream field/profile migration, composition glyph size legends, dense multilayer and complete example/assistive-technology/engine acceptance remain open."
+  },
+  "acceptance_policy": {
+    "revision": "2026-11-09-user-scope",
+    "document": "ACCEPTANCE.md",
+    "goal": "Complete documented generic capabilities, Euro/China decoding and host contracts using semantic tests and representative integration evidence.",
+    "default_integration_cases": 22,
+    "historical_expanded_cases": 414,
+    "browser_cases_per_change": [
+      2,
+      6
+    ],
+    "browser_cases_per_integration": [
+      8,
+      12
+    ],
+    "browser_counts_are_guidance_not_quotas": true,
+    "upstream_per_example_visual_parity_required": false,
+    "exhaustive_cross_product_required": false,
+    "all_upstream_fields_callbacks_profiles_required": false,
+    "checks": "Select by changed capability and boundary; reuse applicable unchanged evidence.",
+    "evidence_invalidation": "Only changes to the behavior or delivery boundary covered by evidence invalidate it. Documentation, coverage notes or package-description hashes do not invalidate unrelated runtime, package-consumer or browser results.",
+    "ci": "Automatic code/contract checks use one LTS and the default 22-case matrix. Browser, package, secondary-LTS compatibility and expanded-matrix jobs are independent manual selections. Documentation-only edits do not trigger builds.",
+    "distribution": "Build when dist is needed; publish host assets, synchronize skills/check hashes, and verify independent packages only at the affected delivery boundary or frozen release candidate.",
+    "historical_audits": "Evidence snapshots and optional replay tools, not the current default gates.",
+    "stop_rule": "Close a batch when its preselected necessary checks pass; remaining blockers must name concrete missing behavior or a failure and a bounded closing check. Updating docs or evidence does not restart the chain. Scope-policy revisions close independently when documents, machine policy and default entry points agree; do not reopen all historical audits before the next implementation batch.",
+    "goal_status": "complete-for-required-scope",
+    "current_remaining_blockers": 0,
+    "post_close_rule": "Do not reopen the historical 414-case matrix, upstream per-example visual checks or full delivery chain for documentation/evidence updates. Reopen only for a changed affected boundary, a concrete missing required behavior or an actual failure."
+  },
+  "historical_acceptance_notes": [
+    "Independent size/color symbol roles now resolve colliding series IDs across datasets, numeric/category color modes, separate missing statuses, role-aware events/tooltips, matching ranking colors, common size/color domains and offline exports, including independent OD slices. Automatic legends avoid Dorling glyph envelopes. 480 synthetic Chrome source/shape/layout/color cases plus twelve native keyboard/filter/multiples/inset/playback cases and mobile touch are covered under symbol_color_20261109. Full upstream field and example equivalence remains open.",
+    "Proportional-symbol positive minRadius, radius-relative offset, spikeWidth and stroke width/opacity now share map, size legend and conservative round-stroke collision geometry. 120 synthetic Chrome source/shape/layout cases verify native bounds, keyboard, Worker and offline exports. Independent color channels and remaining upstream settings are still open; this is not complete field equivalence.",
+    "Implementation remains in progress. Unit tests and selected browser probes do not imply full renderer/Euro/China acceptance.",
+    "Mobile browser gesture acceptance is not complete.",
+    "PNG SVG decoding fallback is covered by raster.test.js.",
+    "43 synthetic Chrome cards cover new flow/color/texture and layer legend scenes; legend and region keyboard actions and story controls passed. Narrow screenshot remains a smoke check.",
+    "External bundle bytes are authoritative: sidecar resource objects cannot replace hashed JSON; cancellation and reference mismatches tested.",
+    "Euro adapter now supports sparse JSON-stat and TopoJSON; unit-specific metadata retained; unknown aggregation defaults to none.",
+    "Mercator orientation and projected fit corrected; custom projection registry is application-owned and unknown names fail.",
+    "Latest browser probe now covers 46 cards, categorical exceptions, small multiple pagination and real narrow-width resize. An SVG inline baseline feedback loop found by ResizeObserver acceptance was corrected with a block root SVG; touch gestures remain unverified.",
+    "Small-multiple domains now include bivariate axes, alpha opacity, proportional/mushroom size, composition/radar totals, bar width/height, time-series axes, and flow/node sizes. Bar is restricted to the base role.",
+    "Resolved scheme export freezes current breaks, scalar/composition/opacity/time/flow domains and ternary centers. Raw exportSpec remains available. CSV carries original values, evidence, units, scope, source flags and resource identities with duplicate-region removal.",
+    "Spec/data/bundle mutation now previews rendering semantics before commit, including category/number mismatches and negative size failures; failed updates retain current spec, data and output.",
+    "414 synthetic source/layout/mode cases now pass Node and Chrome functional baseline checks, standalone SVG/PNG decoding and resolved-spec reopening. Native keyboard and touch cover nine source/layout pairs on choropleth; category and OD data are explicit canonical extensions. This does not close Dorling/dense/assistive technology or the full upstream visual matrix.",
+    "Dorling now measures glyph envelopes in pixels through shared renderer models, unions layers, preserves encoded sizes, bounds placement and reports unresolved collisions/overflow. 135 historical Chrome source/mode cases and native keyboard/touch/inset selection pass; custom closed path extrema now also drive collision radii, with current evidence under custom_paths_20261109. This does not guarantee collision-free labels or inter-node flow routes. Worker failures and stale/cancelled replies are covered.",
+    "Specialized bivariate, ternary, alpha, time, size/mushroom and flow legends now share content-driven measurement and rendering; complete labels wrap, numerical marks retain scale, and automatic panels avoid titles, footers, ranking, insets and fixed later legends. Overflow/collision is diagnosed. Chrome acceptance covers 30 source/configuration cases at desktop/narrow widths plus keyboard/touch filtering and RTL bounds; custom closed path/viewBox mismatch now uses actual analytic path bounds in the shared size legend layout; current evidence is under custom_paths_20261109.",
+    "Rankings now use measured complete text/number/bar layouts, corner placement and declarative formatting; automatic large-region distributions retain original rows and exact bin membership, and independent HTML rankings offer bounded pages and mode controls. Chosen period/series SVG events retain original ranking observations; complete upstream country-group preset mapping and visual acceptance remain open."
+  ],
+  "acceptance_notes": [
+    "Current scope and completion rules are defined by ACCEPTANCE.md and acceptance_policy. Generic functionality, numeric semantics, provenance and committed host compatibility remain required.",
+    "Default integration uses 22 representative cases. Mode algorithms are covered in focused tests, source protocols in adapter contracts, browser-only behavior in small relevant samples.",
+    "No upstream per-example visual equivalence, all-field facade compatibility, exhaustive source/renderer/layout combinations or automatic replay of all historical release gates is required.",
+    "Only concrete missing committed behavior or actual defects block capability completion; optional_checks and compatibility_notes do not.",
+    "Historical evidence remains valid only where the covered implementation and boundary are unchanged; results for changed behavior require relevant revalidation.",
+    "Composition total-size graphical references are verified under composition_legend_20261109 using five source-import browser cases and focused semantic tests. Historical notes describing this gap are superseded for V07/V13/X03. The per-change distribution chain was not rerun.",
+    "2026-11-09 required-scope close: renderer protocol and candidate delivery are closed; current_completion.required_remaining is empty. Historical expanded matrix and upstream per-example visual parity remain optional/historical."
+  ],
+  "composition_legend_validation": {
+    "date": "2026-11-09",
+    "evidence": "data/audits/stats-map/composition_legend_20261109",
+    "status": "verified",
+    "scope": "Equal-share nominal total-size references for all seven pieChart modes and waffle, shared map sizing and strokes, common and empty domains, measurement/render plan, category filtering, no fake interaction identities, resolved reopening and SVG/PNG export.",
+    "focused_node_tests": 53,
+    "browser_cases": 5,
+    "browser_import": "src/index.js",
+    "schema_and_types": true,
+    "delivery": "Source changes only; distribution checks deferred to the affected release boundary.",
+    "limitation": "A 760x560 Dorling test reports LEGEND_COLLISION while preserving complete content and scale; four other cases have no diagnostics."
+  },
+  "host_workbench": {
+    "date": "2026-11-09",
+    "status": "verified-host-delivery",
+    "evidence": "data/audits/stats-map/host_workbench_20261109/VALIDATION.md",
+    "python_tests_passed": 30,
+    "host_node_tests_passed": 34,
+    "browser_cases_passed": 2,
+    "scope": "Registered hash-bound MapBundles in both local services; shared renderer/layout/channel/time/orchestration controls; selection/groups/source/summary and SVG/PNG/CSV exports; standard MapSpec interchange and version-isolated local storage; failed and stale imports retain the current map.",
+    "library_runtime_changed": false,
+    "delivery_evidence": "data/audits/stats-map/host_workbench_20261109/delivery.json"
+  },
+  "host_convergence": {
+    "date": "2026-11-09",
+    "status": "verified-candidate-delivery",
+    "evidence": "data/audits/stats-map/host_convergence_20261109/VALIDATION.md",
+    "host_node_tests_passed": 41,
+    "browser_cases_passed": 2,
+    "scope": "Legacy statistics, main/inset projection, paths, numeric colors and legends use the common library without duplicate fallbacks or private view access. Registered-resource links preserve MapSpec and orchestration, override cache, reject invalid references/state and isolate stale loads.",
+    "library_runtime_changed": false,
+    "delivery": "Canonical host sources and the affected candidate delivery are verified. The renderer protocol, package, host assets, skill copies and installed host checks are closed; documentation-only follow-up does not restart the chain.",
+    "known_required_followups": [],
+    "closed_followups": [
+      {
+        "requirement": "renderer stage protocol",
+        "status": "closed",
+        "evidence": "data/audits/stats-map/renderer_protocol_20261109/VALIDATION.md",
+        "tests": 7,
+        "scope": "Custom renderer registration, validateEncoding, prepare, render/update, hitTest, describe, destroy, failure isolation, resource cleanup, public types, main/inset/Dorling/direct SVG integration."
+      }
+    ]
+  },
+  "browser_distribution": {
+    "date": "2026-11-09",
+    "evidence": "data/audits/stats-map/browser_distribution_20261109",
+    "classic_script": "dist/stats-map.iife.js",
+    "stylesheet": "dist/stats-map.css",
+    "per_renderer_entries": 14,
+    "worker": "Classic build resolves the module Worker from the captured script URL; ESM resolves beside its own worker-url module.",
+    "runtime_dependencies": 0,
+    "build_tool": "esbuild 0.28.2 (exact development dependency)",
+    "license": "EUPL-1.2 full text and esbuild MIT notice included in dist",
+    "scope": "Offline browser script and ESM consumer checks, independent tarball imports, source rebuild and public types; no exhaustive historical visual regression."
+  },
+  "current_completion": {
+    "date": "2026-11-09",
+    "status": "complete-for-required-scope",
+    "goal": "Implement the documented generic stats-map capabilities and committed Euro/China/host contracts using bounded semantic and representative integration evidence.",
+    "policy": "stats-map/ACCEPTANCE.md",
+    "required_remaining": [],
+    "default_integration_cases": 22,
+    "historical_expanded_cases": "414 (manual opt-in; not a current gate)",
+    "upstream_examples": "109 reference entries; per-example visual equivalence is not required",
+    "reused_evidence": [
+      "345 Node22 library tests, including the 22-case representative matrix and 7 renderer protocol tests",
+      "41 host Node tests and 2 host browser cases",
+      "4 stats-map browser cases",
+      "129-file candidate build/publish, independent package/type consumer, wheel/sdist and installed host checks",
+      "two skill copies with zero differences"
+    ],
+    "delivery_evidence": "data/audits/stats-map/renderer_protocol_20261109/VALIDATION.md",
+    "close_rule": "Only concrete missing required behavior or an actual defect reopens a bounded check; documentation or evidence-index changes do not restart delivery checks."
+  }
+}

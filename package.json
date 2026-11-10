@@ -1,0 +1,89 @@
+{
+  "name": "stats-map",
+  "version": "1.0.0",
+  "description": "Generic, offline first interactive statistics maps",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./core": {
+      "types": "./dist/src/core/index.d.ts",
+      "default": "./dist/src/core/index.js"
+    },
+    "./renderers": {
+      "types": "./dist/src/renderers/index.d.ts",
+      "default": "./dist/src/renderers/index.js"
+    },
+    "./adapters/*": {
+      "types": "./dist/src/adapters/*.d.ts",
+      "default": "./dist/src/adapters/*.js"
+    },
+    "./renderers/*": {
+      "types": "./dist/renderers/*.d.ts",
+      "default": "./dist/renderers/*.js"
+    },
+    "./browser": {
+      "types": "./dist/types/browser.d.ts",
+      "default": "./dist/stats-map.iife.js"
+    },
+    "./style.css": "./dist/stats-map.css",
+    "./worker": "./dist/src/layouts/dorling-worker.js",
+    "./preparation": {
+      "types": "./dist/src/preparation/index.d.ts",
+      "default": "./dist/src/preparation/index.js"
+    }
+  },
+  "types": "./dist/types/index.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "schemas",
+    "types",
+    "scripts",
+    "docs",
+    "examples/preview",
+    "tests/fixtures/gallery.js",
+    "tests/fixtures/gallery-geography.geojson",
+    "tests/fixtures/third-map.json",
+    "README.md",
+    "ACCEPTANCE.md",
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md",
+    "upstream-coverage.json",
+    ".nvmrc",
+    "tests/fixtures/*.grids.json"
+  ],
+  "scripts": {
+    "build": "node ./scripts/build.js",
+    "prepack": "npm run build",
+    "export:assets": "node ./scripts/publish.js",
+    "preview": "node ./scripts/preview/server.js",
+    "preview:synthetic": "node ./scripts/preview/server.js --config ./scripts/preview/config.json",
+    "test": "node --test",
+    "test:matrix": "node ./scripts/matrix-runner.js",
+    "test:matrix:expanded": "node ./scripts/matrix-runner.js --expanded",
+    "check": "node ./scripts/check.js",
+    "verify-package": "node ./scripts/verify-package.js",
+    "test:browser": "python ./scripts/browser_smoke.py",
+    "prepare:grids": "node ./scripts/prepare-grids.js",
+    "prepare:preview-grids": "node ./scripts/prepare-preview-grids.js"
+  },
+  "license": "EUPL-1.2",
+  "directories": {
+    "test": "tests"
+  },
+  "keywords": [],
+  "author": "",
+  "devDependencies": {
+    "esbuild": "0.28.2",
+    "typescript": "5.9.3"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "packageManager": "npm@11.10.1"
+}

@@ -1,0 +1,5 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema","$id":"stats-map-bundle-v1.schema.json","title":"stats-map MapBundle v1","type":"object",
+  "required":["schema_version","kind","id","revision","resources","spec_ref"],
+  "properties":{"schema_version":{"const":1},"kind":{"const":"stats-map/bundle"},"id":{"type":"string","minLength":1},"revision":{"type":"string","minLength":1},"resources":{"type":"array","minItems":1,"items":{"oneOf":[{"type":"object","required":["storage","resource"],"properties":{"storage":{"const":"inline"},"resource":{"type":"object"}},"additionalProperties":true},{"type":"object","required":["storage","ref","path","sha256"],"properties":{"storage":{"const":"external"},"ref":{"type":"object"},"path":{"type":"string","minLength":1},"sha256":{"type":"string","pattern":"^[a-fA-F0-9]{64}$"}},"additionalProperties":true}]}},"spec_ref":{"$ref":"#/$defs/ref"},"extensions":{"type":"object"}},"$defs":{"ref":{"type":"object","required":["id","revision"],"properties":{"id":{"type":"string","minLength":1},"revision":{"type":"string","minLength":1}},"additionalProperties":true}},"additionalProperties":true
+}

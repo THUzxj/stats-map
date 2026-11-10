@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>stats-map · 最小使用示例</title>
+<link rel="stylesheet" href="/src/stats-map.css">
+<style>body{font:16px system-ui;max-width:960px;margin:32px auto;padding:0 20px}#map{height:480px}select{font:inherit}pre{white-space:pre-wrap}</style>
+<h1>虚构群岛统计地图</h1>
+<p>包内标准 MapBundle，包含有效零与缺失值。点击地区可查看选择结果。</p>
+<label>布局 <select id="layout"><option value="geographic">地理</option><option value="grid-square">方格</option><option value="grid-hex">六边形</option><option value="dorling">Dorling</option></select></label>
+<div id="map" class="stats-map"></div>
+<pre id="selection" aria-live="polite">尚未选择地区</pre>
+<p><a href="/preview/">查看全部图型</a> · <a href="/docs/USAGE.md">使用指南</a></p>
+<script type="module">
+  import { createMap, validateBundle } from '/src/index.js';
+  const response = await fetch('/fixtures/third-map.json');
+  if (!response.ok) throw new Error(`Bundle: HTTP ${response.status}`);
+  const bundle = await response.json();
+  validateBundle(bundle);
+  const map = createMap(document.querySelector('#map'), { bundle, responsive: true });
+  map.on('selectionchange', () => {
+    document.querySelector('#selection').textContent = JSON.stringify(map.getState().selection);
+  });
+  document.querySelector('#layout').addEventListener('change', event => map.setLayout({ type: event.target.value }));
+  window.addEventListener('pagehide', () => map.destroy(), { once: true });
+</script>

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>stats-map · 统计地图预览</title>
+  <link rel="stylesheet" href="/src/stats-map.css">
+  <link rel="stylesheet" href="/preview/gallery.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">STATS-MAP · LOCAL SOURCE PREVIEW</div>
+      <h1 id="gallery-title">统计地图可视化对照画廊</h1>
+      <p id="gallery-subtitle">14 类图型 · 四种布局 · 来源协议对照</p>
+      <div class="notice"><strong>MOCK</strong> 所有统计数值、类别与路线均为演示数据，不代表地区真实水平。地图范围与轮廓来源见各面板说明。</div>
+    </div>
+  </header>
+  <section class="toolbar" aria-label="画廊控制">
+    <label>期次 <select id="period"></select></label>
+    <label>布局 <select id="layout"><option value="geographic">地理</option><option value="grid-square">方格</option><option value="grid-hex">六边形</option><option value="dorling">Dorling</option></select></label>
+    <label class="search">查找图型 <input id="filter" type="search" placeholder="例如：流向、柱形、玫瑰"></label>
+    <span id="status" role="status">正在加载…</span>
+  </section>
+  <main id="gallery" class="gallery" aria-live="polite"></main>
+  <footer class="footer"><a href="/preview/quickstart.html">最小使用示例</a> · <a href="/README.md">README</a> · <a href="/docs/USAGE.md">使用指南</a> · 数据和轮廓均在本地加载</footer>
+  <script type="module" src="/preview/gallery.js"></script>
+</body>
+</html>

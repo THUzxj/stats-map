@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "title": "Stats-map 虚构地图画廊",
+  "geographies": [
+    {
+      "id": "protocol-a",
+      "adapter": "euro",
+      "label": "虚构地图 · Euro 协议",
+      "subtitle": "GeoJSON + JSON-stat 模拟输入",
+      "path": "tests/fixtures/gallery-geography.geojson",
+      "id_property": "region_id",
+      "label_property": "name",
+      "level": "area",
+      "projection": "equirectangular",
+      "attribution": "包内虚构轮廓与模拟数据，无真实地理或统计含义。",
+      "grid_layouts_path": "tests/fixtures/protocol-a.grids.json",
+      "grid_layouts_sha256": "83b7607365de2aacee7a41a5b53a94acfd47fe90a85ca0a5dc44e441533dbe5a"
+    },
+    {
+      "id": "protocol-b",
+      "adapter": "china",
+      "label": "虚构地图 · China 协议",
+      "subtitle": "GeoJSON + China v1 模拟输入",
+      "path": "tests/fixtures/gallery-geography.geojson",
+      "id_property": "region_id",
+      "label_property": "name",
+      "level": "area",
+      "projection": "equirectangular",
+      "attribution": "同一虚构轮廓经另一来源协议接入，共用绘图内核。",
+      "grid_layouts_path": "tests/fixtures/protocol-b.grids.json",
+      "grid_layouts_sha256": "9d517daedfc3c703708a17037b62ca1a19051a2dd7a21df9bc405fb2b1c1bf81"
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "title": "European country boundaries for the stats-map preview",
+  "origin": "Eurostat / GISCO, country regions, 60M, 2024, EPSG:4326",
+  "attribution": "© EuroGeographics for the administrative boundaries",
+  "usage_terms_url": "https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/countries",
+  "upstream_commit": "b866ca20b3346c0037215ecaeaa7deb74d9d6c8f",
+  "source_url": "https://raw.githubusercontent.com/eurostat/eurostat-map/b866ca20b3346c0037215ecaeaa7deb74d9d6c8f/src/assets/topojson/world-topo-60M.json",
+  "acquisition": "Copied byte-for-byte from the existing archived preview geometry; no network request. Raw topology is identified by URL/SHA and is not required by the preview.",
+  "raw": {
+    "sha256": "21027f91464235633b19934ce6339f5f40f28920cb6f74c857358cc15926ccaf",
+    "original_host_archive": "catalog/maps/geometry/raw/euro-world-60m-2024.topojson"
+  },
+  "derived": {
+    "path": "examples/preview/geometry/europe.geojson",
+    "sha256": "728eaa7c2aaee1815ff285506c5a79e44b7d648d597221d709d84a10da899462"
+  },
+  "transformation": {
+    "decoder": "stats-map decodeTopology",
+    "object": "CNTR_RG_60M_2024_4326",
+    "selected_country_ids": [
+      "AD",
+      "AL",
+      "AT",
+      "BA",
+      "BE",
+      "BG",
+      "BY",
+      "CH",
+      "CY",
+      "CZ",
+      "DE",
+      "DK",
+      "EE",
+      "ES",
+      "FI",
+      "FR",
+      "UK",
+      "EL",
+      "HR",
+      "HU",
+      "IE",
+      "IS",
+      "IT",
+      "LI",
+      "LT",
+      "LU",
+      "LV",
+      "MD",
+      "ME",
+      "MK",
+      "MT",
+      "NL",
+      "NO",
+      "PL",
+      "PT",
+      "RO",
+      "RS",
+      "SE",
+      "SI",
+      "SK",
+      "UA"
+    ],
+    "component_bbox": [
+      -25,
+      34,
+      45,
+      72
+    ],
+    "rule": "Keep complete polygon components whose outer-ring vertices all lie in the bbox. Do not clip or alter coordinates. Not a complete Europe coverage dataset.",
+    "exclusions": [
+      {
+        "id": "ES",
+        "excluded_polygon_count": 7
+      },
+      {
+        "id": "FR",
+        "excluded_polygon_count": 7
+      },
+      {
+        "id": "PT",
+        "excluded_polygon_count": 8
+      }
+    ],
+    "property_mapping": "CNTR_ID → region_id; NAME_ENGL or CNTR_NAME → name"
+  },
+  "reproduce": "The archived transformation is documented below; the preview reads only the bundled derived GeoJSON.",
+  "original_host_archive": "catalog/maps/geometry/europe-countries.geojson"
+}

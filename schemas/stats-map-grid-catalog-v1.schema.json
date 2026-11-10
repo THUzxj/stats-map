@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "stats-map-grid-catalog-v1.schema.json",
+  "title": "Offline saved-grid sidecar (not a MapResource)",
+  "type": "object",
+  "required": ["schema_version", "geography_ref", "source_sha256", "grid_layouts"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "geography_ref": {"type": "object", "required": ["id", "revision"], "properties": {"id": {"type": "string", "minLength": 1}, "revision": {"type": "string", "minLength": 1}}, "additionalProperties": false},
+    "source_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "grid_layouts": {"type": "array", "items": {"$ref": "stats-map-geography-v1.schema.json#/$defs/savedGridLayout"}}
+  },
+  "additionalProperties": false
+}

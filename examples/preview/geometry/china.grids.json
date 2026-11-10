@@ -1,0 +1,1564 @@
+{
+  "schema_version": 1,
+  "geography_ref": {
+    "id": "gallery-china-geography",
+    "revision": "r1"
+  },
+  "source_sha256": "99adfeded5223848bbe37a0a12f8023e11ee12161c7800521c27db42fdeac275",
+  "grid_layouts": [
+    {
+      "id": "grid-square:province",
+      "type": "grid-square",
+      "geography_ref": {
+        "id": "gallery-china-geography",
+        "revision": "r1"
+      },
+      "reference_region_ids": [
+        "110000",
+        "120000",
+        "130000",
+        "140000",
+        "150000",
+        "210000",
+        "220000",
+        "230000",
+        "310000",
+        "320000",
+        "330000",
+        "340000",
+        "350000",
+        "360000",
+        "370000",
+        "410000",
+        "420000",
+        "430000",
+        "440000",
+        "450000",
+        "460000",
+        "500000",
+        "510000",
+        "520000",
+        "530000",
+        "540000",
+        "610000",
+        "620000",
+        "630000",
+        "640000",
+        "650000",
+        "710000",
+        "810000",
+        "820000"
+      ],
+      "positions": {
+        "110000": [
+          6,
+          1
+        ],
+        "120000": [
+          7,
+          1
+        ],
+        "130000": [
+          6,
+          2
+        ],
+        "140000": [
+          5,
+          2
+        ],
+        "150000": [
+          5,
+          1
+        ],
+        "210000": [
+          8,
+          2
+        ],
+        "220000": [
+          8,
+          1
+        ],
+        "230000": [
+          8,
+          0
+        ],
+        "310000": [
+          8,
+          3
+        ],
+        "320000": [
+          7,
+          3
+        ],
+        "330000": [
+          8,
+          4
+        ],
+        "340000": [
+          7,
+          4
+        ],
+        "350000": [
+          7,
+          5
+        ],
+        "360000": [
+          6,
+          5
+        ],
+        "370000": [
+          7,
+          2
+        ],
+        "410000": [
+          6,
+          3
+        ],
+        "420000": [
+          6,
+          4
+        ],
+        "430000": [
+          5,
+          4
+        ],
+        "440000": [
+          5,
+          5
+        ],
+        "450000": [
+          4,
+          6
+        ],
+        "460000": [
+          5,
+          6
+        ],
+        "500000": [
+          4,
+          4
+        ],
+        "510000": [
+          3,
+          4
+        ],
+        "520000": [
+          4,
+          5
+        ],
+        "530000": [
+          3,
+          5
+        ],
+        "540000": [
+          1,
+          4
+        ],
+        "610000": [
+          5,
+          3
+        ],
+        "620000": [
+          4,
+          3
+        ],
+        "630000": [
+          3,
+          3
+        ],
+        "640000": [
+          4,
+          2
+        ],
+        "650000": [
+          1,
+          1
+        ],
+        "710000": [
+          8,
+          5
+        ],
+        "810000": [
+          7,
+          6
+        ],
+        "820000": [
+          6,
+          6
+        ]
+      },
+      "algorithm": {
+        "name": "geographic-grid",
+        "version": 1,
+        "parameters": {
+          "weights": {
+            "position": 1,
+            "direction": 0.6,
+            "adjacency": 1,
+            "falseAdjacency": 0.2,
+            "compactness": 0.1
+          },
+          "occupancies": [
+            0.55,
+            0.7,
+            0.85
+          ],
+          "maxCandidates": 12,
+          "maxIterations": 8,
+          "maxOperations": 100000,
+          "maxCells": 4096,
+          "maxMatrixEntries": 2000000
+        }
+      },
+      "input_sha256": "66d790378be1ff859c56349b0623827e8d92cd52f81408918cc72c3cf91ea8dd",
+      "projection": {
+        "id": "equirectangular"
+      },
+      "anchor_provenance": [
+        {
+          "region_id": "110000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "120000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "130000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "140000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "150000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "210000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "220000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "230000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "310000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "320000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "330000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "340000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "350000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "360000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "370000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "410000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "420000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "430000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "440000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "450000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "460000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "500000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "510000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "520000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "530000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "540000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "610000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "620000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "630000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "640000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "650000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "710000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "810000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "820000",
+          "method": "center",
+          "version": 1
+        }
+      ],
+      "adjacency_provenance": null,
+      "candidate_frame": {
+        "columns": 9,
+        "rows": 7,
+        "phase": [
+          0.5,
+          0.5
+        ]
+      },
+      "target_transform": {
+        "scale": 0.012330585275206644,
+        "translation": [
+          -2.393627223208793,
+          -1.9520533658515182
+        ]
+      },
+      "quality": {
+        "energy": 0.5441090697116204,
+        "terms": {
+          "position": 0.47631164560279055,
+          "direction": 0.0051525695931477515,
+          "adjacency": 0,
+          "falseAdjacency": 0,
+          "compactness": 0.6470588235294117
+        },
+        "displacement_mean": 0.6109235047171689,
+        "displacement_p95": 1.1361258832597931,
+        "cardinal_reversal_rate": 0.0010706638115631692,
+        "cardinal_tie_rate": 0.055674518201284794,
+        "cardinal_comparisons": 934,
+        "adjacency_recall": null,
+        "adjacency_precision": null,
+        "occupied_cell_count": 34,
+        "occupied_bbox_area": 56
+      },
+      "diagnostics": [
+        {
+          "code": "GRID_ADJACENCY_UNAVAILABLE"
+        }
+      ],
+      "search": {
+        "candidates": 12,
+        "operations": 11068,
+        "selected_stop_reason": "local-optimum",
+        "initial_energy": 0.5646571551128045,
+        "candidates_summary": [
+          {
+            "frame": {
+              "columns": 9,
+              "rows": 7,
+              "phase": [
+                0.5,
+                0.5
+              ]
+            },
+            "quality": {
+              "energy": 0.5441090697116204,
+              "terms": {
+                "position": 0.47631164560279055,
+                "direction": 0.0051525695931477515,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.6470588235294117
+              },
+              "displacement_mean": 0.6109235047171689,
+              "displacement_p95": 1.1361258832597931,
+              "cardinal_reversal_rate": 0.0010706638115631692,
+              "cardinal_tie_rate": 0.055674518201284794,
+              "cardinal_comparisons": 934,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 34,
+              "occupied_bbox_area": 56
+            }
+          },
+          {
+            "frame": {
+              "columns": 9,
+              "rows": 7,
+              "phase": [
+                0,
+                0
+              ]
+            },
+            "quality": {
+              "energy": 0.5443107828449346,
+              "terms": {
+                "position": 0.4569690206582613,
+                "direction": 0.003412740899357602,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.8529411764705883
+              },
+              "displacement_mean": 0.5965699910010372,
+              "displacement_p95": 1.122537450351261,
+              "cardinal_reversal_rate": 0,
+              "cardinal_tie_rate": 0.05460385438972163,
+              "cardinal_comparisons": 934,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 34,
+              "occupied_bbox_area": 63
+            }
+          },
+          {
+            "frame": {
+              "columns": 9,
+              "rows": 6,
+              "phase": [
+                0,
+                0
+              ]
+            },
+            "quality": {
+              "energy": 0.6150152241871556,
+              "terms": {
+                "position": 0.5707137535989203,
+                "direction": 0.005208333333333333,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.41176470588235303
+              },
+              "displacement_mean": 0.6805782205921096,
+              "displacement_p95": 1.2251595767588106,
+              "cardinal_reversal_rate": 0.0010822510822510823,
+              "cardinal_tie_rate": 0.05627705627705628,
+              "cardinal_comparisons": 924,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 34,
+              "occupied_bbox_area": 48
+            }
+          },
+          {
+            "frame": {
+              "columns": 11,
+              "rows": 6,
+              "phase": [
+                0,
+                0
+              ]
+            },
+            "quality": {
+              "energy": 0.6150152241871556,
+              "terms": {
+                "position": 0.5707137535989203,
+                "direction": 0.005208333333333333,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.41176470588235303
+              },
+              "displacement_mean": 0.6805782205921096,
+              "displacement_p95": 1.2251595767588106,
+              "cardinal_reversal_rate": 0.0010822510822510823,
+              "cardinal_tie_rate": 0.05627705627705628,
+              "cardinal_comparisons": 924,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 34,
+              "occupied_bbox_area": 48
+            }
+          },
+          {
+            "frame": {
+              "columns": 11,
+              "rows": 6,
+              "phase": [
+                0.5,
+                0.5
+              ]
+            },
+            "quality": {
+              "energy": 0.7992805514479523,
+              "terms": {
+                "position": 0.7347346194387849,
+                "direction": 0.009537337662337662,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.588235294117647
+              },
+              "displacement_mean": 0.7644732691140852,
+              "displacement_p95": 1.700589709067941,
+              "cardinal_reversal_rate": 0.003246753246753247,
+              "cardinal_tie_rate": 0.07142857142857142,
+              "cardinal_comparisons": 924,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 34,
+              "occupied_bbox_area": 54
+            }
+          },
+          {
+            "frame": {
+              "columns": 9,
+              "rows": 6,
+              "phase": [
+                0.5,
+                0.5
+              ]
+            },
+            "quality": {
+              "energy": 0.8104137255622971,
+              "terms": {
+                "position": 0.7603898523766592,
+                "direction": 0.014745670995670996,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.41176470588235303
+              },
+              "displacement_mean": 0.7755210256485453,
+              "displacement_p95": 1.700589709067941,
+              "cardinal_reversal_rate": 0.006493506493506494,
+              "cardinal_tie_rate": 0.0735930735930736,
+              "cardinal_comparisons": 924,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 34,
+              "occupied_bbox_area": 48
+            }
+          },
+          {
+            "frame": {
+              "columns": 7,
+              "rows": 6,
+              "phase": [
+                0,
+                0
+              ]
+            },
+            "quality": {
+              "energy": 1.0166340850403681,
+              "terms": {
+                "position": 0.9860112476701258,
+                "direction": 0.01182237600922722,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.23529411764705888
+              },
+              "displacement_mean": 0.9013433383610877,
+              "displacement_p95": 1.5182426433845502,
+              "cardinal_reversal_rate": 0.0057670126874279125,
+              "cardinal_tie_rate": 0.04498269896193772,
+              "cardinal_comparisons": 867,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 34,
+              "occupied_bbox_area": 42
+            }
+          },
+          {
+            "frame": {
+              "columns": 10,
+              "rows": 5,
+              "phase": [
+                0,
+                0
+              ]
+            },
+            "quality": {
+              "energy": 1.1709729227102648,
+              "terms": {
+                "position": 1.1491879328522527,
+                "direction": 0.006896551724137931,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.17647058823529416
+              },
+              "displacement_mean": 0.9798974942140594,
+              "displacement_p95": 1.740047680314591,
+              "cardinal_reversal_rate": 0.0022988505747126436,
+              "cardinal_tie_rate": 0.052873563218390804,
+              "cardinal_comparisons": 870,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 34,
+              "occupied_bbox_area": 40
+            }
+          },
+          {
+            "frame": {
+              "columns": 8,
+              "rows": 5,
+              "phase": [
+                0,
+                0
+              ]
+            },
+            "quality": {
+              "energy": 1.2028832771414728,
+              "terms": {
+                "position": 1.1924421006708845,
+                "direction": 0.0125,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.02941176470588225
+              },
+              "displacement_mean": 0.9849380622849017,
+              "displacement_p95": 1.77630124863849,
+              "cardinal_reversal_rate": 0.005747126436781609,
+              "cardinal_tie_rate": 0.05632183908045977,
+              "cardinal_comparisons": 870,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 34,
+              "occupied_bbox_area": 35
+            }
+          },
+          {
+            "frame": {
+              "columns": 10,
+              "rows": 5,
+              "phase": [
+                0.5,
+                0.5
+              ]
+            },
+            "quality": {
+              "energy": 1.4233392592146337,
+              "terms": {
+                "position": 1.3948732348738628,
+                "direction": 0.0180316091954023,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.17647058823529416
+              },
+              "displacement_mean": 1.0560897545801342,
+              "displacement_p95": 1.9255690131090228,
+              "cardinal_reversal_rate": 0.009195402298850575,
+              "cardinal_tie_rate": 0.05862068965517241,
+              "cardinal_comparisons": 870,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 34,
+              "occupied_bbox_area": 40
+            }
+          },
+          {
+            "frame": {
+              "columns": 7,
+              "rows": 6,
+              "phase": [
+                0.5,
+                0.5
+              ]
+            },
+            "quality": {
+              "energy": 1.702363766170356,
+              "terms": {
+                "position": 1.6890852194575532,
+                "direction": 0.012326989619377162,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.05882352941176472
+              },
+              "displacement_mean": 1.1689401653206453,
+              "displacement_p95": 2.1335870364193883,
+              "cardinal_reversal_rate": 0.0057670126874279125,
+              "cardinal_tie_rate": 0.0530565167243368,
+              "cardinal_comparisons": 867,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 34,
+              "occupied_bbox_area": 36
+            }
+          },
+          {
+            "frame": {
+              "columns": 8,
+              "rows": 5,
+              "phase": [
+                0.5,
+                0.5
+              ]
+            },
+            "quality": {
+              "energy": 1.954812755753536,
+              "terms": {
+                "position": 1.9409664068691546,
+                "direction": 0.01817528735632184,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.02941176470588225
+              },
+              "displacement_mean": 1.2385086907281864,
+              "displacement_p95": 2.329806715644268,
+              "cardinal_reversal_rate": 0.009195402298850575,
+              "cardinal_tie_rate": 0.06091954022988506,
+              "cardinal_comparisons": 870,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 34,
+              "occupied_bbox_area": 35
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "grid-hex:province",
+      "type": "grid-hex",
+      "geography_ref": {
+        "id": "gallery-china-geography",
+        "revision": "r1"
+      },
+      "reference_region_ids": [
+        "110000",
+        "120000",
+        "130000",
+        "140000",
+        "150000",
+        "210000",
+        "220000",
+        "230000",
+        "310000",
+        "320000",
+        "330000",
+        "340000",
+        "350000",
+        "360000",
+        "370000",
+        "410000",
+        "420000",
+        "430000",
+        "440000",
+        "450000",
+        "460000",
+        "500000",
+        "510000",
+        "520000",
+        "530000",
+        "540000",
+        "610000",
+        "620000",
+        "630000",
+        "640000",
+        "650000",
+        "710000",
+        "810000",
+        "820000"
+      ],
+      "positions": {
+        "110000": [
+          7,
+          0
+        ],
+        "120000": [
+          8,
+          1
+        ],
+        "130000": [
+          7,
+          1
+        ],
+        "140000": [
+          6,
+          2
+        ],
+        "150000": [
+          6,
+          1
+        ],
+        "210000": [
+          9,
+          1
+        ],
+        "220000": [
+          9,
+          0
+        ],
+        "230000": [
+          10,
+          0
+        ],
+        "310000": [
+          9,
+          2
+        ],
+        "320000": [
+          8,
+          3
+        ],
+        "330000": [
+          9,
+          3
+        ],
+        "340000": [
+          7,
+          3
+        ],
+        "350000": [
+          8,
+          5
+        ],
+        "360000": [
+          8,
+          4
+        ],
+        "370000": [
+          8,
+          2
+        ],
+        "410000": [
+          7,
+          2
+        ],
+        "420000": [
+          6,
+          3
+        ],
+        "430000": [
+          6,
+          4
+        ],
+        "440000": [
+          7,
+          4
+        ],
+        "450000": [
+          5,
+          4
+        ],
+        "460000": [
+          5,
+          5
+        ],
+        "500000": [
+          5,
+          3
+        ],
+        "510000": [
+          4,
+          3
+        ],
+        "520000": [
+          4,
+          4
+        ],
+        "530000": [
+          4,
+          5
+        ],
+        "540000": [
+          1,
+          3
+        ],
+        "610000": [
+          5,
+          2
+        ],
+        "620000": [
+          4,
+          2
+        ],
+        "630000": [
+          3,
+          1
+        ],
+        "640000": [
+          5,
+          1
+        ],
+        "650000": [
+          1,
+          0
+        ],
+        "710000": [
+          9,
+          4
+        ],
+        "810000": [
+          7,
+          5
+        ],
+        "820000": [
+          6,
+          5
+        ]
+      },
+      "algorithm": {
+        "name": "geographic-grid",
+        "version": 1,
+        "parameters": {
+          "weights": {
+            "position": 1,
+            "direction": 0.6,
+            "adjacency": 1,
+            "falseAdjacency": 0.2,
+            "compactness": 0.1
+          },
+          "occupancies": [
+            0.55,
+            0.7,
+            0.85
+          ],
+          "maxCandidates": 12,
+          "maxIterations": 8,
+          "maxOperations": 100000,
+          "maxCells": 4096,
+          "maxMatrixEntries": 2000000
+        }
+      },
+      "input_sha256": "7201d30aed6fe2c1141b8c75e287429310cc6c040db598186f1fa6d4055c7568",
+      "projection": {
+        "id": "equirectangular"
+      },
+      "anchor_provenance": [
+        {
+          "region_id": "110000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "120000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "130000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "140000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "150000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "210000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "220000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "230000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "310000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "320000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "330000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "340000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "350000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "360000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "370000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "410000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "420000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "430000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "440000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "450000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "460000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "500000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "510000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "520000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "530000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "540000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "610000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "620000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "630000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "640000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "650000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "710000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "810000",
+          "method": "center",
+          "version": 1
+        },
+        {
+          "region_id": "820000",
+          "method": "center",
+          "version": 1
+        }
+      ],
+      "adjacency_provenance": null,
+      "candidate_frame": {
+        "columns": 11,
+        "rows": 6,
+        "phase": [
+          0,
+          0
+        ]
+      },
+      "target_transform": {
+        "scale": 0.012860000803820585,
+        "translation": [
+          -2.85947912329062,
+          -2.9361380950263323
+        ]
+      },
+      "quality": {
+        "energy": 0.3879554145869362,
+        "terms": {
+          "position": 0.28813969296424685,
+          "direction": 0.003777836691410392,
+          "adjacency": 0,
+          "falseAdjacency": 0,
+          "compactness": 0.9754901960784312
+        },
+        "displacement_mean": 0.4857509753201324,
+        "displacement_p95": 0.7920801365690142,
+        "cardinal_reversal_rate": 0.003181336161187699,
+        "cardinal_tie_rate": 0.031813361611876985,
+        "cardinal_comparisons": 943,
+        "adjacency_recall": null,
+        "adjacency_precision": null,
+        "occupied_cell_count": 34,
+        "occupied_bbox_area": 58.16803962085479
+      },
+      "diagnostics": [
+        {
+          "code": "GRID_ADJACENCY_UNAVAILABLE"
+        }
+      ],
+      "search": {
+        "candidates": 12,
+        "operations": 10869,
+        "selected_stop_reason": "local-optimum",
+        "initial_energy": 0.39800141248900006,
+        "candidates_summary": [
+          {
+            "frame": {
+              "columns": 11,
+              "rows": 6,
+              "phase": [
+                0,
+                0
+              ]
+            },
+            "quality": {
+              "energy": 0.3879554145869362,
+              "terms": {
+                "position": 0.28813969296424685,
+                "direction": 0.003777836691410392,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.9754901960784312
+              },
+              "displacement_mean": 0.4857509753201324,
+              "displacement_p95": 0.7920801365690142,
+              "cardinal_reversal_rate": 0.003181336161187699,
+              "cardinal_tie_rate": 0.031813361611876985,
+              "cardinal_comparisons": 943,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 34,
+              "occupied_bbox_area": 58.16803962085479
+            }
+          },
+          {
+            "frame": {
+              "columns": 11,
+              "rows": 6,
+              "phase": [
+                0.5,
+                0.5
+              ]
+            },
+            "quality": {
+              "energy": 0.4982042540245966,
+              "terms": {
+                "position": 0.39707623123541735,
+                "direction": 0.005965005302226935,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.9754901960784312
+              },
+              "displacement_mean": 0.5728326673639108,
+              "displacement_p95": 0.9211515596479742,
+              "cardinal_reversal_rate": 0.0042417815482502655,
+              "cardinal_tie_rate": 0.04029692470837752,
+              "cardinal_comparisons": 943,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 34,
+              "occupied_bbox_area": 58.16803962085479
+            }
+          },
+          {
+            "frame": {
+              "columns": 9,
+              "rows": 6,
+              "phase": [
+                0,
+                0
+              ]
+            },
+            "quality": {
+              "energy": 0.577043135102803,
+              "terms": {
+                "position": 0.4967035767130754,
+                "direction": 0.0031803097345132745,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.7843137254901962
+              },
+              "displacement_mean": 0.6217987280331284,
+              "displacement_p95": 1.282679024904914,
+              "cardinal_reversal_rate": 0.0022123893805309734,
+              "cardinal_tie_rate": 0.030973451327433628,
+              "cardinal_comparisons": 904,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 34,
+              "occupied_bbox_area": 52.53887449625595
+            }
+          },
+          {
+            "frame": {
+              "columns": 13,
+              "rows": 5,
+              "phase": [
+                0,
+                0
+              ]
+            },
+            "quality": {
+              "energy": 0.6420048790579115,
+              "terms": {
+                "position": 0.584192537108606,
+                "direction": 0.011386582987404512,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.5098039215686274
+              },
+              "displacement_mean": 0.673606327315126,
+              "displacement_p95": 1.221831667805472,
+              "cardinal_reversal_rate": 0.00778642936596218,
+              "cardinal_tie_rate": 0.04004449388209121,
+              "cardinal_comparisons": 899,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 34,
+              "occupied_bbox_area": 44.45597072760118
+            }
+          },
+          {
+            "frame": {
+              "columns": 10,
+              "rows": 5,
+              "phase": [
+                0,
+                0
+              ]
+            },
+            "quality": {
+              "energy": 0.647674213104062,
+              "terms": {
+                "position": 0.5921530920903909,
+                "direction": 0.007567881428013835,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.5098039215686274
+              },
+              "displacement_mean": 0.6868525245919874,
+              "displacement_p95": 1.3873246779861672,
+              "cardinal_reversal_rate": 0.006674082313681869,
+              "cardinal_tie_rate": 0.03670745272525028,
+              "cardinal_comparisons": 899,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 34,
+              "occupied_bbox_area": 44.45597072760118
+            }
+          },
+          {
+            "frame": {
+              "columns": 9,
+              "rows": 6,
+              "phase": [
+                0.5,
+                0.5
+              ]
+            },
+            "quality": {
+              "energy": 0.7523783838921159,
+              "terms": {
+                "position": 0.6854763756351772,
+                "direction": 0.012647137944571039,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.5931372549019609
+              },
+              "displacement_mean": 0.741762777684548,
+              "displacement_p95": 1.4135112515452082,
+              "cardinal_reversal_rate": 0.011061946902654867,
+              "cardinal_tie_rate": 0.03761061946902655,
+              "cardinal_comparisons": 904,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 34,
+              "occupied_bbox_area": 46.909709371657094
+            }
+          },
+          {
+            "frame": {
+              "columns": 13,
+              "rows": 5,
+              "phase": [
+                0.5,
+                0.5
+              ]
+            },
+            "quality": {
+              "energy": 0.8848190678826342,
+              "terms": {
+                "position": 0.8402733729703415,
+                "direction": 0.012151321585847231,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.37254901960784315
+              },
+              "displacement_mean": 0.809379301443939,
+              "displacement_p95": 1.5742148722556684,
+              "cardinal_reversal_rate": 0.008898776418242492,
+              "cardinal_tie_rate": 0.042269187986651836,
+              "cardinal_comparisons": 899,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 34,
+              "occupied_bbox_area": 40.414518843273804
+            }
+          },
+          {
+            "frame": {
+              "columns": 10,
+              "rows": 5,
+              "phase": [
+                0.5,
+                0.5
+              ]
+            },
+            "quality": {
+              "energy": 0.9101500530484561,
+              "terms": {
+                "position": 0.8686006025760007,
+                "direction": 0.01124254817304658,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.3480392156862744
+              },
+              "displacement_mean": 0.8507390186926765,
+              "displacement_p95": 1.4918776188739957,
+              "cardinal_reversal_rate": 0.010011123470522803,
+              "cardinal_tie_rate": 0.041156840934371525,
+              "cardinal_comparisons": 899,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 34,
+              "occupied_bbox_area": 39.69283100678677
+            }
+          },
+          {
+            "frame": {
+              "columns": 8,
+              "rows": 5,
+              "phase": [
+                0,
+                0
+              ]
+            },
+            "quality": {
+              "energy": 0.9674251613715507,
+              "terms": {
+                "position": 0.9252082100406609,
+                "direction": 0.012355049603770606,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.3480392156862744
+              },
+              "displacement_mean": 0.8738266382207365,
+              "displacement_p95": 1.607437471550878,
+              "cardinal_reversal_rate": 0.011507479861910242,
+              "cardinal_tie_rate": 0.0379746835443038,
+              "cardinal_comparisons": 869,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 34,
+              "occupied_bbox_area": 39.69283100678677
+            }
+          },
+          {
+            "frame": {
+              "columns": 10,
+              "rows": 4,
+              "phase": [
+                0,
+                0
+              ]
+            },
+            "quality": {
+              "energy": 1.548793529264901,
+              "terms": {
+                "position": 1.5174966289860046,
+                "direction": 0.012945814190317826,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.23529411764705888
+              },
+              "displacement_mean": 1.108862307682722,
+              "displacement_p95": 2.0571185096579474,
+              "cardinal_reversal_rate": 0.013110846245530394,
+              "cardinal_tie_rate": 0.03098927294398093,
+              "cardinal_comparisons": 839,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 34,
+              "occupied_bbox_area": 36.373066958946424
+            }
+          },
+          {
+            "frame": {
+              "columns": 8,
+              "rows": 5,
+              "phase": [
+                0.5,
+                0.5
+              ]
+            },
+            "quality": {
+              "energy": 1.7899367652317872,
+              "terms": {
+                "position": 1.764457274132401,
+                "direction": 0.011420066864990398,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.18627450980392157
+              },
+              "displacement_mean": 1.1639224367648136,
+              "displacement_p95": 2.2690371077267546,
+              "cardinal_reversal_rate": 0.009205983889528193,
+              "cardinal_tie_rate": 0.04372842347525892,
+              "cardinal_comparisons": 869,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 34,
+              "occupied_bbox_area": 34.92969128597236
+            }
+          },
+          {
+            "frame": {
+              "columns": 10,
+              "rows": 4,
+              "phase": [
+                0.5,
+                0.5
+              ]
+            },
+            "quality": {
+              "energy": 2.1504413405711094,
+              "terms": {
+                "position": 2.1207567077282854,
+                "direction": 0.010258701796863974,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.23529411764705888
+              },
+              "displacement_mean": 1.3312974100995891,
+              "displacement_p95": 2.6106710051801,
+              "cardinal_reversal_rate": 0.00834326579261025,
+              "cardinal_tie_rate": 0.03694874851013111,
+              "cardinal_comparisons": 839,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 34,
+              "occupied_bbox_area": 36.373066958946424
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

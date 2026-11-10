@@ -1,0 +1,1284 @@
+{
+  "schema_version": 1,
+  "geography_ref": {
+    "id": "gallery-protocol-b-geography",
+    "revision": "r1"
+  },
+  "source_sha256": "9954cbcecab0cdb87ab54bbd228475d7daf26ceb555e0bfbd35953dd3ee45147",
+  "grid_layouts": [
+    {
+      "id": "grid-square:area",
+      "type": "grid-square",
+      "geography_ref": {
+        "id": "gallery-protocol-b-geography",
+        "revision": "r1"
+      },
+      "reference_region_ids": [
+        "area-01",
+        "area-02",
+        "area-03",
+        "area-04",
+        "area-05",
+        "area-06",
+        "area-07",
+        "area-08",
+        "area-09",
+        "area-10",
+        "area-11",
+        "area-12",
+        "area-13",
+        "area-14",
+        "area-15",
+        "area-16",
+        "area-17",
+        "area-18",
+        "area-19",
+        "area-20"
+      ],
+      "positions": {
+        "area-01": [
+          1,
+          4
+        ],
+        "area-02": [
+          2,
+          4
+        ],
+        "area-03": [
+          3,
+          4
+        ],
+        "area-04": [
+          5,
+          4
+        ],
+        "area-05": [
+          6,
+          4
+        ],
+        "area-06": [
+          1,
+          3
+        ],
+        "area-07": [
+          2,
+          3
+        ],
+        "area-08": [
+          3,
+          3
+        ],
+        "area-09": [
+          5,
+          3
+        ],
+        "area-10": [
+          6,
+          3
+        ],
+        "area-11": [
+          1,
+          1
+        ],
+        "area-12": [
+          2,
+          1
+        ],
+        "area-13": [
+          3,
+          1
+        ],
+        "area-14": [
+          5,
+          1
+        ],
+        "area-15": [
+          6,
+          1
+        ],
+        "area-16": [
+          1,
+          0
+        ],
+        "area-17": [
+          2,
+          0
+        ],
+        "area-18": [
+          3,
+          0
+        ],
+        "area-19": [
+          5,
+          0
+        ],
+        "area-20": [
+          6,
+          0
+        ]
+      },
+      "algorithm": {
+        "name": "geographic-grid",
+        "version": 1,
+        "parameters": {
+          "weights": {
+            "position": 1,
+            "direction": 0.6,
+            "adjacency": 1,
+            "falseAdjacency": 0.2,
+            "compactness": 0.1
+          },
+          "occupancies": [
+            0.55,
+            0.7,
+            0.85
+          ],
+          "maxCandidates": 12,
+          "maxIterations": 8,
+          "maxOperations": 100000,
+          "maxCells": 4096,
+          "maxMatrixEntries": 2000000
+        }
+      },
+      "input_sha256": "046aa5cd831dcfe4b692f4a1a968469b6a132c08365bf1e6fddc2ebdf85069c2",
+      "projection": {
+        "id": "equirectangular"
+      },
+      "anchor_provenance": [
+        {
+          "region_id": "area-01",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "area-02",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "area-03",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "area-04",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "area-05",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "area-06",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "area-07",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "area-08",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "area-09",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "area-10",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "area-11",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "area-12",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "area-13",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "area-14",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "area-15",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "area-16",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "area-17",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "area-18",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "area-19",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "area-20",
+          "method": "interior-point",
+          "version": 1
+        }
+      ],
+      "adjacency_provenance": null,
+      "candidate_frame": {
+        "columns": 8,
+        "rows": 5,
+        "phase": [
+          0,
+          0
+        ]
+      },
+      "target_transform": {
+        "scale": 0.006184895833333334,
+        "translation": [
+          0.33333333333333304,
+          -1.166666666666667
+        ]
+      },
+      "quality": {
+        "energy": 0.17777777777777787,
+        "terms": {
+          "position": 0.12777777777777785,
+          "direction": 0,
+          "adjacency": 0,
+          "falseAdjacency": 0,
+          "compactness": 0.5
+        },
+        "displacement_mean": 0.325830386424386,
+        "displacement_p95": 0.6009252125773317,
+        "cardinal_reversal_rate": 0,
+        "cardinal_tie_rate": 0,
+        "cardinal_comparisons": 310,
+        "adjacency_recall": null,
+        "adjacency_precision": null,
+        "occupied_cell_count": 20,
+        "occupied_bbox_area": 30
+      },
+      "diagnostics": [
+        {
+          "code": "GRID_ADJACENCY_UNAVAILABLE"
+        }
+      ],
+      "search": {
+        "candidates": 12,
+        "operations": 2861,
+        "selected_stop_reason": "local-optimum",
+        "initial_energy": 0.17777777777777787,
+        "candidates_summary": [
+          {
+            "frame": {
+              "columns": 8,
+              "rows": 5,
+              "phase": [
+                0,
+                0
+              ]
+            },
+            "quality": {
+              "energy": 0.17777777777777787,
+              "terms": {
+                "position": 0.12777777777777785,
+                "direction": 0,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.5
+              },
+              "displacement_mean": 0.325830386424386,
+              "displacement_p95": 0.6009252125773317,
+              "cardinal_reversal_rate": 0,
+              "cardinal_tie_rate": 0,
+              "cardinal_comparisons": 310,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 20,
+              "occupied_bbox_area": 30
+            }
+          },
+          {
+            "frame": {
+              "columns": 6,
+              "rows": 5,
+              "phase": [
+                0,
+                0
+              ]
+            },
+            "quality": {
+              "energy": 0.203125,
+              "terms": {
+                "position": 0.153125,
+                "direction": 0,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.5
+              },
+              "displacement_mean": 0.36007930164431523,
+              "displacement_p95": 0.625,
+              "cardinal_reversal_rate": 0,
+              "cardinal_tie_rate": 0,
+              "cardinal_comparisons": 310,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 20,
+              "occupied_bbox_area": 30
+            }
+          },
+          {
+            "frame": {
+              "columns": 6,
+              "rows": 5,
+              "phase": [
+                0.5,
+                0.5
+              ]
+            },
+            "quality": {
+              "energy": 0.203125,
+              "terms": {
+                "position": 0.203125,
+                "direction": 0,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0
+              },
+              "displacement_mean": 0.42411812196453597,
+              "displacement_p95": 0.625,
+              "cardinal_reversal_rate": 0,
+              "cardinal_tie_rate": 0,
+              "cardinal_comparisons": 310,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 20,
+              "occupied_bbox_area": 20
+            }
+          },
+          {
+            "frame": {
+              "columns": 5,
+              "rows": 5,
+              "phase": [
+                0,
+                0
+              ]
+            },
+            "quality": {
+              "energy": 0.25,
+              "terms": {
+                "position": 0.25,
+                "direction": 0,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0
+              },
+              "displacement_mean": 0.5,
+              "displacement_p95": 0.5,
+              "cardinal_reversal_rate": 0,
+              "cardinal_tie_rate": 0,
+              "cardinal_comparisons": 310,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 20,
+              "occupied_bbox_area": 20
+            }
+          },
+          {
+            "frame": {
+              "columns": 5,
+              "rows": 5,
+              "phase": [
+                0.5,
+                0.5
+              ]
+            },
+            "quality": {
+              "energy": 0.25,
+              "terms": {
+                "position": 0.25,
+                "direction": 0,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0
+              },
+              "displacement_mean": 0.5,
+              "displacement_p95": 0.5000000000000001,
+              "cardinal_reversal_rate": 0,
+              "cardinal_tie_rate": 0,
+              "cardinal_comparisons": 310,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 20,
+              "occupied_bbox_area": 20
+            }
+          },
+          {
+            "frame": {
+              "columns": 8,
+              "rows": 4,
+              "phase": [
+                0,
+                0
+              ]
+            },
+            "quality": {
+              "energy": 0.25,
+              "terms": {
+                "position": 0.25,
+                "direction": 0,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0
+              },
+              "displacement_mean": 0.5,
+              "displacement_p95": 0.5,
+              "cardinal_reversal_rate": 0,
+              "cardinal_tie_rate": 0,
+              "cardinal_comparisons": 310,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 20,
+              "occupied_bbox_area": 20
+            }
+          },
+          {
+            "frame": {
+              "columns": 6,
+              "rows": 4,
+              "phase": [
+                0,
+                0
+              ]
+            },
+            "quality": {
+              "energy": 0.25,
+              "terms": {
+                "position": 0.25,
+                "direction": 0,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0
+              },
+              "displacement_mean": 0.5,
+              "displacement_p95": 0.5,
+              "cardinal_reversal_rate": 0,
+              "cardinal_tie_rate": 0,
+              "cardinal_comparisons": 310,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 20,
+              "occupied_bbox_area": 20
+            }
+          },
+          {
+            "frame": {
+              "columns": 6,
+              "rows": 4,
+              "phase": [
+                0.5,
+                0.5
+              ]
+            },
+            "quality": {
+              "energy": 0.25,
+              "terms": {
+                "position": 0.25,
+                "direction": 0,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0
+              },
+              "displacement_mean": 0.5,
+              "displacement_p95": 0.5000000000000001,
+              "cardinal_reversal_rate": 0,
+              "cardinal_tie_rate": 0,
+              "cardinal_comparisons": 310,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 20,
+              "occupied_bbox_area": 20
+            }
+          },
+          {
+            "frame": {
+              "columns": 8,
+              "rows": 4,
+              "phase": [
+                0.5,
+                0.5
+              ]
+            },
+            "quality": {
+              "energy": 0.25,
+              "terms": {
+                "position": 0.25,
+                "direction": 0,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0
+              },
+              "displacement_mean": 0.5,
+              "displacement_p95": 0.5000000000000001,
+              "cardinal_reversal_rate": 0,
+              "cardinal_tie_rate": 0,
+              "cardinal_comparisons": 310,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 20,
+              "occupied_bbox_area": 20
+            }
+          },
+          {
+            "frame": {
+              "columns": 7,
+              "rows": 6,
+              "phase": [
+                0.5,
+                0.5
+              ]
+            },
+            "quality": {
+              "energy": 0.2624999999999999,
+              "terms": {
+                "position": 0.2124999999999999,
+                "direction": 0,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.5
+              },
+              "displacement_mean": 0.4354101966249685,
+              "displacement_p95": 0.5590169943749475,
+              "cardinal_reversal_rate": 0,
+              "cardinal_tie_rate": 0,
+              "cardinal_comparisons": 310,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 20,
+              "occupied_bbox_area": 30
+            }
+          },
+          {
+            "frame": {
+              "columns": 7,
+              "rows": 6,
+              "phase": [
+                0,
+                0
+              ]
+            },
+            "quality": {
+              "energy": 0.2725000000000001,
+              "terms": {
+                "position": 0.16250000000000003,
+                "direction": 0,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 1.1
+              },
+              "displacement_mean": 0.37360679774997896,
+              "displacement_p95": 0.5590169943749476,
+              "cardinal_reversal_rate": 0,
+              "cardinal_tie_rate": 0,
+              "cardinal_comparisons": 310,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 20,
+              "occupied_bbox_area": 42
+            }
+          },
+          {
+            "frame": {
+              "columns": 8,
+              "rows": 5,
+              "phase": [
+                0.5,
+                0.5
+              ]
+            },
+            "quality": {
+              "energy": 0.3027777777777777,
+              "terms": {
+                "position": 0.22777777777777772,
+                "direction": 0,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.75
+              },
+              "displacement_mean": 0.4561079501975853,
+              "displacement_p95": 0.6009252125773317,
+              "cardinal_reversal_rate": 0,
+              "cardinal_tie_rate": 0,
+              "cardinal_comparisons": 310,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 20,
+              "occupied_bbox_area": 35
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "grid-hex:area",
+      "type": "grid-hex",
+      "geography_ref": {
+        "id": "gallery-protocol-b-geography",
+        "revision": "r1"
+      },
+      "reference_region_ids": [
+        "area-01",
+        "area-02",
+        "area-03",
+        "area-04",
+        "area-05",
+        "area-06",
+        "area-07",
+        "area-08",
+        "area-09",
+        "area-10",
+        "area-11",
+        "area-12",
+        "area-13",
+        "area-14",
+        "area-15",
+        "area-16",
+        "area-17",
+        "area-18",
+        "area-19",
+        "area-20"
+      ],
+      "positions": {
+        "area-01": [
+          0,
+          3
+        ],
+        "area-02": [
+          1,
+          3
+        ],
+        "area-03": [
+          3,
+          3
+        ],
+        "area-04": [
+          4,
+          3
+        ],
+        "area-05": [
+          5,
+          3
+        ],
+        "area-06": [
+          0,
+          2
+        ],
+        "area-07": [
+          1,
+          2
+        ],
+        "area-08": [
+          3,
+          2
+        ],
+        "area-09": [
+          4,
+          2
+        ],
+        "area-10": [
+          5,
+          2
+        ],
+        "area-11": [
+          0,
+          1
+        ],
+        "area-12": [
+          1,
+          1
+        ],
+        "area-13": [
+          2,
+          1
+        ],
+        "area-14": [
+          4,
+          1
+        ],
+        "area-15": [
+          5,
+          1
+        ],
+        "area-16": [
+          0,
+          0
+        ],
+        "area-17": [
+          1,
+          0
+        ],
+        "area-18": [
+          2,
+          0
+        ],
+        "area-19": [
+          4,
+          0
+        ],
+        "area-20": [
+          5,
+          0
+        ]
+      },
+      "algorithm": {
+        "name": "geographic-grid",
+        "version": 1,
+        "parameters": {
+          "weights": {
+            "position": 1,
+            "direction": 0.6,
+            "adjacency": 1,
+            "falseAdjacency": 0.2,
+            "compactness": 0.1
+          },
+          "occupancies": [
+            0.55,
+            0.7,
+            0.85
+          ],
+          "maxCandidates": 12,
+          "maxIterations": 8,
+          "maxOperations": 100000,
+          "maxCells": 4096,
+          "maxMatrixEntries": 2000000
+        }
+      },
+      "input_sha256": "18a946ada3661008638c4b0e45a079f7c9137f365794ddb031cf302632ed454e",
+      "projection": {
+        "id": "equirectangular"
+      },
+      "anchor_provenance": [
+        {
+          "region_id": "area-01",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "area-02",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "area-03",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "area-04",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "area-05",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "area-06",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "area-07",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "area-08",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "area-09",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "area-10",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "area-11",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "area-12",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "area-13",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "area-14",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "area-15",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "area-16",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "area-17",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "area-18",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "area-19",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "area-20",
+          "method": "interior-point",
+          "version": 1
+        }
+      ],
+      "adjacency_provenance": null,
+      "candidate_frame": {
+        "columns": 6,
+        "rows": 4,
+        "phase": [
+          0,
+          0
+        ]
+      },
+      "target_transform": {
+        "scale": 0.005021509604462992,
+        "translation": [
+          -0.4059494080239556,
+          -0.821012917485052
+        ]
+      },
+      "quality": {
+        "energy": 0.16151118770057443,
+        "terms": {
+          "position": 0.11901118770057444,
+          "direction": 0,
+          "adjacency": 0,
+          "falseAdjacency": 0,
+          "compactness": 0.42500000000000004
+        },
+        "displacement_mean": 0.3277961877126759,
+        "displacement_p95": 0.4806973413199711,
+        "cardinal_reversal_rate": 0,
+        "cardinal_tie_rate": 0,
+        "cardinal_comparisons": 310,
+        "adjacency_recall": null,
+        "adjacency_precision": null,
+        "occupied_cell_count": 20,
+        "occupied_bbox_area": 24.6817240078565
+      },
+      "diagnostics": [
+        {
+          "code": "GRID_ADJACENCY_UNAVAILABLE"
+        }
+      ],
+      "search": {
+        "candidates": 12,
+        "operations": 4366,
+        "selected_stop_reason": "local-optimum",
+        "initial_energy": 0.16151118770057443,
+        "candidates_summary": [
+          {
+            "frame": {
+              "columns": 6,
+              "rows": 4,
+              "phase": [
+                0,
+                0
+              ]
+            },
+            "quality": {
+              "energy": 0.16151118770057443,
+              "terms": {
+                "position": 0.11901118770057444,
+                "direction": 0,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.42500000000000004
+              },
+              "displacement_mean": 0.3277961877126759,
+              "displacement_p95": 0.4806973413199711,
+              "cardinal_reversal_rate": 0,
+              "cardinal_tie_rate": 0,
+              "cardinal_comparisons": 310,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 20,
+              "occupied_bbox_area": 24.6817240078565
+            }
+          },
+          {
+            "frame": {
+              "columns": 6,
+              "rows": 5,
+              "phase": [
+                0,
+                0
+              ]
+            },
+            "quality": {
+              "energy": 0.16151118770057443,
+              "terms": {
+                "position": 0.11901118770057442,
+                "direction": 0,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.42500000000000004
+              },
+              "displacement_mean": 0.3277961877126759,
+              "displacement_p95": 0.4806973413199711,
+              "cardinal_reversal_rate": 0,
+              "cardinal_tie_rate": 0,
+              "cardinal_comparisons": 310,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 20,
+              "occupied_bbox_area": 24.6817240078565
+            }
+          },
+          {
+            "frame": {
+              "columns": 8,
+              "rows": 4,
+              "phase": [
+                0,
+                0
+              ]
+            },
+            "quality": {
+              "energy": 0.1788903281521833,
+              "terms": {
+                "position": 0.13639032815218327,
+                "direction": 0,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.42500000000000027
+              },
+              "displacement_mean": 0.3424144290526545,
+              "displacement_p95": 0.5275554318040836,
+              "cardinal_reversal_rate": 0,
+              "cardinal_tie_rate": 0,
+              "cardinal_comparisons": 310,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 20,
+              "occupied_bbox_area": 24.681724007856502
+            }
+          },
+          {
+            "frame": {
+              "columns": 6,
+              "rows": 5,
+              "phase": [
+                0.5,
+                0.5
+              ]
+            },
+            "quality": {
+              "energy": 0.18925166128140988,
+              "terms": {
+                "position": 0.16925166128140987,
+                "direction": 0,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.20000000000000018
+              },
+              "displacement_mean": 0.3910495948902456,
+              "displacement_p95": 0.5786499903373046,
+              "cardinal_reversal_rate": 0,
+              "cardinal_tie_rate": 0,
+              "cardinal_comparisons": 310,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 20,
+              "occupied_bbox_area": 20.784609690826528
+            }
+          },
+          {
+            "frame": {
+              "columns": 7,
+              "rows": 6,
+              "phase": [
+                0,
+                0
+              ]
+            },
+            "quality": {
+              "energy": 0.23157163378519405,
+              "terms": {
+                "position": 0.12990496711852734,
+                "direction": 0,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 1.016666666666667
+              },
+              "displacement_mean": 0.33417691749923195,
+              "displacement_p95": 0.47636639805673303,
+              "cardinal_reversal_rate": 0,
+              "cardinal_tie_rate": 0,
+              "cardinal_comparisons": 310,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 20,
+              "occupied_bbox_area": 34.92969128597236
+            }
+          },
+          {
+            "frame": {
+              "columns": 7,
+              "rows": 6,
+              "phase": [
+                0.5,
+                0.5
+              ]
+            },
+            "quality": {
+              "energy": 0.2528778984941705,
+              "terms": {
+                "position": 0.17871123182750384,
+                "direction": 0,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.7416666666666669
+              },
+              "displacement_mean": 0.3976195666044367,
+              "displacement_p95": 0.583838836223284,
+              "cardinal_reversal_rate": 0,
+              "cardinal_tie_rate": 0,
+              "cardinal_comparisons": 310,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 20,
+              "occupied_bbox_area": 30.16655156515795
+            }
+          },
+          {
+            "frame": {
+              "columns": 8,
+              "rows": 5,
+              "phase": [
+                0,
+                0
+              ]
+            },
+            "quality": {
+              "energy": 0.2832075480653925,
+              "terms": {
+                "position": 0.15404088139872577,
+                "direction": 0,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 1.291666666666667
+              },
+              "displacement_mean": 0.34098071140109315,
+              "displacement_p95": 0.5388744593780875,
+              "cardinal_reversal_rate": 0,
+              "cardinal_tie_rate": 0,
+              "cardinal_comparisons": 310,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 20,
+              "occupied_bbox_area": 39.69283100678677
+            }
+          },
+          {
+            "frame": {
+              "columns": 8,
+              "rows": 4,
+              "phase": [
+                0.5,
+                0.5
+              ]
+            },
+            "quality": {
+              "energy": 0.3004108046416728,
+              "terms": {
+                "position": 0.2532602670072642,
+                "direction": 0.0008064516129032258,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.4666666666666668
+              },
+              "displacement_mean": 0.46322229848907853,
+              "displacement_p95": 0.8657788432587461,
+              "cardinal_reversal_rate": 0,
+              "cardinal_tie_rate": 0.012903225806451613,
+              "cardinal_comparisons": 310,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 20,
+              "occupied_bbox_area": 25.403411844343534
+            }
+          },
+          {
+            "frame": {
+              "columns": 6,
+              "rows": 4,
+              "phase": [
+                0.5,
+                0.5
+              ]
+            },
+            "quality": {
+              "energy": 0.3803307390629844,
+              "terms": {
+                "position": 0.336983964869436,
+                "direction": 0.001411290322580645,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.42500000000000004
+              },
+              "displacement_mean": 0.5294483021467291,
+              "displacement_p95": 0.9186353742972,
+              "cardinal_reversal_rate": 0,
+              "cardinal_tie_rate": 0.02258064516129032,
+              "cardinal_comparisons": 310,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 20,
+              "occupied_bbox_area": 24.6817240078565
+            }
+          },
+          {
+            "frame": {
+              "columns": 8,
+              "rows": 5,
+              "phase": [
+                0.5,
+                0.5
+              ]
+            },
+            "quality": {
+              "energy": 0.4069894570027224,
+              "terms": {
+                "position": 0.323656123669389,
+                "direction": 0,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.8333333333333337
+              },
+              "displacement_mean": 0.526428831575888,
+              "displacement_p95": 0.8610154338299447,
+              "cardinal_reversal_rate": 0,
+              "cardinal_tie_rate": 0,
+              "cardinal_comparisons": 310,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 20,
+              "occupied_bbox_area": 31.75426480542942
+            }
+          },
+          {
+            "frame": {
+              "columns": 8,
+              "rows": 3,
+              "phase": [
+                0,
+                0
+              ]
+            },
+            "quality": {
+              "energy": 0.48163120268328774,
+              "terms": {
+                "position": 0.4348301274144705,
+                "direction": 0.0016129032258064516,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.45833333333333326
+              },
+              "displacement_mean": 0.6044653425611631,
+              "displacement_p95": 1.3644222465788687,
+              "cardinal_reversal_rate": 0,
+              "cardinal_tie_rate": 0.025806451612903226,
+              "cardinal_comparisons": 310,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 20,
+              "occupied_bbox_area": 25.259074277046125
+            }
+          },
+          {
+            "frame": {
+              "columns": 8,
+              "rows": 3,
+              "phase": [
+                0.5,
+                0.5
+              ]
+            },
+            "quality": {
+              "energy": 0.65315497924845,
+              "terms": {
+                "position": 0.6232490652699554,
+                "direction": 0.002620967741935484,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.28333333333333344
+              },
+              "displacement_mean": 0.7061070757549752,
+              "displacement_p95": 1.1166003115268623,
+              "cardinal_reversal_rate": 0,
+              "cardinal_tie_rate": 0.041935483870967745,
+              "cardinal_comparisons": 310,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 20,
+              "occupied_bbox_area": 22.22798536380059
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,705 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "area-01",
+      "properties": {
+        "region_id": "area-01",
+        "name": "Area 01"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              3,
+              0
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              0,
+              0
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "area-02",
+      "properties": {
+        "region_id": "area-02",
+        "name": "Area 02"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              4,
+              0
+            ],
+            [
+              7,
+              0
+            ],
+            [
+              7,
+              3
+            ],
+            [
+              4,
+              3
+            ],
+            [
+              4,
+              0
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "area-03",
+      "properties": {
+        "region_id": "area-03",
+        "name": "Area 03"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              8,
+              0
+            ],
+            [
+              11,
+              0
+            ],
+            [
+              11,
+              3
+            ],
+            [
+              8,
+              3
+            ],
+            [
+              8,
+              0
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "area-04",
+      "properties": {
+        "region_id": "area-04",
+        "name": "Area 04"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              12,
+              0
+            ],
+            [
+              15,
+              0
+            ],
+            [
+              15,
+              3
+            ],
+            [
+              12,
+              3
+            ],
+            [
+              12,
+              0
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "area-05",
+      "properties": {
+        "region_id": "area-05",
+        "name": "Area 05"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              16,
+              0
+            ],
+            [
+              19,
+              0
+            ],
+            [
+              19,
+              3
+            ],
+            [
+              16,
+              3
+            ],
+            [
+              16,
+              0
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "area-06",
+      "properties": {
+        "region_id": "area-06",
+        "name": "Area 06"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              0,
+              4
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              3,
+              7
+            ],
+            [
+              0,
+              7
+            ],
+            [
+              0,
+              4
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "area-07",
+      "properties": {
+        "region_id": "area-07",
+        "name": "Area 07"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              4,
+              4
+            ],
+            [
+              7,
+              4
+            ],
+            [
+              7,
+              7
+            ],
+            [
+              4,
+              7
+            ],
+            [
+              4,
+              4
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "area-08",
+      "properties": {
+        "region_id": "area-08",
+        "name": "Area 08"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              8,
+              4
+            ],
+            [
+              11,
+              4
+            ],
+            [
+              11,
+              7
+            ],
+            [
+              8,
+              7
+            ],
+            [
+              8,
+              4
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "area-09",
+      "properties": {
+        "region_id": "area-09",
+        "name": "Area 09"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              12,
+              4
+            ],
+            [
+              15,
+              4
+            ],
+            [
+              15,
+              7
+            ],
+            [
+              12,
+              7
+            ],
+            [
+              12,
+              4
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "area-10",
+      "properties": {
+        "region_id": "area-10",
+        "name": "Area 10"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              16,
+              4
+            ],
+            [
+              19,
+              4
+            ],
+            [
+              19,
+              7
+            ],
+            [
+              16,
+              7
+            ],
+            [
+              16,
+              4
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "area-11",
+      "properties": {
+        "region_id": "area-11",
+        "name": "Area 11"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              0,
+              8
+            ],
+            [
+              3,
+              8
+            ],
+            [
+              3,
+              11
+            ],
+            [
+              0,
+              11
+            ],
+            [
+              0,
+              8
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "area-12",
+      "properties": {
+        "region_id": "area-12",
+        "name": "Area 12"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              4,
+              8
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              7,
+              11
+            ],
+            [
+              4,
+              11
+            ],
+            [
+              4,
+              8
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "area-13",
+      "properties": {
+        "region_id": "area-13",
+        "name": "Area 13"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              8,
+              8
+            ],
+            [
+              11,
+              8
+            ],
+            [
+              11,
+              11
+            ],
+            [
+              8,
+              11
+            ],
+            [
+              8,
+              8
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "area-14",
+      "properties": {
+        "region_id": "area-14",
+        "name": "Area 14"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              12,
+              8
+            ],
+            [
+              15,
+              8
+            ],
+            [
+              15,
+              11
+            ],
+            [
+              12,
+              11
+            ],
+            [
+              12,
+              8
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "area-15",
+      "properties": {
+        "region_id": "area-15",
+        "name": "Area 15"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              16,
+              8
+            ],
+            [
+              19,
+              8
+            ],
+            [
+              19,
+              11
+            ],
+            [
+              16,
+              11
+            ],
+            [
+              16,
+              8
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "area-16",
+      "properties": {
+        "region_id": "area-16",
+        "name": "Area 16"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              0,
+              12
+            ],
+            [
+              3,
+              12
+            ],
+            [
+              3,
+              15
+            ],
+            [
+              0,
+              15
+            ],
+            [
+              0,
+              12
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "area-17",
+      "properties": {
+        "region_id": "area-17",
+        "name": "Area 17"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              4,
+              12
+            ],
+            [
+              7,
+              12
+            ],
+            [
+              7,
+              15
+            ],
+            [
+              4,
+              15
+            ],
+            [
+              4,
+              12
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "area-18",
+      "properties": {
+        "region_id": "area-18",
+        "name": "Area 18"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              8,
+              12
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              11,
+              15
+            ],
+            [
+              8,
+              15
+            ],
+            [
+              8,
+              12
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "area-19",
+      "properties": {
+        "region_id": "area-19",
+        "name": "Area 19"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              12,
+              12
+            ],
+            [
+              15,
+              12
+            ],
+            [
+              15,
+              15
+            ],
+            [
+              12,
+              15
+            ],
+            [
+              12,
+              12
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "area-20",
+      "properties": {
+        "region_id": "area-20",
+        "name": "Area 20"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              16,
+              12
+            ],
+            [
+              19,
+              12
+            ],
+            [
+              19,
+              15
+            ],
+            [
+              16,
+              15
+            ],
+            [
+              16,
+              12
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

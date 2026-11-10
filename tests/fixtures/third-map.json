@@ -1,0 +1,280 @@
+{
+  "schema_version": 1,
+  "kind": "stats-map/bundle",
+  "id": "fictional-archipelago-bundle",
+  "revision": "r1",
+  "spec_ref": {
+    "id": "fictional-view",
+    "revision": "r1"
+  },
+  "resources": [
+    {
+      "storage": "inline",
+      "resource": {
+        "schema_version": 1,
+        "kind": "stats-map/geography",
+        "id": "fictional-archipelago",
+        "revision": "r1",
+        "title": "Fictional archipelago",
+        "levels": [
+          {
+            "id": "island",
+            "label": "Island"
+          }
+        ],
+        "regions": [
+          {
+            "id": "island-a",
+            "label": "A",
+            "level_id": "island"
+          },
+          {
+            "id": "island-b",
+            "label": "B",
+            "level_id": "island"
+          },
+          {
+            "id": "island-c",
+            "label": "C",
+            "level_id": "island"
+          }
+        ],
+        "coordinate_space": {
+          "type": "cartesian",
+          "units": "unit",
+          "y_direction": "up"
+        },
+        "features": {
+          "type": "FeatureCollection",
+          "features": [
+            {
+              "type": "Feature",
+              "id": "a",
+              "properties": {
+                "role": "region",
+                "region_id": "island-a"
+              },
+              "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                  [
+                    [
+                      0,
+                      0
+                    ],
+                    [
+                      1,
+                      0
+                    ],
+                    [
+                      1,
+                      1
+                    ],
+                    [
+                      0,
+                      1
+                    ],
+                    [
+                      0,
+                      0
+                    ]
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "Feature",
+              "id": "b",
+              "properties": {
+                "role": "region",
+                "region_id": "island-b"
+              },
+              "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                  [
+                    [
+                      2,
+                      0
+                    ],
+                    [
+                      3,
+                      0
+                    ],
+                    [
+                      3,
+                      1
+                    ],
+                    [
+                      2,
+                      1
+                    ],
+                    [
+                      2,
+                      0
+                    ]
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "Feature",
+              "id": "c",
+              "properties": {
+                "role": "region",
+                "region_id": "island-c"
+              },
+              "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                  [
+                    [
+                      1,
+                      2
+                    ],
+                    [
+                      2,
+                      2
+                    ],
+                    [
+                      2,
+                      3
+                    ],
+                    [
+                      1,
+                      3
+                    ],
+                    [
+                      1,
+                      2
+                    ]
+                  ]
+                ]
+              }
+            }
+          ]
+        },
+        "anchor_policy": {
+          "method": "interior-point",
+          "version": 1
+        }
+      }
+    },
+    {
+      "storage": "inline",
+      "resource": {
+        "schema_version": 1,
+        "kind": "stats-map/dataset",
+        "id": "fictional-values",
+        "revision": "r1",
+        "title": "Fictional values",
+        "scope_note": "synthetic",
+        "geography_ref": {
+          "id": "fictional-archipelago",
+          "revision": "r1"
+        },
+        "periods": [
+          {
+            "id": "2025",
+            "label": "2025",
+            "order": 0
+          }
+        ],
+        "units": [
+          {
+            "id": "count",
+            "label": "Count",
+            "dimension": "count"
+          }
+        ],
+        "metrics": [
+          {
+            "id": "value",
+            "label": "Value",
+            "value_type": "number",
+            "aggregation": "sum"
+          }
+        ],
+        "scopes": [
+          {
+            "id": "all",
+            "description": "all islands"
+          }
+        ],
+        "series": [
+          {
+            "id": "value",
+            "metric_id": "value",
+            "unit_id": "count",
+            "scope_id": "all",
+            "measure_type": "actual",
+            "review_status": "reviewed"
+          }
+        ],
+        "observations": [
+          {
+            "id": "a",
+            "series_id": "value",
+            "region_id": "island-a",
+            "period_id": "2025",
+            "status": "value",
+            "value": 2
+          },
+          {
+            "id": "b",
+            "series_id": "value",
+            "region_id": "island-b",
+            "period_id": "2025",
+            "status": "value",
+            "value": 0
+          },
+          {
+            "id": "c",
+            "series_id": "value",
+            "region_id": "island-c",
+            "period_id": "2025",
+            "status": "missing",
+            "value": null
+          }
+        ]
+      }
+    },
+    {
+      "storage": "inline",
+      "resource": {
+        "schema_version": 1,
+        "kind": "stats-map/spec",
+        "id": "fictional-view",
+        "revision": "r1",
+        "geography_ref": {
+          "id": "fictional-archipelago",
+          "revision": "r1"
+        },
+        "dataset_refs": [
+          {
+            "id": "fictional-values",
+            "revision": "r1"
+          }
+        ],
+        "view": {
+          "period_id": "2025"
+        },
+        "layout": {
+          "type": "grid-hex",
+          "columns": 2
+        },
+        "layers": [
+          {
+            "id": "base",
+            "type": "choropleth",
+            "role": "base",
+            "encoding": {
+              "dataset_id": "fictional-values",
+              "series_id": "value"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

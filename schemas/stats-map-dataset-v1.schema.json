@@ -1,0 +1,329 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "stats-map-dataset-v1.schema.json",
+  "title": "stats-map Dataset v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "kind",
+    "id",
+    "revision",
+    "title",
+    "scope_note",
+    "geography_ref",
+    "periods",
+    "units",
+    "metrics",
+    "scopes",
+    "series",
+    "observations"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "kind": {
+      "const": "stats-map/dataset"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "revision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scope_note": {
+      "type": "string"
+    },
+    "geography_ref": {
+      "$ref": "#/$defs/ref"
+    },
+    "periods": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "order"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "label": {
+            "type": "string"
+          },
+          "order": {
+            "type": "number"
+          },
+          "labels": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "titles": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "units": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "dimension"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "label": {
+            "type": "string"
+          },
+          "dimension": {
+            "type": "string",
+            "minLength": 1
+          },
+          "labels": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "titles": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "metrics": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "value_type",
+          "aggregation"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "label": {
+            "type": "string"
+          },
+          "value_type": {
+            "enum": [
+              "number",
+              "category"
+            ]
+          },
+          "aggregation": {
+            "enum": [
+              "sum",
+              "ratio",
+              "none"
+            ]
+          },
+          "category_dimension_id": {
+            "type": "string"
+          },
+          "derivation": {
+            "type": "object"
+          },
+          "labels": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "titles": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "scopes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "description"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "dimensions": {
+      "type": "array"
+    },
+    "series": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "metric_id",
+          "unit_id",
+          "scope_id",
+          "measure_type",
+          "review_status"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "metric_id": {
+            "type": "string"
+          },
+          "unit_id": {
+            "type": "string"
+          },
+          "scope_id": {
+            "type": "string"
+          },
+          "measure_type": {
+            "enum": [
+              "actual",
+              "estimate",
+              "target",
+              "unspecified"
+            ]
+          },
+          "review_status": {
+            "enum": [
+              "reviewed",
+              "unreviewed",
+              "unspecified"
+            ]
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "observations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "series_id",
+          "region_id",
+          "period_id",
+          "status",
+          "value"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "series_id": {
+            "type": "string"
+          },
+          "region_id": {
+            "type": "string"
+          },
+          "period_id": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "value",
+              "missing",
+              "not_available",
+              "not_applicable",
+              "suppressed",
+              "out_of_scope"
+            ]
+          },
+          "value": {}
+        },
+        "additionalProperties": true
+      }
+    },
+    "aggregation_bases": {
+      "type": "array"
+    },
+    "relations": {
+      "type": "array"
+    },
+    "sources": {
+      "type": "array"
+    },
+    "extensions": {
+      "type": "object"
+    },
+    "labels": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "titles": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    }
+  },
+  "$defs": {
+    "ref": {
+      "type": "object",
+      "required": [
+        "id",
+        "revision"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

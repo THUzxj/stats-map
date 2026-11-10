@@ -1,0 +1,1704 @@
+{
+  "schema_version": 1,
+  "geography_ref": {
+    "id": "gallery-europe",
+    "revision": "r1"
+  },
+  "source_sha256": "728eaa7c2aaee1815ff285506c5a79e44b7d648d597221d709d84a10da899462",
+  "grid_layouts": [
+    {
+      "id": "grid-square:region",
+      "type": "grid-square",
+      "geography_ref": {
+        "id": "gallery-europe",
+        "revision": "r1"
+      },
+      "reference_region_ids": [
+        "AD",
+        "AL",
+        "AT",
+        "BA",
+        "BE",
+        "BG",
+        "BY",
+        "CH",
+        "CY",
+        "CZ",
+        "DE",
+        "DK",
+        "EE",
+        "EL",
+        "ES",
+        "FI",
+        "FR",
+        "HR",
+        "HU",
+        "IE",
+        "IS",
+        "IT",
+        "LI",
+        "LT",
+        "LU",
+        "LV",
+        "MD",
+        "ME",
+        "MK",
+        "MT",
+        "NL",
+        "NO",
+        "PL",
+        "PT",
+        "RO",
+        "RS",
+        "SE",
+        "SI",
+        "SK",
+        "UA",
+        "UK"
+      ],
+      "positions": {
+        "AD": [
+          3,
+          7
+        ],
+        "AL": [
+          6,
+          8
+        ],
+        "AT": [
+          5,
+          5
+        ],
+        "BA": [
+          5,
+          7
+        ],
+        "BE": [
+          3,
+          4
+        ],
+        "BG": [
+          8,
+          6
+        ],
+        "BY": [
+          7,
+          4
+        ],
+        "CH": [
+          4,
+          6
+        ],
+        "CY": [
+          8,
+          8
+        ],
+        "CZ": [
+          5,
+          4
+        ],
+        "DE": [
+          4,
+          4
+        ],
+        "DK": [
+          4,
+          3
+        ],
+        "EE": [
+          7,
+          2
+        ],
+        "EL": [
+          7,
+          8
+        ],
+        "ES": [
+          2,
+          7
+        ],
+        "FI": [
+          7,
+          1
+        ],
+        "FR": [
+          3,
+          6
+        ],
+        "HR": [
+          6,
+          6
+        ],
+        "HU": [
+          6,
+          5
+        ],
+        "IE": [
+          1,
+          4
+        ],
+        "IS": [
+          0,
+          1
+        ],
+        "IT": [
+          4,
+          7
+        ],
+        "LI": [
+          4,
+          5
+        ],
+        "LT": [
+          6,
+          3
+        ],
+        "LU": [
+          3,
+          5
+        ],
+        "LV": [
+          7,
+          3
+        ],
+        "MD": [
+          8,
+          5
+        ],
+        "ME": [
+          6,
+          7
+        ],
+        "MK": [
+          7,
+          7
+        ],
+        "MT": [
+          5,
+          8
+        ],
+        "NL": [
+          3,
+          3
+        ],
+        "NO": [
+          4,
+          2
+        ],
+        "PL": [
+          5,
+          3
+        ],
+        "PT": [
+          2,
+          6
+        ],
+        "RO": [
+          7,
+          5
+        ],
+        "RS": [
+          7,
+          6
+        ],
+        "SE": [
+          5,
+          2
+        ],
+        "SI": [
+          5,
+          6
+        ],
+        "SK": [
+          6,
+          4
+        ],
+        "UA": [
+          8,
+          4
+        ],
+        "UK": [
+          2,
+          4
+        ]
+      },
+      "algorithm": {
+        "name": "geographic-grid",
+        "version": 1,
+        "parameters": {
+          "weights": {
+            "position": 1,
+            "direction": 0.6,
+            "adjacency": 1,
+            "falseAdjacency": 0.2,
+            "compactness": 0.1
+          },
+          "occupancies": [
+            0.55,
+            0.7,
+            0.85
+          ],
+          "maxCandidates": 12,
+          "maxIterations": 8,
+          "maxOperations": 100000,
+          "maxCells": 4096,
+          "maxMatrixEntries": 2000000
+        }
+      },
+      "input_sha256": "70430769a76e8c57fe57199ad605fca8f3e93c5a705d7d64a767e76231981c79",
+      "projection": {
+        "id": "mercator"
+      },
+      "anchor_provenance": [
+        {
+          "region_id": "AD",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "AL",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "AT",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "BA",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "BE",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "BG",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "BY",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "CH",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "CY",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "CZ",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "DE",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "DK",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "EE",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "EL",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "ES",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "FI",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "FR",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "HR",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "HU",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "IE",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "IS",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "IT",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "LI",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "LT",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "LU",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "LV",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "MD",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "ME",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "MK",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "MT",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "NL",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "NO",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "PL",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "PT",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "RO",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "RS",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "SE",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "SI",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "SK",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "UA",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "UK",
+          "method": "interior-point",
+          "version": 1
+        }
+      ],
+      "adjacency_provenance": null,
+      "candidate_frame": {
+        "columns": 9,
+        "rows": 9,
+        "phase": [
+          0,
+          0
+        ]
+      },
+      "target_transform": {
+        "scale": 0.009958090120033243,
+        "translation": [
+          -1.0195381138186956,
+          -2.3999944604812784
+        ]
+      },
+      "quality": {
+        "energy": 0.7059871121033314,
+        "terms": {
+          "position": 0.626699832741633,
+          "direction": 0.006129205440229062,
+          "adjacency": 0,
+          "falseAdjacency": 0,
+          "compactness": 0.7560975609756098
+        },
+        "displacement_mean": 0.71457288557921,
+        "displacement_p95": 1.3511873692315524,
+        "cardinal_reversal_rate": 0.0014316392269148174,
+        "cardinal_tie_rate": 0.06227630637079456,
+        "cardinal_comparisons": 1397,
+        "adjacency_recall": null,
+        "adjacency_precision": null,
+        "occupied_cell_count": 41,
+        "occupied_bbox_area": 72
+      },
+      "diagnostics": [
+        {
+          "code": "GRID_ADJACENCY_UNAVAILABLE"
+        }
+      ],
+      "search": {
+        "candidates": 12,
+        "operations": 15149,
+        "selected_stop_reason": "local-optimum",
+        "initial_energy": 0.7168781369295671,
+        "candidates_summary": [
+          {
+            "frame": {
+              "columns": 9,
+              "rows": 9,
+              "phase": [
+                0,
+                0
+              ]
+            },
+            "quality": {
+              "energy": 0.7059871121033314,
+              "terms": {
+                "position": 0.626699832741633,
+                "direction": 0.006129205440229062,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.7560975609756098
+              },
+              "displacement_mean": 0.71457288557921,
+              "displacement_p95": 1.3511873692315524,
+              "cardinal_reversal_rate": 0.0014316392269148174,
+              "cardinal_tie_rate": 0.06227630637079456,
+              "cardinal_comparisons": 1397,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 41,
+              "occupied_bbox_area": 72
+            }
+          },
+          {
+            "frame": {
+              "columns": 9,
+              "rows": 9,
+              "phase": [
+                0.5,
+                0.5
+              ]
+            },
+            "quality": {
+              "energy": 0.7483169705421728,
+              "terms": {
+                "position": 0.6898035183711443,
+                "direction": 0.004026485325697924,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.5609756097560976
+              },
+              "displacement_mean": 0.7446033578944226,
+              "displacement_p95": 1.4898397120951714,
+              "cardinal_reversal_rate": 0,
+              "cardinal_tie_rate": 0.06442376521116679,
+              "cardinal_comparisons": 1397,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 41,
+              "occupied_bbox_area": 64
+            }
+          },
+          {
+            "frame": {
+              "columns": 10,
+              "rows": 8,
+              "phase": [
+                0,
+                0
+              ]
+            },
+            "quality": {
+              "energy": 0.7604002546114861,
+              "terms": {
+                "position": 0.6826785851565245,
+                "direction": 0.00351985559566787,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.7560975609756098
+              },
+              "displacement_mean": 0.76785938777755,
+              "displacement_p95": 1.2610508409067822,
+              "cardinal_reversal_rate": 0,
+              "cardinal_tie_rate": 0.05631768953068592,
+              "cardinal_comparisons": 1385,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 41,
+              "occupied_bbox_area": 72
+            }
+          },
+          {
+            "frame": {
+              "columns": 10,
+              "rows": 8,
+              "phase": [
+                0.5,
+                0.5
+              ]
+            },
+            "quality": {
+              "energy": 0.8559978828259637,
+              "terms": {
+                "position": 0.8121561992827744,
+                "direction": 0.012093862815884477,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.36585365853658547
+              },
+              "displacement_mean": 0.8255527169834235,
+              "displacement_p95": 1.4311483206247815,
+              "cardinal_reversal_rate": 0.005054151624548736,
+              "cardinal_tie_rate": 0.06714801444043321,
+              "cardinal_comparisons": 1385,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 41,
+              "occupied_bbox_area": 56
+            }
+          },
+          {
+            "frame": {
+              "columns": 8,
+              "rows": 8,
+              "phase": [
+                0,
+                0
+              ]
+            },
+            "quality": {
+              "energy": 0.8829927579568948,
+              "terms": {
+                "position": 0.8247523398384279,
+                "direction": 0.0035714285714285713,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.5609756097560976
+              },
+              "displacement_mean": 0.8420494321640822,
+              "displacement_p95": 1.499224576777992,
+              "cardinal_reversal_rate": 0,
+              "cardinal_tie_rate": 0.05714285714285714,
+              "cardinal_comparisons": 1365,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 41,
+              "occupied_bbox_area": 64
+            }
+          },
+          {
+            "frame": {
+              "columns": 9,
+              "rows": 7,
+              "phase": [
+                0,
+                0
+              ]
+            },
+            "quality": {
+              "energy": 1.079714411278355,
+              "terms": {
+                "position": 1.0367478610169003,
+                "direction": 0.010635307346326837,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.36585365853658547
+              },
+              "displacement_mean": 0.9378670915903293,
+              "displacement_p95": 1.4901540483608695,
+              "cardinal_reversal_rate": 0.004497751124437781,
+              "cardinal_tie_rate": 0.05772113943028486,
+              "cardinal_comparisons": 1334,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 41,
+              "occupied_bbox_area": 56
+            }
+          },
+          {
+            "frame": {
+              "columns": 7,
+              "rows": 8,
+              "phase": [
+                0,
+                0
+              ]
+            },
+            "quality": {
+              "energy": 1.3111568654073855,
+              "terms": {
+                "position": 1.271013733677675,
+                "direction": 0.0059296097934200456,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.36585365853658547
+              },
+              "displacement_mean": 1.0619637501068995,
+              "displacement_p95": 1.6850799141673185,
+              "cardinal_reversal_rate": 0.001530221882172915,
+              "cardinal_tie_rate": 0.056618209640397855,
+              "cardinal_comparisons": 1307,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 41,
+              "occupied_bbox_area": 56
+            }
+          },
+          {
+            "frame": {
+              "columns": 8,
+              "rows": 8,
+              "phase": [
+                0.5,
+                0.5
+              ]
+            },
+            "quality": {
+              "energy": 1.3769022887212181,
+              "terms": {
+                "position": 1.3513736100827833,
+                "direction": 0.010027472527472528,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.19512195121951215
+              },
+              "displacement_mean": 1.0701947138941534,
+              "displacement_p95": 1.7986912099187504,
+              "cardinal_reversal_rate": 0.003663003663003663,
+              "cardinal_tie_rate": 0.06886446886446887,
+              "cardinal_comparisons": 1365,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 41,
+              "occupied_bbox_area": 49
+            }
+          },
+          {
+            "frame": {
+              "columns": 7,
+              "rows": 7,
+              "phase": [
+                0,
+                0
+              ]
+            },
+            "quality": {
+              "energy": 1.5086618029480072,
+              "terms": {
+                "position": 1.4840424922943038,
+                "direction": 0.00851185921958684,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.19512195121951215
+              },
+              "displacement_mean": 1.1314295960705432,
+              "displacement_p95": 1.752580936437754,
+              "cardinal_reversal_rate": 0.00306044376434583,
+              "cardinal_tie_rate": 0.05967865340474369,
+              "cardinal_comparisons": 1307,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 41,
+              "occupied_bbox_area": 49
+            }
+          },
+          {
+            "frame": {
+              "columns": 9,
+              "rows": 7,
+              "phase": [
+                0.5,
+                0.5
+              ]
+            },
+            "quality": {
+              "energy": 1.5390002286934692,
+              "terms": {
+                "position": 1.514146954111248,
+                "direction": 0.008901799100449775,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.19512195121951215
+              },
+              "displacement_mean": 1.1601856040390905,
+              "displacement_p95": 1.9030269013958094,
+              "cardinal_reversal_rate": 0.0029985007496251873,
+              "cardinal_tie_rate": 0.06746626686656672,
+              "cardinal_comparisons": 1334,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 41,
+              "occupied_bbox_area": 49
+            }
+          },
+          {
+            "frame": {
+              "columns": 7,
+              "rows": 8,
+              "phase": [
+                0.5,
+                0.5
+              ]
+            },
+            "quality": {
+              "energy": 2.0436492930447283,
+              "terms": {
+                "position": 2.022788823154643,
+                "direction": 0.006312165263963275,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.1707317073170731
+              },
+              "displacement_mean": 1.3281417586386939,
+              "displacement_p95": 2.0777193898933906,
+              "cardinal_reversal_rate": 0.001530221882172915,
+              "cardinal_tie_rate": 0.06273909716908951,
+              "cardinal_comparisons": 1307,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 41,
+              "occupied_bbox_area": 48
+            }
+          },
+          {
+            "frame": {
+              "columns": 7,
+              "rows": 7,
+              "phase": [
+                0.5,
+                0.5
+              ]
+            },
+            "quality": {
+              "energy": 2.6936289910490565,
+              "terms": {
+                "position": 2.667460330739653,
+                "direction": 0.011094108645753635,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.19512195121951215
+              },
+              "displacement_mean": 1.5298084037698205,
+              "displacement_p95": 2.2472345892532264,
+              "cardinal_reversal_rate": 0.0045906656465187455,
+              "cardinal_tie_rate": 0.06273909716908951,
+              "cardinal_comparisons": 1307,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 41,
+              "occupied_bbox_area": 49
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "grid-hex:region",
+      "type": "grid-hex",
+      "geography_ref": {
+        "id": "gallery-europe",
+        "revision": "r1"
+      },
+      "reference_region_ids": [
+        "AD",
+        "AL",
+        "AT",
+        "BA",
+        "BE",
+        "BG",
+        "BY",
+        "CH",
+        "CY",
+        "CZ",
+        "DE",
+        "DK",
+        "EE",
+        "EL",
+        "ES",
+        "FI",
+        "FR",
+        "HR",
+        "HU",
+        "IE",
+        "IS",
+        "IT",
+        "LI",
+        "LT",
+        "LU",
+        "LV",
+        "MD",
+        "ME",
+        "MK",
+        "MT",
+        "NL",
+        "NO",
+        "PL",
+        "PT",
+        "RO",
+        "RS",
+        "SE",
+        "SI",
+        "SK",
+        "UA",
+        "UK"
+      ],
+      "positions": {
+        "AD": [
+          4,
+          6
+        ],
+        "AL": [
+          6,
+          7
+        ],
+        "AT": [
+          6,
+          4
+        ],
+        "BA": [
+          6,
+          6
+        ],
+        "BE": [
+          3,
+          4
+        ],
+        "BG": [
+          8,
+          6
+        ],
+        "BY": [
+          9,
+          3
+        ],
+        "CH": [
+          4,
+          5
+        ],
+        "CY": [
+          9,
+          7
+        ],
+        "CZ": [
+          6,
+          3
+        ],
+        "DE": [
+          5,
+          3
+        ],
+        "DK": [
+          5,
+          2
+        ],
+        "EE": [
+          8,
+          2
+        ],
+        "EL": [
+          7,
+          7
+        ],
+        "ES": [
+          3,
+          6
+        ],
+        "FI": [
+          8,
+          1
+        ],
+        "FR": [
+          3,
+          5
+        ],
+        "HR": [
+          6,
+          5
+        ],
+        "HU": [
+          7,
+          4
+        ],
+        "IE": [
+          2,
+          4
+        ],
+        "IS": [
+          1,
+          0
+        ],
+        "IT": [
+          5,
+          6
+        ],
+        "LI": [
+          5,
+          4
+        ],
+        "LT": [
+          8,
+          3
+        ],
+        "LU": [
+          4,
+          4
+        ],
+        "LV": [
+          7,
+          2
+        ],
+        "MD": [
+          9,
+          5
+        ],
+        "ME": [
+          7,
+          6
+        ],
+        "MK": [
+          8,
+          7
+        ],
+        "MT": [
+          5,
+          7
+        ],
+        "NL": [
+          4,
+          3
+        ],
+        "NO": [
+          5,
+          1
+        ],
+        "PL": [
+          7,
+          3
+        ],
+        "PT": [
+          2,
+          6
+        ],
+        "RO": [
+          8,
+          5
+        ],
+        "RS": [
+          7,
+          5
+        ],
+        "SE": [
+          6,
+          1
+        ],
+        "SI": [
+          5,
+          5
+        ],
+        "SK": [
+          8,
+          4
+        ],
+        "UA": [
+          9,
+          4
+        ],
+        "UK": [
+          3,
+          3
+        ]
+      },
+      "algorithm": {
+        "name": "geographic-grid",
+        "version": 1,
+        "parameters": {
+          "weights": {
+            "position": 1,
+            "direction": 0.6,
+            "adjacency": 1,
+            "falseAdjacency": 0.2,
+            "compactness": 0.1
+          },
+          "occupancies": [
+            0.55,
+            0.7,
+            0.85
+          ],
+          "maxCandidates": 12,
+          "maxIterations": 8,
+          "maxOperations": 100000,
+          "maxCells": 4096,
+          "maxMatrixEntries": 2000000
+        }
+      },
+      "input_sha256": "880e9f2bd11d83bf3870652d98bf97941e0422f1af0e21c656488557253d93d5",
+      "projection": {
+        "id": "mercator"
+      },
+      "anchor_provenance": [
+        {
+          "region_id": "AD",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "AL",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "AT",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "BA",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "BE",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "BG",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "BY",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "CH",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "CY",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "CZ",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "DE",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "DK",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "EE",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "EL",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "ES",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "FI",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "FR",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "HR",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "HU",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "IE",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "IS",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "IT",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "LI",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "LT",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "LU",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "LV",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "MD",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "ME",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "MK",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "MT",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "NL",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "NO",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "PL",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "PT",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "RO",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "RS",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "SE",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "SI",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "SK",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "UA",
+          "method": "interior-point",
+          "version": 1
+        },
+        {
+          "region_id": "UK",
+          "method": "interior-point",
+          "version": 1
+        }
+      ],
+      "adjacency_provenance": null,
+      "candidate_frame": {
+        "columns": 10,
+        "rows": 8,
+        "phase": [
+          0,
+          0
+        ]
+      },
+      "target_transform": {
+        "scale": 0.00970195389426407,
+        "translation": [
+          -0.9933141450301428,
+          -2.485377510213528
+        ]
+      },
+      "quality": {
+        "energy": 0.5499036234098336,
+        "terms": {
+          "position": 0.46315672157983884,
+          "direction": 0.007721801152972277,
+          "adjacency": 0,
+          "falseAdjacency": 0,
+          "compactness": 0.821138211382114
+        },
+        "displacement_mean": 0.6060336681970846,
+        "displacement_p95": 1.2315482472426063,
+        "cardinal_reversal_rate": 0.006470165348670022,
+        "cardinal_tie_rate": 0.038102084831056794,
+        "cardinal_comparisons": 1391,
+        "adjacency_recall": null,
+        "adjacency_precision": null,
+        "occupied_cell_count": 41,
+        "occupied_bbox_area": 64.66323014923809
+      },
+      "diagnostics": [
+        {
+          "code": "GRID_ADJACENCY_UNAVAILABLE"
+        }
+      ],
+      "search": {
+        "candidates": 12,
+        "operations": 15759,
+        "selected_stop_reason": "local-optimum",
+        "initial_energy": 0.5605457136724113,
+        "candidates_summary": [
+          {
+            "frame": {
+              "columns": 10,
+              "rows": 8,
+              "phase": [
+                0,
+                0
+              ]
+            },
+            "quality": {
+              "energy": 0.5499036234098336,
+              "terms": {
+                "position": 0.46315672157983884,
+                "direction": 0.007721801152972277,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.821138211382114
+              },
+              "displacement_mean": 0.6060336681970846,
+              "displacement_p95": 1.2315482472426063,
+              "cardinal_reversal_rate": 0.006470165348670022,
+              "cardinal_tie_rate": 0.038102084831056794,
+              "cardinal_comparisons": 1391,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 41,
+              "occupied_bbox_area": 64.66323014923809
+            }
+          },
+          {
+            "frame": {
+              "columns": 10,
+              "rows": 8,
+              "phase": [
+                0.5,
+                0.5
+              ]
+            },
+            "quality": {
+              "energy": 0.6901847023525313,
+              "terms": {
+                "position": 0.6034936541378239,
+                "direction": 0.007628711794160072,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.821138211382114
+              },
+              "displacement_mean": 0.7091486657972024,
+              "displacement_p95": 1.291471477629671,
+              "cardinal_reversal_rate": 0.006470165348670022,
+              "cardinal_tie_rate": 0.040258806613946804,
+              "cardinal_comparisons": 1391,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 41,
+              "occupied_bbox_area": 64.66323014923809
+            }
+          },
+          {
+            "frame": {
+              "columns": 11,
+              "rows": 7,
+              "phase": [
+                0,
+                0
+              ]
+            },
+            "quality": {
+              "energy": 0.7118283536242768,
+              "terms": {
+                "position": 0.6537947958232808,
+                "direction": 0.00932422235125355,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.5243902439024388
+              },
+              "displacement_mean": 0.754793485842527,
+              "displacement_p95": 1.1841593941885697,
+              "cardinal_reversal_rate": 0.007326007326007326,
+              "cardinal_tie_rate": 0.04322344322344322,
+              "cardinal_comparisons": 1365,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 41,
+              "occupied_bbox_area": 54.126587736527405
+            }
+          },
+          {
+            "frame": {
+              "columns": 9,
+              "rows": 7,
+              "phase": [
+                0,
+                0
+              ]
+            },
+            "quality": {
+              "energy": 0.735193419445005,
+              "terms": {
+                "position": 0.6868086154456301,
+                "direction": 0.010180635391912215,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.4227642276422763
+              },
+              "displacement_mean": 0.7477018239790163,
+              "displacement_p95": 1.2992273744874463,
+              "cardinal_reversal_rate": 0.010279001468428781,
+              "cardinal_tie_rate": 0.042584434654919234,
+              "cardinal_comparisons": 1362,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 41,
+              "occupied_bbox_area": 50.51814855409225
+            }
+          },
+          {
+            "frame": {
+              "columns": 11,
+              "rows": 7,
+              "phase": [
+                0.5,
+                0.5
+              ]
+            },
+            "quality": {
+              "energy": 0.8918007903138322,
+              "terms": {
+                "position": 0.8359370022367771,
+                "direction": 0.013160514003763921,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.47967479674796776
+              },
+              "displacement_mean": 0.8349123552207046,
+              "displacement_p95": 1.5060647888952543,
+              "cardinal_reversal_rate": 0.01098901098901099,
+              "cardinal_tie_rate": 0.047619047619047616,
+              "cardinal_comparisons": 1365,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 41,
+              "occupied_bbox_area": 52.53887449625595
+            }
+          },
+          {
+            "frame": {
+              "columns": 10,
+              "rows": 6,
+              "phase": [
+                0,
+                0
+              ]
+            },
+            "quality": {
+              "energy": 1.0755779959221075,
+              "terms": {
+                "position": 1.0312147540337433,
+                "direction": 0.01296312672450943,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.3658536585365857
+              },
+              "displacement_mean": 0.9253779461496416,
+              "displacement_p95": 1.5998708538660227,
+              "cardinal_reversal_rate": 0.008468052347959968,
+              "cardinal_tie_rate": 0.03926096997690531,
+              "cardinal_comparisons": 1299,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 41,
+              "occupied_bbox_area": 48.49742261192857
+            }
+          },
+          {
+            "frame": {
+              "columns": 9,
+              "rows": 6,
+              "phase": [
+                0,
+                0
+              ]
+            },
+            "quality": {
+              "energy": 1.1297475925094422,
+              "terms": {
+                "position": 1.0909178067017338,
+                "direction": 0.011193274449161735,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.32113821138211396
+              },
+              "displacement_mean": 0.995790281824571,
+              "displacement_p95": 1.4984305933312405,
+              "cardinal_reversal_rate": 0.01077752117013087,
+              "cardinal_tie_rate": 0.04003079291762895,
+              "cardinal_comparisons": 1299,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 41,
+              "occupied_bbox_area": 46.909709371657094
+            }
+          },
+          {
+            "frame": {
+              "columns": 9,
+              "rows": 7,
+              "phase": [
+                0.5,
+                0.5
+              ]
+            },
+            "quality": {
+              "energy": 1.394291460789979,
+              "terms": {
+                "position": 1.3420500544566358,
+                "direction": 0.016608305948525855,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.4227642276422763
+              },
+              "displacement_mean": 1.079933782300289,
+              "displacement_p95": 1.6778870006935895,
+              "cardinal_reversal_rate": 0.014684287812041116,
+              "cardinal_tie_rate": 0.04919236417033774,
+              "cardinal_comparisons": 1362,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 41,
+              "occupied_bbox_area": 50.51814855409225
+            }
+          },
+          {
+            "frame": {
+              "columns": 7,
+              "rows": 7,
+              "phase": [
+                0,
+                0
+              ]
+            },
+            "quality": {
+              "energy": 1.4842741501523766,
+              "terms": {
+                "position": 1.454055377147668,
+                "direction": 0.008359201620313863,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.2520325203252034
+              },
+              "displacement_mean": 1.115265897815332,
+              "displacement_p95": 1.87342657830606,
+              "cardinal_reversal_rate": 0.00645682001614205,
+              "cardinal_tie_rate": 0.04035512510088781,
+              "cardinal_comparisons": 1239,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 41,
+              "occupied_bbox_area": 44.45597072760118
+            }
+          },
+          {
+            "frame": {
+              "columns": 10,
+              "rows": 6,
+              "phase": [
+                0.5,
+                0.5
+              ]
+            },
+            "quality": {
+              "energy": 1.6124304697740235,
+              "terms": {
+                "position": 1.575355435978175,
+                "direction": 0.008268687762728589,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.32113821138211374
+              },
+              "displacement_mean": 1.1754446248318808,
+              "displacement_p95": 1.8318480777541708,
+              "cardinal_reversal_rate": 0.006928406466512702,
+              "cardinal_tie_rate": 0.04080061585835258,
+              "cardinal_comparisons": 1299,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 41,
+              "occupied_bbox_area": 46.90970937165709
+            }
+          },
+          {
+            "frame": {
+              "columns": 9,
+              "rows": 6,
+              "phase": [
+                0.5,
+                0.5
+              ]
+            },
+            "quality": {
+              "energy": 2.0401083030715585,
+              "terms": {
+                "position": 1.9976473218339763,
+                "direction": 0.017245266832284643,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.32113821138211396
+              },
+              "displacement_mean": 1.336109873710186,
+              "displacement_p95": 2.0921123562494124,
+              "cardinal_reversal_rate": 0.013856812933025405,
+              "cardinal_tie_rate": 0.04695919938414165,
+              "cardinal_comparisons": 1299,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 41,
+              "occupied_bbox_area": 46.909709371657094
+            }
+          },
+          {
+            "frame": {
+              "columns": 7,
+              "rows": 7,
+              "phase": [
+                0.5,
+                0.5
+              ]
+            },
+            "quality": {
+              "energy": 2.54979668233649,
+              "terms": {
+                "position": 2.5030142203339736,
+                "direction": 0.02106020089850326,
+                "adjacency": 0,
+                "falseAdjacency": 0,
+                "compactness": 0.3414634146341464
+              },
+              "displacement_mean": 1.4838223669389892,
+              "displacement_p95": 2.17503293575626,
+              "cardinal_reversal_rate": 0.01533494753833737,
+              "cardinal_tie_rate": 0.04035512510088781,
+              "cardinal_comparisons": 1239,
+              "adjacency_recall": null,
+              "adjacency_precision": null,
+              "occupied_cell_count": 41,
+              "occupied_bbox_area": 47.63139720814413
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
