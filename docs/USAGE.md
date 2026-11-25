@@ -16,11 +16,11 @@ npm run preview
 
 需要纯虚构轮廓时运行 `npm run preview:synthetic`。通用测试继续使用虚构夹具；真实地图的专项核查入口为 `node examples/preview/verify.js`。
 
-`http://127.0.0.1:4173/preview/quickstart.html` 是可运行的最小示例，直接消费标准 MapBundle。实现位于 [quickstart.html](../scripts/preview/quickstart.html)，数据位于 [third-map.json](../tests/fixtures/third-map.json)，包含正值、有效零与缺失。
+`http://127.0.0.1:4173/preview/quickstart.html` 是可运行的最小示例，直接消费标准 MapBundle。实现位于 [quickstart.html](../scripts/examples/quickstart.html)，数据位于 [third-map.json](../tests/fixtures/third-map.json)，包含正值、有效零与缺失。
 
 预览无需 `npm ci` 或 build，通过本机 HTTP 加载包内源码。按 `Ctrl+C` 停止；自定义端口用 `npm run preview -- --port 4174`。不要直接用 `file://` 打开 HTML，模块和 Worker 需要 HTTP。
 
-使用自己的轮廓时，参考[默认画廊配置](../examples/preview/gallery.json)或[虚构画廊配置](../scripts/preview/config.json)，显式提供配置与数据根目录：
+使用自己的轮廓时，参考[默认画廊配置](../examples/preview/gallery.json)或[虚构画廊配置](../scripts/examples/config.json)，显式提供配置与数据根目录：
 
 ```sh
 npm run preview -- --config /path/to/gallery.json --data-root /path/to/assets

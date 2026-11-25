@@ -4,7 +4,7 @@ import { once } from 'node:events';
 import { mkdtemp, readFile, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
-import { createPreviewServer } from '../scripts/preview/server.js';
+import { createPreviewServer } from '../scripts/examples/server.js';
 import * as lib from '../src/index.js';
 import { preparePreviewGrids } from '../scripts/prepare-preview-grids.js';
 import { galleryFixture, gallerySpec, galleryTypes } from './fixtures/gallery.js';
@@ -19,7 +19,7 @@ async function serve(t, options) {
 }
 
 test('configured fictional preview serves package-only resources and renders all gallery types', async t => {
-  const get = await serve(t, { configPath: new URL('../scripts/preview/config.json', import.meta.url) });
+  const get = await serve(t, { configPath: new URL('../scripts/examples/config.json', import.meta.url) });
   const config = await (await get('/config.json')).json();
   assert.equal(config.geographies.length, 2);
   for (const route of ['/preview/', '/preview/quickstart.html', '/preview/gallery.js', '/src/index.js', '/fixtures/gallery.js', '/docs/USAGE.md', '/README.md']) {
@@ -60,7 +60,7 @@ test('external preview data is opt-in and confined to the explicit data root', a
 });
 
 test('saved preview grids are read without a preparation request and survive period, viewport and export reopening', async t => {
-  const get = await serve(t, { configPath: new URL('../scripts/preview/config.json', import.meta.url) });
+  const get = await serve(t, { configPath: new URL('../scripts/examples/config.json', import.meta.url) });
   const config = await (await get('/config.json')).json(), item = galleryTypes[0];
   for (const entry of config.geographies) {
     const saved = await (await get(`/geographies/${entry.id}/grids`)).json();
@@ -87,7 +87,7 @@ test('saved preview grids are read without a preparation request and survive per
 test('preview registration persists separate map catalogs once and rejects a changed source until explicit force', async () => {
   const directory = await mkdtemp(path.join(tmpdir(), 'stats-grid-preview-')), configPath = path.join(directory, 'gallery.json');
   const source = await readFile(new URL('./fixtures/gallery-geography.geojson', import.meta.url), 'utf8');
-  const config = JSON.parse(await readFile(new URL('../scripts/preview/config.json', import.meta.url), 'utf8'));
+  const config = JSON.parse(await readFile(new URL('../scripts/examples/config.json', import.meta.url), 'utf8'));
   for (const entry of config.geographies) { entry.path = 'shape.json'; delete entry.grid_layouts_path; delete entry.grid_layouts_sha256; }
   await writeFile(path.join(directory, 'shape.json'), source); await writeFile(configPath, JSON.stringify(config));
   const initial = await preparePreviewGrids({ configPath, dataRoot: directory });

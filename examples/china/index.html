@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>中国省级统计地图</title>
+  <link rel="stylesheet" href="../../src/stats-map.css">
+  <style>
+    body { margin: 32px auto; padding: 0 20px; max-width: 920px; font: 16px system-ui, sans-serif; color: #1c2e33; }
+    h1 { margin: 0 0 8px; }
+    .source { margin: 0 0 20px; color: #45595f; }
+    #map { height: clamp(330px, 65vh, 540px); border: 1px solid #d4dfe1; border-radius: 8px; }
+    #selection { margin: 12px 0; }
+  </style>
+  <script type="importmap">
+    { "imports": { "stats-map": "../../src/index.js" } }
+  </script>
+</head>
+<body>
+  <main>
+    <h1>中国省级统计地图</h1>
+    <p class="source">指标值为模拟数据。 <a href="../preview/geometry/china.source.json">边界来源</a></p>
+    <div id="map" class="stats-map"></div>
+    <p id="selection" role="status">正在加载地图…</p>
+  </main>
+  <script type="module" src="./china-map.js"></script>
+</body>
+</html>

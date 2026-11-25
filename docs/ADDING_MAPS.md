@@ -189,7 +189,7 @@ adapter 只处理来源字段、状态、坐标声明和兼容差异，保持来
 
 ## 在本地预览和检查
 
-自己的 bundle 可直接接到上述网页入口。若要使用内置图型画廊的模拟统计数据，复制[虚构画廊配置](../scripts/preview/config.json)，将 `geographies[]` 的 `path`、`id_property`、`label_property`、`level`、`projection` 和来源说明替换为自己的配置，然后在 stats-map 目录执行：
+自己的 bundle 可直接接到上述网页入口。若要使用内置图型画廊的模拟统计数据，复制[虚构画廊配置](../scripts/examples/config.json)，将 `geographies[]` 的 `path`、`id_property`、`label_property`、`level`、`projection` 和来源说明替换为自己的配置，然后在 stats-map 目录执行：
 
 ```sh
 npm run preview -- --config /path/to/gallery.json --data-root /path/to/assets

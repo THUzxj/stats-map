@@ -9,7 +9,7 @@ stats-map 的运行、开发、构建、默认预览和 npm 打包输入均位�
 | 运行与公共类型 | 本包源码、类型或构建后的 dist | 无；无第三方 runtime dependency |
 | 构建 | 本包源码、Schema、类型、许可、覆盖账本，锁定 esbuild/TypeScript | 无；首次安装工具通常需 registry |
 | Node 测试与默认矩阵 | 本包 tests 和虚构夹具 | 无；默认 22 例矩阵 |
-| 默认 preview | scripts/preview、源码、模拟数据生成器及包内 examples/preview 的真实边界 | 无；不读取外层 examples/catalog |
+| 默认 preview | scripts/examples、源码、模拟数据生成器及包内 examples/preview 的真实边界 | 无；不读取外层 examples/catalog |
 | 包消费验证 | npm 缓存、临时目录、实际 tarball、精确构建工具 | 无；离线验证需预先具备缓存 |
 | 可选浏览器 smoke | Python、Playwright 和已安装的 Chromium/Chrome | 无宿主源码依赖；需额外测试环境 |
 | 静态资源部署 | dist 和调用方指定的新/空目录 | 无固定宿主路径 |

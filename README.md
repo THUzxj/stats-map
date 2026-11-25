@@ -53,25 +53,63 @@ npm pack
 npm install /path/to/stats-map-1.0.0.tgz
 ```
 
+下面在支持 npm 模块和 CSS 导入的前端项目中创建一张中国省级分级设色图。将仓库中的 [china.geojson](examples/preview/geometry/china.geojson) 复制到前端项目，与 `china-map.js` 放在同一目录。边界来自 DataV GeoAtlas 归档快照，图中的指标值为模拟数据。 [边界来源与范围](examples/preview/geometry/china.source.json)
+
+想先看效果，可以运行 `npm run preview` 并打开 [中国地图最小示例](http://127.0.0.1:4173/examples/china/)。页面及脚本位于 [examples/china](examples/china/)。
+
+在页面中添加地图容器，并加载 `china-map.js`。
+
 ```html
 <div id="map" class="stats-map" style="height:480px"></div>
+<script type="module" src="./china-map.js"></script>
 ```
 
+在 `china-map.js` 中，用 GeoJSON 的 `adcode` 作为地区 ID、`name` 作为显示名称。将具名地区和原始几何一起交给 `chinaGeography()`，生成标准 `Geography`。无名称的附属几何作为参考边界保留。
+
 ```js
-import { createMap } from 'stats-map';
+import { chinaDataset, chinaGeography, createMap } from 'stats-map';
 import 'stats-map/style.css';
 
-// bundle.json 由调用方提供；可复制包内
-// tests/fixtures/third-map.json 虚构样本开始。
-const response = await fetch('./bundle.json');
+const response = await fetch(new URL('./china.geojson', import.meta.url));
 if (!response.ok) throw new Error(`HTTP ${response.status}`);
-const bundle = await response.json();
-const map = createMap(document.querySelector('#map'), { bundle, responsive: true });
+const geojson = await response.json();
+
+const regions = geojson.features
+  .filter(({ properties }) => properties?.name && properties.adcode != null)
+  .map(({ properties }) => ({
+    code: String(properties.adcode),
+    name: properties.name,
+    level: 'province',
+  }));
+
+const geography = chinaGeography({
+  id: 'china-provinces',
+  title: '中国省级边界',
+  regions,
+  features: geojson,
+});
+
+const dataset = chinaDataset({
+  id: 'china-demo',
+  title: '省级模拟数据',
+  scope_note: '演示用模拟数据',
+  periods: [{ id: 'demo', label: '演示期' }],
+  metrics: [{ id: 'demo_value', label: '模拟指标', unit: '模拟单位', aggregation: 'none' }],
+  records: regions.map(({ code }, index) => ({
+    region_code: code,
+    period: 'demo',
+    values: { demo_value: 10 + (index * 17) % 90 },
+  })),
+}, geography);
+
+const map = createMap(document.querySelector('#map'), { geography, dataset, responsive: true });
 map.on('selectionchange', () => console.log(map.getState().selection));
 // 页面或组件卸载时：map.destroy();
 ```
 
-上例用于支持 npm 模块与 CSS 导入的前端工具。普通网页可直接加载构建后的浏览器脚本，无需打包工具，见[使用指南](docs/USAGE.md)。预览边界、范围与来源见[示例说明](examples/preview/README.md)；生产应用自行提供和管理统计数据、边界及其来源。
+`chinaDataset()` 会把统计数据关联到这份 `Geography`，每条记录的 `region_code` 对应上面的省级 `adcode`。`createMap()` 默认用首个期次和指标绘制分级设色图。接入实际数据时，把 `metrics`、`periods` 和 `records` 换成自己的统计口径和记录。 [更多图层配置](docs/ADDING_MAPS.md)
+
+普通网页也可直接加载构建后的浏览器脚本，无需打包工具。 [使用指南](docs/USAGE.md)
 
 ## 文档
 

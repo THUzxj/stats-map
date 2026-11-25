@@ -14,8 +14,15 @@ export async function createPreviewServer({ configPath = path.join(root, 'exampl
   if (config.schema_version !== 1 || !Array.isArray(config.geographies) || !config.geographies.length) throw new Error('Invalid gallery config');
   const dataBase = path.resolve(dataRoot);
   function resolve(route) {
-    if (route === '/' || route === '/preview' || route === '/preview/') return path.join(root, 'scripts/preview/index.html');
-    if (route.startsWith('/preview/')) return path.join(root, 'scripts/preview', route.slice('/preview/'.length));
+    if (route === '/' || route === '/preview' || route === '/preview/') return path.join(root, 'scripts/examples/index.html');
+    if (route.startsWith('/preview/')) return path.join(root, 'scripts/examples', route.slice('/preview/'.length));
+    if (route === '/examples/china/') return path.join(root, 'examples/china/index.html');
+    if ([
+      '/examples/china/index.html',
+      '/examples/china/china-map.js',
+      '/examples/preview/geometry/china.geojson',
+      '/examples/preview/geometry/china.source.json',
+    ].includes(route)) return path.join(root, route.slice(1));
     if (['/src/', '/dist/', '/docs/'].some(prefix => route.startsWith(prefix))) return path.join(root, route.slice(1));
     if (['/fixtures/gallery.js', '/fixtures/third-map.json'].includes(route)) return path.join(root, 'tests', route.slice(1));
     if (route === '/README.md') return path.join(root, 'README.md');
