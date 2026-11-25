@@ -22,6 +22,8 @@ export async function createPreviewServer({ configPath = path.join(root, 'exampl
       '/examples/china/china-map.js',
       '/examples/preview/geometry/china.geojson',
       '/examples/preview/geometry/china.source.json',
+      '/examples/preview/geometry/hainan.geojson',
+      '/examples/preview/geometry/hainan.source.json',
     ].includes(route)) return path.join(root, route.slice(1));
     if (['/src/', '/dist/', '/docs/'].some(prefix => route.startsWith(prefix))) return path.join(root, route.slice(1));
     if (['/fixtures/gallery.js', '/fixtures/third-map.json'].includes(route)) return path.join(root, 'tests', route.slice(1));

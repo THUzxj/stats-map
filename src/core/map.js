@@ -8,14 +8,14 @@ import { rememberFocus, restoreFocus } from '../components/focus.js';
 import { rankingSvg } from '../components/ranking.js';
 import { resolveProfile } from './profile.js';
 import { decorationSvg, geographicBackgroundSvg, graticuleSvg, referenceSvg, selectionSvg, escapeSvg } from '../components/decorations.js';
-import { renderInsets, insetHitTest } from '../components/insets.js';
+import { renderInsets, insetHitTest, positionInsets } from '../components/insets.js';
 import { dispatchMapTarget } from './interaction-events.js';
 import { svgPngBlob } from '../components/raster.js';
 import { validateBundle, validateGeography, validateDataset, validateMapSpec } from './validate.js';
 import { DatasetView } from './dataset.js';
 import { stageSvg } from '../renderers/svg.js';
 import { RendererTransaction } from '../renderers/protocol.js';
-import { hitTest, fitProjection } from './geometry.js';
+import { hitTest, fitProjection, geographyWithFeatures } from './geometry.js';
 import { StatsMapError } from './errors.js';
 import { getRenderer } from '../renderers/registry.js';
 import { buildLegend, legendSvg, measureLegend } from '../components/legend.js';
@@ -32,15 +32,36 @@ import { comparisonDomains } from '../components/comparison.js';
 
 let instanceSequence = 0;
 function key(r) { return `${r.kind}:${r.id}@${r.revision}`; }
-function projectionOptions(spec,geography) { return {...(spec.layout??{}),regionIds:geography?viewRegionIds(geography,spec):spec.view?.region_ids}; }
+function insetFeatureIds(spec) {
+  if((spec.layout?.type??'geographic')!=='geographic')return [];
+  return [...new Set((spec.insets??[]).flatMap(inset=>inset.feature_ids??[]))].sort();
+}
+function mainGeography(geography,spec) {
+  const excluded=insetFeatureIds(spec);
+  return excluded.length?geographyWithFeatures(geography,excluded,{exclude:true}):geography;
+}
+function projectionOptions(spec,geography) {
+  const excludedFeatures=insetFeatureIds(spec);
+  const cornerInsets=excludedFeatures.length?(spec.insets??[])
+    .filter(inset=>inset.feature_ids&&inset.anchor==='bottom-right'&&(inset.visible!==false||inset.controls!==false))
+    .map(({x,y,width,height,anchor})=>({x,y,width,height,anchor})):[];
+  return {...spec.layout,regionIds:viewRegionIds(geography,spec),excludedFeatures,cornerInsets};
+}
+function fitMainProjection(geography,viewport,spec) {
+  const {excludedFeatures,cornerInsets,...options}=projectionOptions(spec,geography);
+  const scoped=excludedFeatures.length?geographyWithFeatures(geography,excludedFeatures,{exclude:true}):geography;
+  const positioned=positionInsets(cornerInsets,viewport);
+  const reservedCorner=positioned.length?{x:Math.min(...positioned.map(inset=>inset.x)),y:Math.min(...positioned.map(inset=>inset.y-4))}:null;
+  return fitProjection(scoped,viewport,{...options,reservedCorner});
+}
 function normalizeLayerRoles(spec) { return {...spec,layers:(spec.layers??[]).map(layer=>layer.role?layer:{...layer,role:getRenderer(layer.type).defaultRole})}; }
 function eventBus() { const listeners=new Map(); return {on(name,fn){if(typeof fn!=='function')return()=>{};const a=listeners.get(name)??[];a.push(fn);listeners.set(name,a);return()=>{const i=a.indexOf(fn);if(i>=0)a.splice(i,1);}},off(name,fn){const a=listeners.get(name)??[];const i=a.indexOf(fn);if(i>=0)a.splice(i,1);},emit(name,p){for(const fn of [...(listeners.get(name)??[])])try{fn(p)}catch{}},clear(){listeners.clear();}}; }
 
 export function inlineResources(bundle) { validateBundle(bundle); const map=new Map(); for(const e of bundle.resources)if(e.storage==='inline')map.set(key(e.resource),e.resource); const specRef={kind:'stats-map/spec',...bundle.spec_ref}; const spec=map.get(key(specRef))??map.get(key(bundle.spec_ref)); if(!spec)throw new StatsMapError(`missing spec ${bundle.spec_ref.id}`,'MISSING_RESOURCE'); const geo=map.get(key({kind:'stats-map/geography',...spec.geography_ref})); if(!geo)throw new StatsMapError(`missing geography ${spec.geography_ref.id}`,'MISSING_RESOURCE'); const datasets=new Map(); for(const r of spec.dataset_refs){const d=map.get(key({kind:'stats-map/dataset',...r}));if(!d)throw new StatsMapError(`missing dataset ${r.id}`,'MISSING_RESOURCE');datasets.set(r.id,d);} return {bundle,spec,geography:geo,datasets,resources:map}; }
 
 export class MapFrame {
-  constructor(bundle, options={}) { const loaded=inlineResources(bundle);loaded.spec=normalizeLayerRoles(resolveProfile({...loaded.spec,...(options.locale!=null?{locale:options.locale,view:{...loaded.spec.view,locale:options.locale}}:{}),...(options.theme!=null?{theme:options.theme}:{})})); validateGeography(loaded.geography); for(const d of loaded.datasets.values())validateDataset(d,loaded.geography); validateMapSpec(loaded.spec,loaded.geography,new Map([...loaded.datasets].map(([id,d])=>[`stats-map/dataset:${id}@${d.revision}`,d]))); this.instanceId=`stats-map-${++instanceSequence}`;this.bundle=bundle;this.spec=loaded.spec;this.geography=loaded.geography;this.datasets=loaded.datasets;this.options=options;this.viewport={width:options.width??800,height:options.height??600};this.projection=fitProjection(this.geography,this.viewport,projectionOptions(this.spec,this.geography));this.events=eventBus();this.events.on('regionhover',payload=>{const id=payload.region_id??null;if(this.hoveredRegionId===id)return;this.hoveredRegionId=id;this.render();});this.state=new MapState({bundle_ref:{id:bundle.id,revision:bundle.revision},spec_ref:{id:this.spec.id,revision:this.spec.revision},selection:[]});this.selection=new Set();this.groups=[];this.destroyed=false;this.lastRender=null;this.dorlingSimulation=new DorlingSimulation(this.spec.layout?.dorling??this.spec.layout??{});this.dorlingPositions=null;this.dorlingKey=null;this._views=new Map([...this.datasets].map(([id,d])=>[id,new DatasetView(d,this.geography)])); if(options.container)try{this.mount(options.container);}catch(error){this.destroy();throw error;} }
-  mount(container){if(this.destroyed)throw new StatsMapError('map is destroyed','LIFECYCLE');if(this.container&&this.container!==container)this.unmount();this.container=container;if(this.options.touch!==false&&!this.touchGestures)this.touchGestures=new TouchGestures(this,container);if(!this.domHandlers){const onClick=e=>{if(!this.touchGestures?.suppressClick())dispatchMapTarget(this,e,'click');};const onHover=e=>{if(e.pointerType!=='touch'&&!this.touchGestures?.active)dispatchMapTarget(this,e,'hover');};const onFocus=e=>dispatchMapTarget(this,e,'focus');const onMove=e=>{if(e.pointerType==='touch'){this.touchGestures?.move(e);return;}if(!this.drag)return;this.projection={...this.projection,translate:[this.drag.translate[0]+e.clientX-this.drag.x,this.drag.translate[1]+e.clientY-this.drag.y]};this._emitTransform('gesture');this.render();};const onDown=e=>{if(e.pointerType==='touch'){this.touchGestures?.down(e);return;}if(e.target?.closest?.('[data-inset-id],[data-inset-toggle]'))return;if(e.button!==1&&!e.altKey)return;this.drag={x:e.clientX,y:e.clientY,translate:[...this.projection.translate]};e.preventDefault();};const onUp=e=>{if(e?.pointerType==='touch')this.touchGestures?.up(e);else this.touchGestures?.cancel();this.drag=null;};const onWheel=e=>{e.preventDefault();const point=this._eventPoint(e),inset=e.target?.closest?.('[data-inset-id]')?.getAttribute('data-inset-id');this.zoomAt(point,e.deltaY<0?1.15:1/1.15,inset); };const onKey=e=>{if(['Enter',' '].includes(e.key)&&e.target?.closest?.('[data-inset-toggle]')){const id=e.target.closest('[data-inset-toggle]').getAttribute('data-inset-toggle');this.toggleInset(id);e.preventDefault();for(const element of container.querySelectorAll?.('[data-inset-toggle]')??[])if(element.getAttribute('data-inset-toggle')===id)element.focus?.();return;}const legend=e.target?.closest?.('[data-legend-layer-id]'),item=e.target?.closest?.('[data-legend-key]');if(legend&&item&&['Enter',' ','Escape'].includes(e.key)){const layerId=legend.getAttribute('data-legend-layer-id'),key=item.getAttribute('data-legend-key');if(e.key==='Escape')this.setLegendFilter(layerId,null,{source:'keyboard'});else dispatchMapTarget(this,e,'click');e.preventDefault();for(const element of container.querySelectorAll?.('[data-legend-layer-id] [data-legend-key]')??[])if(element.getAttribute('data-legend-key')===key&&element.closest('[data-legend-layer-id]').getAttribute('data-legend-layer-id')===layerId){element.focus?.();break;}return;}if(['Enter',' '].includes(e.key)&&e.target?.closest?.('[data-region-id],[data-symbol-region-id],[data-relation-id],[data-flow-route-id]')){const target=e.target,regionId=target.getAttribute('data-region-id')??target.getAttribute('data-symbol-region-id'),relationId=target.getAttribute('data-relation-id');dispatchMapTarget(this,e,'click');e.preventDefault();return;}if(e.target!==container&&/input|textarea|select/i.test(e.target?.tagName??''))return;if(e.key==='Escape'){this.setSelection([],{source:'keyboard'});e.preventDefault();}if(e.key==='Home'){this.projection=fitProjection(this.geography,this.viewport,projectionOptions(this.spec,this.geography));this.render();e.preventDefault();}};this.domHandlers={onClick,onHover,onMove,onDown,onUp,onWheel,onKey,onFocus};container.setAttribute?.('tabindex','0');container.addEventListener?.('click',onClick);container.addEventListener?.('focusin',onFocus);container.addEventListener?.('pointermove',onHover);container.addEventListener?.('pointerdown',onDown);container.ownerDocument?.addEventListener?.('pointermove',onMove);container.ownerDocument?.addEventListener?.('pointerup',onUp);container.ownerDocument?.addEventListener?.('pointercancel',onUp);container.ownerDocument?.defaultView?.addEventListener?.('blur',onUp);container.addEventListener?.('wheel',onWheel,{passive:false});container.addEventListener?.('keydown',onKey);}
+  constructor(bundle, options={}) { const loaded=inlineResources(bundle);loaded.spec=normalizeLayerRoles(resolveProfile({...loaded.spec,...(options.locale!=null?{locale:options.locale,view:{...loaded.spec.view,locale:options.locale}}:{}),...(options.theme!=null?{theme:options.theme}:{})})); validateGeography(loaded.geography); for(const d of loaded.datasets.values())validateDataset(d,loaded.geography); validateMapSpec(loaded.spec,loaded.geography,new Map([...loaded.datasets].map(([id,d])=>[`stats-map/dataset:${id}@${d.revision}`,d]))); this.instanceId=`stats-map-${++instanceSequence}`;this.bundle=bundle;this.spec=loaded.spec;this.geography=loaded.geography;this.datasets=loaded.datasets;this.options=options;this.viewport={width:options.width??800,height:options.height??600};this.projection=fitMainProjection(this.geography,this.viewport,this.spec);this.events=eventBus();this.events.on('regionhover',payload=>{const id=payload.region_id??null;if(this.hoveredRegionId===id)return;this.hoveredRegionId=id;this.render();});this.state=new MapState({bundle_ref:{id:bundle.id,revision:bundle.revision},spec_ref:{id:this.spec.id,revision:this.spec.revision},selection:[]});this.selection=new Set();this.groups=[];this.destroyed=false;this.lastRender=null;this.dorlingSimulation=new DorlingSimulation(this.spec.layout?.dorling??this.spec.layout??{});this.dorlingPositions=null;this.dorlingKey=null;this._views=new Map([...this.datasets].map(([id,d])=>[id,new DatasetView(d,this.geography)])); if(options.container)try{this.mount(options.container);}catch(error){this.destroy();throw error;} }
+  mount(container){if(this.destroyed)throw new StatsMapError('map is destroyed','LIFECYCLE');if(this.container&&this.container!==container)this.unmount();this.container=container;if(this.options.touch!==false&&!this.touchGestures)this.touchGestures=new TouchGestures(this,container);if(!this.domHandlers){const onClick=e=>{if(!this.touchGestures?.suppressClick())dispatchMapTarget(this,e,'click');};const onHover=e=>{if(e.pointerType!=='touch'&&!this.touchGestures?.active)dispatchMapTarget(this,e,'hover');};const onFocus=e=>dispatchMapTarget(this,e,'focus');const onMove=e=>{if(e.pointerType==='touch'){this.touchGestures?.move(e);return;}if(!this.drag)return;this.projection={...this.projection,translate:[this.drag.translate[0]+e.clientX-this.drag.x,this.drag.translate[1]+e.clientY-this.drag.y]};this._emitTransform('gesture');this.render();};const onDown=e=>{if(e.pointerType==='touch'){this.touchGestures?.down(e);return;}if(e.target?.closest?.('[data-inset-id],[data-inset-toggle]'))return;if(e.button!==1&&!e.altKey)return;this.drag={x:e.clientX,y:e.clientY,translate:[...this.projection.translate]};e.preventDefault();};const onUp=e=>{if(e?.pointerType==='touch')this.touchGestures?.up(e);else this.touchGestures?.cancel();this.drag=null;};const onWheel=e=>{e.preventDefault();const point=this._eventPoint(e),inset=e.target?.closest?.('[data-inset-id]')?.getAttribute('data-inset-id');this.zoomAt(point,e.deltaY<0?1.15:1/1.15,inset); };const onKey=e=>{if(['Enter',' '].includes(e.key)&&e.target?.closest?.('[data-inset-toggle]')){const id=e.target.closest('[data-inset-toggle]').getAttribute('data-inset-toggle');this.toggleInset(id);e.preventDefault();for(const element of container.querySelectorAll?.('[data-inset-toggle]')??[])if(element.getAttribute('data-inset-toggle')===id)element.focus?.();return;}const legend=e.target?.closest?.('[data-legend-layer-id]'),item=e.target?.closest?.('[data-legend-key]');if(legend&&item&&['Enter',' ','Escape'].includes(e.key)){const layerId=legend.getAttribute('data-legend-layer-id'),key=item.getAttribute('data-legend-key');if(e.key==='Escape')this.setLegendFilter(layerId,null,{source:'keyboard'});else dispatchMapTarget(this,e,'click');e.preventDefault();for(const element of container.querySelectorAll?.('[data-legend-layer-id] [data-legend-key]')??[])if(element.getAttribute('data-legend-key')===key&&element.closest('[data-legend-layer-id]').getAttribute('data-legend-layer-id')===layerId){element.focus?.();break;}return;}if(['Enter',' '].includes(e.key)&&e.target?.closest?.('[data-region-id],[data-symbol-region-id],[data-relation-id],[data-flow-route-id]')){const target=e.target,regionId=target.getAttribute('data-region-id')??target.getAttribute('data-symbol-region-id'),relationId=target.getAttribute('data-relation-id');dispatchMapTarget(this,e,'click');e.preventDefault();return;}if(e.target!==container&&/input|textarea|select/i.test(e.target?.tagName??''))return;if(e.key==='Escape'){this.setSelection([],{source:'keyboard'});e.preventDefault();}if(e.key==='Home'){this.projection=fitMainProjection(this.geography,this.viewport,this.spec);this.render();e.preventDefault();}};this.domHandlers={onClick,onHover,onMove,onDown,onUp,onWheel,onKey,onFocus};container.setAttribute?.('tabindex','0');container.addEventListener?.('click',onClick);container.addEventListener?.('focusin',onFocus);container.addEventListener?.('pointermove',onHover);container.addEventListener?.('pointerdown',onDown);container.ownerDocument?.addEventListener?.('pointermove',onMove);container.ownerDocument?.addEventListener?.('pointerup',onUp);container.ownerDocument?.addEventListener?.('pointercancel',onUp);container.ownerDocument?.defaultView?.addEventListener?.('blur',onUp);container.addEventListener?.('wheel',onWheel,{passive:false});container.addEventListener?.('keydown',onKey);}
     if(this.options.responsive&&!this.resizeObserver){
       const Observer=this.options.ResizeObserver??container.ownerDocument?.defaultView?.ResizeObserver??globalThis.ResizeObserver;
       if(Observer){this.resizeObserver=new Observer(entries=>{if(this.destroyed||!this.container)return;const rect=entries.find(entry=>entry.target===this.container)?.contentRect;if(!rect||rect.width<=0||rect.height<=0||rect.width===this.viewport.width&&rect.height===this.viewport.height)return;const transform=this.getViewTransform();this.viewport={...this.viewport,width:rect.width,height:rect.height};this.setViewTransform(transform,{source:'resize'});});this.resizeObserver.observe(container);}
@@ -60,12 +81,12 @@ export class MapFrame {
     if(!this.destroyed&&this.lastRender===result)this.events.emit('render',{svg:result.svg});
     return result;
   }
-  setViewport(value){const viewport={...this.viewport,...value};return this._change({viewport,projection:fitProjection(this.geography,viewport,projectionOptions(this.spec,this.geography))},()=>this.state.set({viewport:{...viewport}},'viewport'));}
+  setViewport(value){const viewport={...this.viewport,...value};return this._change({viewport,projection:fitMainProjection(this.geography,viewport,this.spec)},()=>this.state.set({viewport:{...viewport}},'viewport'));}
   setSpec(spec){
     if(this.destroyed)throw new StatsMapError('map is destroyed','LIFECYCLE');
     spec=normalizeLayerRoles(resolveProfile(spec));
     validateMapSpec(spec,this.geography,this.datasets);
-    const refit=JSON.stringify(projectionOptions(this.spec,this.geography))!==JSON.stringify(projectionOptions(spec,this.geography)),projection=refit?fitProjection(this.geography,this.viewport,projectionOptions(spec,this.geography)):this.projection;
+    const refit=JSON.stringify(projectionOptions(this.spec,this.geography))!==JSON.stringify(projectionOptions(spec,this.geography)),projection=refit?fitMainProjection(this.geography,this.viewport,spec):this.projection;
     return this._change({drag:null,spec,projection},()=>{this.state.set({spec_ref:{id:spec.id,revision:spec.revision}},'spec');this.events.emit('specchange',spec);});
   }
   setBundle(bundle){
@@ -85,7 +106,7 @@ export class MapFrame {
     for(const value of datasets.values())validateDataset(value,geography);
     validateMapSpec(spec,geography,datasets);
     const views=new Map([...datasets].map(([id,value])=>[id,new DatasetView(value,geography)]));
-    const projection=fitProjection(geography,this.viewport,projectionOptions(spec,geography));
+    const projection=fitMainProjection(geography,this.viewport,spec);
     return this._change({drag:null,geography,datasets,_views:views,spec,projection},()=>{this.state.set({geography_ref:{id:geography.id,revision:geography.revision},spec_ref:{id:spec.id,revision:spec.revision}},'data');this.events.emit('datachange',{dataset_id:dataset.id,revision:dataset.revision});});
   }
   setGeography(geography){
@@ -95,7 +116,7 @@ export class MapFrame {
     const spec={...this.spec,geography_ref:{id:geography.id,revision:geography.revision}};
     validateMapSpec(spec,geography,this.datasets);
     const views=new Map([...this.datasets].map(([id,dataset])=>[id,new DatasetView(dataset,geography)]));
-    const projection=fitProjection(geography,this.viewport,projectionOptions(spec,geography));
+    const projection=fitMainProjection(geography,this.viewport,spec);
     return this._change({drag:null,geography,spec,_views:views,projection},()=>this.state.set({geography_ref:{id:geography.id,revision:geography.revision}},'geography'));
   }
   setView(view={}){return this.setSpec({...this.spec,view:{...(this.spec.view??{}),...view}})}
@@ -115,19 +136,20 @@ export class MapFrame {
   reducedMotion(){const value=this.spec.interaction?.reducedMotion;if(typeof value==='boolean')return value;return !!(this.options.matchMedia??this.container?.ownerDocument?.defaultView?.matchMedia?.bind(this.container.ownerDocument.defaultView)??globalThis.matchMedia)?.('(prefers-reduced-motion: reduce)').matches;}
   setInteraction(interaction){return this.setSpec({...this.spec,interaction:{...(this.spec.interaction??{}),...interaction}})}
   hover(regionId,source='api'){this.events.emit('regionhover',{region_id:regionId??null,geography_ref:{id:this.geography.id,revision:this.geography.revision},source});}
-  getViewTransform(){const fitted=fitProjection(this.geography,this.viewport,projectionOptions(this.spec,this.geography));return {zoom:this.projection.scale/fitted.scale,pan:[(this.projection.translate[0]-fitted.translate[0])/this.viewport.width,(this.projection.translate[1]-fitted.translate[1])/this.viewport.height]};}
+  _fitProjection(){return fitMainProjection(this.geography,this.viewport,this.spec);}
+  getViewTransform(){const fitted=fitMainProjection(this.geography,this.viewport,this.spec);return {zoom:this.projection.scale/fitted.scale,pan:[(this.projection.translate[0]-fitted.translate[0])/this.viewport.width,(this.projection.translate[1]-fitted.translate[1])/this.viewport.height]};}
   _emitTransform(source='api'){this.events.emit('transformchange',{transform:this.getViewTransform(),source});}
-  setViewTransform(transform,options={}){if(this.destroyed)throw new StatsMapError('map is destroyed','LIFECYCLE');if(!Number.isFinite(transform?.zoom)||transform.zoom<=0||!Array.isArray(transform.pan)||transform.pan.length!==2||!transform.pan.every(Number.isFinite))throw new StatsMapError('invalid view transform','INVALID_ARGUMENT');const fitted=fitProjection(this.geography,this.viewport,projectionOptions(this.spec,this.geography));this.projection={...fitted,scale:fitted.scale*transform.zoom,translate:[fitted.translate[0]+transform.pan[0]*this.viewport.width,fitted.translate[1]+transform.pan[1]*this.viewport.height]};this._emitTransform(options.source);return this.render();}
+  setViewTransform(transform,options={}){if(this.destroyed)throw new StatsMapError('map is destroyed','LIFECYCLE');if(!Number.isFinite(transform?.zoom)||transform.zoom<=0||!Array.isArray(transform.pan)||transform.pan.length!==2||!transform.pan.every(Number.isFinite))throw new StatsMapError('invalid view transform','INVALID_ARGUMENT');const fitted=fitMainProjection(this.geography,this.viewport,this.spec);this.projection={...fitted,scale:fitted.scale*transform.zoom,translate:[fitted.translate[0]+transform.pan[0]*this.viewport.width,fitted.translate[1]+transform.pan[1]*this.viewport.height]};this._emitTransform(options.source);return this.render();}
   _eventPoint(event){const rect=this.container.getBoundingClientRect();return [(event.clientX-rect.left)*this.viewport.width/rect.width,(event.clientY-rect.top)*this.viewport.height/rect.height];}
   toggleInset(id,visible){const inset=this.spec.insets?.find(value=>value.id===id);if(!inset)throw new StatsMapError(`unknown inset: ${id}`,'INVALID_ARGUMENT');const next=visible??inset.visible===false;const result=this.setSpec({...this.spec,insets:this.spec.insets.map(value=>value.id===id?{...value,visible:next}:value)});this.events.emit('insetchange',{inset_id:id,visible:next});return result;}
   setInsetTransform(id,transform){if(!Number.isFinite(transform?.zoom)||transform.zoom<=0||!Array.isArray(transform.pan)||transform.pan.length!==2||!transform.pan.every(Number.isFinite))throw new StatsMapError('invalid inset transform','INVALID_ARGUMENT');if(!this.spec.insets?.some(value=>value.id===id))throw new StatsMapError(`unknown inset: ${id}`,'INVALID_ARGUMENT');return this.setSpec({...this.spec,insets:this.spec.insets.map(value=>value.id===id?{...value,transform:{zoom:transform.zoom,pan:[...transform.pan]}}:value)});}
   zoomAt(point,factor,insetId){
     if(!Array.isArray(point)||!point.every(Number.isFinite)||!Number.isFinite(factor)||factor<=0)throw new StatsMapError('invalid zoom position or factor','INVALID_ARGUMENT');
-    if(insetId){const view=this.insetViews?.find(value=>value.id===insetId);if(!view)return;const fitted=fitProjection(this.geography,view.viewport,{...view.spec.layout,regionIds:view.spec.view.region_ids}),[x,y]=[point[0]-view.inset.x,point[1]-view.inset.y-20],translation=[x-(x-view.projection.translate[0])*factor,y-(y-view.projection.translate[1])*factor];return this.setInsetTransform(insetId,{zoom:view.projection.scale*factor/fitted.scale,pan:[(translation[0]-fitted.translate[0])/view.viewport.width,(translation[1]-fitted.translate[1])/view.viewport.height]});}
+    if(insetId){const view=this.insetViews?.find(value=>value.id===insetId);if(!view)return;const fitted=view.fitted,[x,y]=[point[0]-view.inset.x,point[1]-view.inset.y-20],translation=[x-(x-view.projection.translate[0])*factor,y-(y-view.projection.translate[1])*factor];return this.setInsetTransform(insetId,{zoom:view.projection.scale*factor/fitted.scale,pan:[(translation[0]-fitted.translate[0])/view.viewport.width,(translation[1]-fitted.translate[1])/view.viewport.height]});}
     const [x,y]=point;this.projection={...this.projection,scale:this.projection.scale*factor,translate:[x-(x-this.projection.translate[0])*factor,y-(y-this.projection.translate[1])*factor]};this._emitTransform('gesture');return this.render();
   }
   recenterFromMinimap(id,point){const view=this.insetViews?.find(value=>value.id===id);if(!view?.overview)return;const {scale,shift}=view.overview,x=(point[0]-view.inset.x-shift[0])/scale,y=(point[1]-view.inset.y-20-shift[1])/scale;this.projection={...this.projection,translate:[this.projection.translate[0]+this.viewport.width/2-x,this.projection.translate[1]+this.viewport.height/2-y]};this._emitTransform('minimap');return this.render();}
-  resetView(){this.projection=fitProjection(this.geography,this.viewport,projectionOptions(this.spec,this.geography));this._emitTransform();return this.render();}
+  resetView(){this.projection=fitMainProjection(this.geography,this.viewport,this.spec);this._emitTransform();return this.render();}
 
   setGroups(groups){return this._change({groups:[...groups]},()=>this.events.emit('groupschange',this.groups));}
   setLegendFilter(layerId,keys,options={}){
@@ -141,7 +163,7 @@ export class MapFrame {
   setSelection(ids, options={}){const next=new Set(ids??[]);return this._change({selection:next},()=>{this.state.set({selection:[...next]},options.source??'api');this.events.emit('selectionchange',{ids:[...next],source:options.source??'api'});});}
   toggleSelection(id){const s=new Set(this.selection);s.has(id)?s.delete(id):s.add(id);return this.setSelection([...s],{source:'toggle'});}
   getState(){return {schema_version:1,spec_ref:{id:this.spec.id,revision:this.spec.revision},geography_ref:{id:this.geography.id,revision:this.geography.revision},selection:[...this.selection],legend_filters:structuredClone(this.spec.view?.legend_filters??{}),relation_region_id:this.spec.view?.relation_region_id??null,groups:this.groups.map(g=>({...g,members:[...(g.members??[])]})),viewport:{...this.viewport}};}
-  loadState(state){if(!state||state.schema_version!==1)throw new StatsMapError('invalid map state','INVALID_STATE');if(state.spec_ref&&(state.spec_ref.id!==this.spec.id||state.spec_ref.revision!==this.spec.revision))throw new StatsMapError('map state belongs to another spec','REFERENCE_MISMATCH');if(state.legend_filters||state.relation_region_id!=null)this.setView({...state.legend_filters?{legend_filters:state.legend_filters}:{},...state.relation_region_id!=null?{relation_region_id:state.relation_region_id}:{}});this.groups=state.groups??[];this.viewport=state.viewport?{...this.viewport,...state.viewport}:this.viewport;this.projection=fitProjection(this.geography,this.viewport,projectionOptions(this.spec,this.geography));return this.setSelection(state.selection??[],{source:'state'});}
+  loadState(state){if(!state||state.schema_version!==1)throw new StatsMapError('invalid map state','INVALID_STATE');if(state.spec_ref&&(state.spec_ref.id!==this.spec.id||state.spec_ref.revision!==this.spec.revision))throw new StatsMapError('map state belongs to another spec','REFERENCE_MISMATCH');if(state.legend_filters||state.relation_region_id!=null)this.setView({...state.legend_filters?{legend_filters:state.legend_filters}:{},...state.relation_region_id!=null?{relation_region_id:state.relation_region_id}:{}});this.groups=state.groups??[];this.viewport=state.viewport?{...this.viewport,...state.viewport}:this.viewport;this.projection=fitMainProjection(this.geography,this.viewport,this.spec);return this.setSelection(state.selection??[],{source:'state'});}
   addGroup(group){this.groups=[...this.groups,group];this.events.emit('groupschange',this.groups);return this.groups;}
   summary(datasetId,regionIds,seriesId,periodId,options={}){const v=this._views.get(datasetId);if(!v)throw new StatsMapError(`unknown dataset: ${datasetId}`,'UNKNOWN_DATASET');const context=this.spec.aggregation?.dataset_id===datasetId?{basisId:this.spec.aggregation.basis_id,displayValue:this.spec.aggregation.display_value,...options}:options;return v.summary(regionIds,seriesId,periodId,context);}
   render({notify=true}={}) {
@@ -163,16 +185,17 @@ export class MapFrame {
   }
   _render(transaction) {
     if (this.destroyed) throw new StatsMapError('map is destroyed', 'LIFECYCLE');
-    const presentation=createPresentation(this.spec,this.geography),{theme}=presentation;
+    const geography=mainGeography(this.geography,this.spec),positionedInsets=positionInsets(this.spec.insets,this.viewport);
+    const presentation=createPresentation(this.spec,geography),{theme}=presentation;
     this.presentation=presentation;
-    const anchorOptions={policy:this.spec.anchor_policy,regionIds:viewRegionIds(this.geography,this.spec)},symbolResolution=resolveAnchors(this.geography,anchorOptions),labelResolution=resolveAnchors(this.geography,{...anchorOptions,role:'label'});
-    const geometry=geometryStatus(this.geography,{...anchorOptions,symbolResolution,labelResolution});
+    const anchorOptions={policy:this.spec.anchor_policy,regionIds:viewRegionIds(geography,this.spec)},symbolResolution=resolveAnchors(geography,anchorOptions),labelResolution=resolveAnchors(geography,{...anchorOptions,role:'label'});
+    const geometry=geometryStatus(geography,{...anchorOptions,symbolResolution,labelResolution});
     const layoutType = this.spec.layout?.type ?? 'geographic';
     if (layoutType === 'dorling') this._scheduleDorling();
     else if(this.dorlingKey!=null){this.dorlingSimulation.cancel();this.dorlingKey=null;this.dorlingPositions=null;}
-    let layoutPositions = resolveScreenLayout(this.geography, this.spec, this.viewport, layoutType === 'dorling' ? this.dorlingPositions : null,this._views);
+    let layoutPositions = resolveScreenLayout(geography, this.spec, this.viewport, layoutType === 'dorling' ? this.dorlingPositions : null,this._views);
     if (layoutPositions) {
-      const fitted=fitProjection(this.geography,this.viewport,projectionOptions(this.spec,this.geography)), factor=this.projection.scale/fitted.scale;
+      const fitted=this._fitProjection(), factor=this.projection.scale/fitted.scale;
       for (const p of layoutPositions.values()) {
         p.x=(p.x-fitted.translate[0])*factor+this.projection.translate[0];
         p.y=(p.y-fitted.translate[1])*factor+this.projection.translate[1];
@@ -186,7 +209,7 @@ export class MapFrame {
       layoutPositions.metrics.status=status;
     }
     this.layoutPositions = layoutPositions;
-    let svg = geographicBackgroundSvg(this.geography,this.projection,this.spec,layoutPositions)+graticuleSvg(this.geography,this.projection,this.spec), legend = '';
+    let svg = geographicBackgroundSvg(geography,this.projection,this.spec,layoutPositions)+graticuleSvg(geography,this.projection,this.spec), legend = '';
     const legends=[],panels=[],obstacles=[];
     const renders = [];
     const layers = [...this.spec.layers].sort((a,b) => (a.role === 'base' ? 0 : 1) - (b.role === 'base' ? 0 : 1));
@@ -208,12 +231,12 @@ export class MapFrame {
     }
     const ranking=this.spec.ranking?rankingSvg(this,this.spec.ranking):null;
     if(ranking)obstacles.push(ranking.bounds);
-    for(const inset of this.spec.insets??[]){
+    for(const inset of positionedInsets){
       if(inset.controls!==false)obstacles.push({x:inset.x,y:inset.y-4,width:inset.width,height:24});
       if(inset.visible!==false)obstacles.push({x:inset.x,y:inset.y+20,width:inset.width,height:inset.height});
     }
     const explicitPanels=panels.filter(panel=>panel.x!=null||panel.y!=null).map(panel=>({x:(panel.x??this.spec.legend?.x??12)-6,y:(panel.y??this.spec.legend?.y??20)-14,width:panel.width,height:panel.height}));
-    const fixedDecorations=decorationSvg({geography:this.geography,spec:{...this.spec,decorations:{...this.spec.decorations,labels:false}},projection:this.projection,viewport:this.viewport,views:this._views,layoutPositions,anchorResolution:labelResolution,obstacles:[...obstacles,...explicitPanels]});
+    const fixedDecorations=decorationSvg({geography,spec:{...this.spec,decorations:{...this.spec.decorations,labels:false}},projection:this.projection,viewport:this.viewport,views:this._views,layoutPositions,anchorResolution:labelResolution,obstacles:[...obstacles,...explicitPanels]});
     obstacles.push(...fixedDecorations.layout.items.filter(item=>item.reserve!==false).map(item=>item.bounds),...fixedDecorations.layout.markers);
     // Displaced glyphs are the data targets in a Dorling map. Reserve their
     // complete envelopes before placing automatic legends, including a tall
@@ -227,17 +250,17 @@ export class MapFrame {
     for(const layer of layers){
       const binding=layer.encoding??{},channel=binding.dataset_id?binding:Object.values(binding).find(value=>value&&typeof value==='object'&&value.dataset_id)??binding;
       const view=this._views.get(channel.dataset_id??this.spec.dataset_refs[0]?.id);
-      const result = stageSvg(transaction,{geography:this.geography, datasetView:view, datasetViews:this._views, spec:this.spec, layer, viewport:this.viewport, projection:this.projection, selection:[...this.selection], selectionOverlay:true, layoutPositions, layoutType, anchorResolution:symbolResolution, labelObstacles:obstacles, namespace:`${this.instanceId}-${layer.id}`});
+      const result = stageSvg(transaction,{geography, datasetView:view, datasetViews:this._views, spec:this.spec, layer, viewport:this.viewport, projection:this.projection, selection:[...this.selection], selectionOverlay:true, layoutPositions, layoutType, anchorResolution:symbolResolution, labelObstacles:obstacles, namespace:`${this.instanceId}-${layer.id}`});
       renders.push(result);
       svg += `<g data-layer-id="${String(layer.id).replace(/[&<>"']/g,'')}">${result.svg.replace(/^<svg[^>]*>|<\/svg>$/g, '')}</g>`;
       for(const label of result.flowLayout?.labels?.values()??[])if(label.visible)obstacles.push(label.box);
     }
-    svg+=referenceSvg(this.geography,this.projection,this.spec);
-    const insets=renderInsets(this,transaction);this.insetViews=insets.views;
-    const decorations=decorationSvg({geography:this.geography,spec:this.spec,projection:this.projection,viewport:this.viewport,views:this._views,layoutPositions,obstacles,selection:this.selection,anchorResolution:labelResolution,preparedLayout:fixedDecorations.layout});
+    svg+=referenceSvg(geography,this.projection,this.spec);
+    const insets=renderInsets(this,transaction,positionedInsets);this.insetViews=insets.views;
+    const decorations=decorationSvg({geography,spec:this.spec,projection:this.projection,viewport:this.viewport,views:this._views,layoutPositions,obstacles,selection:this.selection,anchorResolution:labelResolution,preparedLayout:fixedDecorations.layout});
     svg+=decorations.svg;
-    if(this.hoveredRegionId)svg+=selectionSvg(this.geography,this.projection,[this.hoveredRegionId],this.spec,layoutPositions,{hover:true});
-    svg+=selectionSvg(this.geography,this.projection,this.selection,this.spec,layoutPositions);
+    if(this.hoveredRegionId)svg+=selectionSvg(geography,this.projection,[this.hoveredRegionId],this.spec,layoutPositions,{hover:true});
+    svg+=selectionSvg(geography,this.projection,this.selection,this.spec,layoutPositions);
     if(ranking)svg+=ranking.svg;
     svg+=insets.svg;
     const wrapped = `<svg xmlns="http://www.w3.org/2000/svg" style="display:block" width="${this.viewport.width}" height="${this.viewport.height}" viewBox="0 0 ${this.viewport.width} ${this.viewport.height}" lang="${escapeSvg(presentation.locale)}" xml:lang="${escapeSvg(presentation.locale)}" direction="${presentation.direction}" font-family="${escapeSvg(theme.fontFamily)}" fill="${theme.text}" role="group" aria-label="${escapeSvg(presentation.label(this.spec,presentation.t('map')))}" data-reduced-motion="${this.reducedMotion()}"><rect data-map-background="true" width="${this.viewport.width}" height="${this.viewport.height}" fill="${theme.background}" pointer-events="none"/>${svg}${legend}</svg>`;
@@ -265,14 +288,14 @@ export class MapFrame {
   hitTest(point) {
     if(this.destroyed)throw new StatsMapError('map is destroyed','LIFECYCLE');
     if(!this.lastRender)this.render();
-    const inset=insetHitTest(point,this.insetViews??[],this.geography);
+    const inset=insetHitTest(point,this.insetViews??[]);
     if(inset){
       const local=[point[0]-inset.view.inset.x,point[1]-inset.view.inset.y-20];
       if(local[1]>=0)for(const frame of [...this.rendererFrames.values()].reverse())if(frame.context.insetId===inset.view.id){const hit=frame.hitTest(local);if(hit)return hit;}
       return inset.hit?{...inset.hit,insetId:inset.view.id}:null;
     }
     for(const frame of [...this.rendererFrames.values()].reverse())if(frame.context.insetId==null){const hit=frame.hitTest(point);if(hit)return hit;}
-    if (!this.layoutPositions) return hitTest(point, this.geography, this.projection,{regionIds:viewRegionIds(this.geography,this.spec),policy:this.spec.anchor_policy});
+    if (!this.layoutPositions) return hitTest(point, mainGeography(this.geography,this.spec), this.projection,{regionIds:viewRegionIds(this.geography,this.spec),policy:this.spec.anchor_policy});
     return layoutHitTest(point,this.layoutPositions,this.spec.layout.type);
   }
   describe(target) {

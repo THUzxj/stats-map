@@ -3,13 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>中国省级统计地图</title>
+  <title>中国与海南统计地图</title>
   <link rel="stylesheet" href="../../src/stats-map.css">
   <style>
     body { margin: 32px auto; padding: 0 20px; max-width: 920px; font: 16px system-ui, sans-serif; color: #1c2e33; }
     h1 { margin: 0 0 8px; }
     .source { margin: 0 0 20px; color: #45595f; }
+    .controls { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-bottom: 12px; }
+    select { margin-left: 8px; font: inherit; }
     #map { height: clamp(330px, 65vh, 540px); border: 1px solid #d4dfe1; border-radius: 8px; }
+    @media (max-width: 640px) { #map { height: 500px; } }
     #selection { margin: 12px 0; }
   </style>
   <script type="importmap">
@@ -18,8 +21,19 @@
 </head>
 <body>
   <main>
-    <h1>中国省级统计地图</h1>
-    <p class="source">指标值为模拟数据。 <a href="../preview/geometry/china.source.json">边界来源</a></p>
+    <h1>中国与海南统计地图</h1>
+    <p class="source">指标值为模拟数据。 <a id="source" href="../preview/geometry/china.source.json">边界来源</a></p>
+    <div class="controls">
+      <label>地图<select id="geography" disabled>
+        <option value="china">中国</option>
+        <option value="hainan">海南</option>
+      </select></label>
+      <label>显示方式<select id="map-display" disabled>
+        <option value="full">完整地理范围</option>
+        <option value="inset">南海诸岛缩略图</option>
+        <option value="hidden">隐藏南海诸岛</option>
+      </select></label>
+    </div>
     <div id="map" class="stats-map"></div>
     <p id="selection" role="status">正在加载地图…</p>
   </main>

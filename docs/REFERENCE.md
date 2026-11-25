@@ -178,6 +178,12 @@ Euro adapter 接受 FeatureCollection、TopoJSON（`topologyObjects` 可选对�
 
 附图使用 `spec.insets:[{id,x,y,width,height,region_ids?,layout?,decorations?,visible?,minimap?}]`，矩形 y 是开关标题行的位置，图面从 y+20 开始；尺寸均为 SVG 像素。各附图有独立投影、裁剪和纹理标识，地区选择仍共用一套身份；滚轮和双指手势只改变所在图面。`toggleInset(id,visible?)`、`setInsetTransform(id,{zoom,pan})` 提供同样控制，transform 保存到方案。`minimap:true` 显示主图视窗，点击定位主图；自定义投影不绘制未经验证的视窗框，变形布局不显示地理视窗框。
 
+地理附图可用 `feature_ids` 指定要移入的几何，包括参考边界。主图采用地理布局时，按余下几何重新适配投影。折叠附图会保留主图的范围，从 `spec.insets` 移除该项会恢复完整范围。地区 ID、统计数据和聚合口径由原地图包提供。`anchor:'bottom-right'` 将 `x`、`y` 解释为右侧和底部边距。移入几何的右下角附图会为主图预留绘图空间。
+
+同时设置 `visible:false` 和 `controls:false` 可以隐藏这些几何，主图使用整张画布重新适配。中国地图示例中的「隐藏南海诸岛」采用此配置。
+
+DataV GeoAtlas 的全国与海南省边界可先用 `chinaGeography()` 转换，再调用 `chinaSouthChinaSeaInset(geography)`。使用返回的 `geography` 创建地图，把返回的 `inset` 加入 `spec.insets` 即可启用缩略版。全国图的附图包括海南省离岸几何及源文件中的南海参考线，海南省图的附图使用三沙市几何。没有匹配几何时，`inset` 为 `null`。 [中国与海南地图示例源码](../examples/china/china-map.js)
+
 ## 排名、分布与成员目录
 
 ```js

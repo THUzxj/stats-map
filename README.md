@@ -55,7 +55,7 @@ npm install /path/to/stats-map-1.0.0.tgz
 
 下面在支持 npm 模块和 CSS 导入的前端项目中创建一张中国省级分级设色图。将仓库中的 [china.geojson](examples/preview/geometry/china.geojson) 复制到前端项目，与 `china-map.js` 放在同一目录。边界来自 DataV GeoAtlas 归档快照，图中的指标值为模拟数据。 [边界来源与范围](examples/preview/geometry/china.source.json)
 
-想先看效果，可以运行 `npm run preview` 并打开 [中国地图最小示例](http://127.0.0.1:4173/examples/china/)。页面及脚本位于 [examples/china](examples/china/)。
+想先看效果，可以运行 `npm run preview` 并打开 [中国与海南地图示例](http://127.0.0.1:4173/examples/china/)。在「显示方式」中可选完整地理范围、南海诸岛缩略图或隐藏南海诸岛。页面及脚本位于 [examples/china](examples/china/)。
 
 在页面中添加地图容器，并加载 `china-map.js`。
 

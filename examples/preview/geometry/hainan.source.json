@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "title": "海南省市县边界预览样本",
+  "origin": "DataV GeoAtlas，海南省市县边界归档快照",
+  "source_url": "https://geo.datav.aliyun.com/areas_v3/bound/460000_full.json",
+  "retrieved_at": "2026-11-06T17:06:10.778228+00:00",
+  "raw_sha256": "ae44b392cf32ff7f7df5466ca16fa7f1b70b9fb9c36f00f54d6f142d011c65e4",
+  "original_host_archive": "catalog/maps/geometry/raw/460000.json",
+  "derived": {
+    "path": "examples/preview/geometry/hainan.geojson",
+    "sha256": "ae44b392cf32ff7f7df5466ca16fa7f1b70b9fb9c36f00f54d6f142d011c65e4"
+  },
+  "transformation": "按原归档 GeoJSON 字节复制，包含三沙市在内的 19 个具名地区。",
+  "purpose": "海南地图及南海诸岛缩略图演示，统计数据为模拟数据。"
+}

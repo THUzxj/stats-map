@@ -2,6 +2,49 @@ import { validateDataset, validateGeography, validateMapSpec, validateBundle } f
 const hashId=s=>String(s).replace(/[^\w.-]+/g,'_');
 const validPoint=value=>Array.isArray(value)&&value.length>=2&&value.slice(0,2).every(point=>typeof point==='number'&&Number.isFinite(point));
 const pointValue=value=>validPoint(value)?value.slice(0,2):null;
+
+// DataV GeoAtlas groups the offshore polygons under 460000 on its national
+// map and under 460300 on its Hainan map. The island and its nearshore
+// polygons are inside this envelope in the archived national boundary.
+function nearHainanIsland(polygon) {
+  return polygon[0].every(([lon,lat])=>lon>=108.5&&lon<=111.25&&lat>=17.5&&lat<=20.3);
+}
+
+export function chinaSouthChinaSeaInset(geography) {
+  const existingIds=new Set(geography.features.features.map(feature=>String(feature.id)));
+  const featureIds=[];
+  const features=geography.features.features.flatMap(feature=>{
+    const {role,region_id:regionId,adcode}=feature.properties;
+    const code=String(adcode??regionId);
+    const isSansha=role==='region'&&code==='460300';
+    const isReference=role!=='region'&&code==='100000_JD';
+    if(isSansha||isReference){
+      featureIds.push(String(feature.id));
+      return [feature];
+    }
+    if(role!=='region'||code!=='460000'||feature.geometry.type!=='MultiPolygon')return [feature];
+    const near=[],offshore=[];
+    for(const polygon of feature.geometry.coordinates)(nearHainanIsland(polygon)?near:offshore).push(polygon);
+    if(!near.length||!offshore.length)return [feature];
+    let offshoreId=`${feature.id}-south-china-sea`;
+    while(existingIds.has(offshoreId))offshoreId+='-islands';
+    existingIds.add(offshoreId);
+    featureIds.push(offshoreId);
+    return [
+      {...feature,geometry:{...feature.geometry,coordinates:near}},
+      {...feature,id:offshoreId,geometry:{...feature.geometry,coordinates:offshore}},
+    ];
+  });
+  if(!featureIds.length)return {geography,inset:null};
+  return {
+    geography:{...geography,features:{...geography.features,features}},
+    inset:{
+      id:'south-china-sea',title:'南海诸岛',labels:{en:'South China Sea islands'},
+      anchor:'bottom-right',x:12,y:12,width:144,height:144,padding:8,feature_ids:featureIds,
+    },
+  };
+}
+
 function featureForRegion(r){if(!r.geometry)return null;const center=pointValue(r.center);return {type:'Feature',id:`region-${hashId(r.code??r.id)}`,properties:{role:'region',region_id:r.code??r.id,...(center?{center}: {})},geometry:r.geometry}}
 export function chinaGeography(input, options={}) {
   if(input?.kind==='stats-map/geography'){validateGeography(input);return input;}

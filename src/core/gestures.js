@@ -1,6 +1,3 @@
-import { viewRegionIds } from './view.js';
-import { fitProjection } from './geometry.js';
-
 // Single touches retain ordinary region taps. Two touches in the same view
 // establish one gesture; document events keep it alive across SVG replacement.
 export class TouchGestures {
@@ -18,7 +15,7 @@ export class TouchGestures {
     this.pointers.set(event.pointerId,{point:this.point(event,insetId),insetId});
     const entries=[...this.pointers.values()];if(entries.length!==2||entries[0].insetId!==entries[1].insetId)return;
     const view=this.map.insetViews?.find(value=>value.id===insetId),projection=view?.projection??this.map.projection;
-    const fitted=view?fitProjection(this.map.geography,view.viewport,{...view.spec.layout,regionIds:view.spec.view.region_ids}):fitProjection(this.map.geography,this.map.viewport,{...this.map.spec.layout,regionIds:viewRegionIds(this.map.geography,this.map.spec)});
+    const fitted=view?.fitted??this.map._fitProjection();
     const [a,b]=entries.map(entry=>entry.point),distance=Math.hypot(a[0]-b[0],a[1]-b[1]);
     if(distance<1)return;
     this.active={insetId,projection,fitted,viewport:view?.viewport??this.map.viewport,distance,center:[(a[0]+b[0])/2,(a[1]+b[1])/2]};

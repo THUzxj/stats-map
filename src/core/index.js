@@ -2,7 +2,10 @@ export * from './errors.js';
 export * from './validate.js';
 export * from './dataset.js';
 export * from './classification.js';
-export * from './geometry.js';
+export {
+  featureIndex, bounds, registerProjection, projectPoint, fitProjection, anchorIndex, screenAnchors, hitTest,
+  resolveAnchors, geometryStatus, normalizeAnchorPolicy, ANCHOR_ALGORITHM_VERSION,
+} from './geometry.js';
 export * from './topology.js';
 export * from './map.js';
 export * from './groups.js';

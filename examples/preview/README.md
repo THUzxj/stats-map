@@ -5,6 +5,7 @@
 | 样本 | 范围与出处 | 来源与字节校验 |
 | --- | --- | --- |
 | [中国边界](geometry/china.geojson) | DataV GeoAtlas 全国省级边界归档，34 个具名地区；无名称附属几何仅作参考 | [来源记录](geometry/china.source.json) |
+| [海南边界](geometry/hainan.geojson) | DataV GeoAtlas 海南省市县边界归档，19 个具名地区，供中国与海南地图示例使用 | [来源记录](geometry/hainan.source.json) |
 | [欧洲边界](geometry/europe.geojson) | Eurostat / GISCO 2024、1:60M，欧洲视窗内 41 国；不含海外部分，并非欧洲全覆盖 | [来源记录](geometry/europe.source.json) |
 
 © EuroGeographics for the administrative boundaries。边界样本保留各自来源归属与说明，不以库代码的 EUPL 许可替代来源条款。

@@ -3,20 +3,52 @@ import { resolveAnchors, pointInPolygon, geometryHasArea } from './anchors.js';
 export { resolveAnchors, geometryStatus, normalizeAnchorPolicy, ANCHOR_ALGORITHM_VERSION } from './anchors.js';
 const coords = g => { const out=[]; const walk=x=>{if(!Array.isArray(x))return; if(typeof x[0]==='number')out.push(x); else x.forEach(walk)}; const geometry=value=>{walk(value?.coordinates);value?.geometries?.forEach(geometry);};geometry(g);return out; };
 export function featureIndex(geography) { const map = new Map(); for (const f of geography.features?.features ?? []) { const id=f.properties?.region_id; if (id && f.properties.role === 'region') { if(!map.has(id))map.set(id,[]); map.get(id).push(f); } } return map; }
-function regionCoordinates(geography,regionIds) {
+function regionCoordinates(geography,regionIds,includeReferences=false) {
   const ids=regionIds?new Set(regionIds):null,represented=new Set(),out=[];
   for(const feature of geography.features?.features??[]){
-    const id=feature.properties?.region_id;if(feature.properties?.role!=='region'||ids&&!ids.has(id))continue;
+    const id=feature.properties?.region_id;
+    if(feature.properties?.role!=='region'){
+      if(includeReferences)for(const point of coords(feature.geometry))out.push(point);
+      continue;
+    }
+    if(ids&&!ids.has(id))continue;
     const points=coords(feature.geometry);if(points.length){represented.add(id);for(const point of points)out.push(point);}
   }
   // Anchor-only statistical nodes still participate in fitting and hit testing.
   for(const anchor of geography.anchors??[])if(!represented.has(anchor.region_id)&&(!ids||ids.has(anchor.region_id)))out.push(anchor.point);
   return out;
 }
-export function bounds(geography,regionIds=null) {
+function coordinateBounds(points) {
   let minX=Infinity,minY=Infinity,maxX=-Infinity,maxY=-Infinity;
-  for(const p of regionCoordinates(geography,regionIds)){minX=Math.min(minX,p[0]);minY=Math.min(minY,p[1]);maxX=Math.max(maxX,p[0]);maxY=Math.max(maxY,p[1]);}
+  for(const p of points){minX=Math.min(minX,p[0]);minY=Math.min(minY,p[1]);maxX=Math.max(maxX,p[0]);maxY=Math.max(maxY,p[1]);}
   return minX===Infinity?null:[[minX,minY],[maxX,maxY]];
+}
+export function bounds(geography,regionIds=null) {
+  return coordinateBounds(regionCoordinates(geography,regionIds));
+}
+
+export function geographyWithFeatures(geography,featureIds,{exclude=false}={}) {
+  if(featureIds==null)return geography;
+  const ids=new Set(featureIds),retained=new Map(),removed=new Set();
+  const features=geography.features.features.filter(feature=>{
+    const keep=ids.has(String(feature.id))!==exclude;
+    const id=feature.properties.role==='region'?feature.properties.region_id:null;
+    if(id!=null){
+      if(keep){
+        if(!retained.has(id))retained.set(id,[]);
+        retained.get(id).push(feature);
+      }else removed.add(id);
+    }
+    return keep;
+  });
+  const anchors=(geography.anchors??[]).filter(({region_id,point:[x,y]})=>{
+    if(!removed.has(region_id))return exclude||retained.has(region_id);
+    return retained.get(region_id)?.some(({geometry})=>{
+      const box=coordinateBounds(coords(geometry));
+      return box&&x>=box[0][0]&&x<=box[1][0]&&y>=box[0][1]&&y<=box[1][1];
+    });
+  });
+  return {...geography,features:{...geography.features,features},anchors};
 }
 const projections=new Map([
   ['equirectangular',(point,projection)=>[point[0]-(projection.center?.[0]??0),(projection.center?.[1]??0)-point[1]]],
@@ -49,17 +81,26 @@ export function fitProjection(geography,viewport={width:800,height:600},options=
   if(![width,height,padding].every(Number.isFinite)||width<=0||height<=0||padding<0)throw new StatsMapError('viewport dimensions must be positive and padding non-negative','INVALID_ARGUMENT');
   const type=geography.coordinate_space?.type==='cartesian'?'cartesian':(options.projection?.id??'equirectangular');
   if(!['cartesian','identity','raw'].includes(type)&&!projections.has(type))throw new StatsMapError(`unregistered projection: ${type}`,'UNSUPPORTED_PROJECTION');
-  const yDirection=geography.coordinate_space?.y_direction??'up',b=bounds(geography,options.regionIds);
+  const points=regionCoordinates(geography,options.regionIds,options.includeReferences);
+  const yDirection=geography.coordinate_space?.y_direction??'up',b=coordinateBounds(points);
   const center=options.projection?.center??(b?[(b[0][0]+b[1][0])/2,(b[0][1]+b[1][1])/2]:[0,0]);
   if(!Array.isArray(center)||center.length!==2||!center.every(Number.isFinite))throw new StatsMapError('projection center must be a numeric pair','INVALID_ARGUMENT');
   const base={...options.projection,type,yDirection,center,scale:1,translate:[width/2,height/2]};
   if(!b)return base;
   let minX=Infinity,minY=Infinity,maxX=-Infinity,maxY=-Infinity;
-  for(const coordinate of regionCoordinates(geography,options.regionIds)){
+  for(const coordinate of points){
     const [x,y]=rawPoint(coordinate,base);minX=Math.min(minX,x);maxX=Math.max(maxX,x);minY=Math.min(minY,y);maxY=Math.max(maxY,y);
   }
-  const w=Math.max(maxX-minX,1e-12),h=Math.max(maxY-minY,1e-12),inset=Math.min(padding,Math.min(width,height)*.49),scale=Math.min((width-2*inset)/w,(height-2*inset)/h);
-  return {...base,scale,translate:[width/2-(minX+maxX)/2*scale,height/2-(minY+maxY)/2*scale]};
+  const w=Math.max(maxX-minX,1e-12),h=Math.max(maxY-minY,1e-12);
+  const fit=(areaWidth,areaHeight)=>{
+    const inset=Math.min(padding,Math.min(areaWidth,areaHeight)*.49);
+    const scale=Math.min((areaWidth-2*inset)/w,(areaHeight-2*inset)/h);
+    return {...base,scale,translate:[areaWidth/2-(minX+maxX)/2*scale,areaHeight/2-(minY+maxY)/2*scale]};
+  };
+  const full=fit(width,height),corner=options.reservedCorner;
+  if(!corner||Math.max(corner.x,corner.y)<=0||(width+w*full.scale)/2<=corner.x||(height+h*full.scale)/2<=corner.y)return full;
+  const above=fit(width,corner.y),left=fit(corner.x,height);
+  return above.scale>=left.scale?above:left;
 }
 export function anchorIndex(geography, options={}) { return new Map([...resolveAnchors(geography,options).anchors].map(([id,a])=>[id,[...a.point]])); }
 export function screenAnchors(geography, projection, options={}) { const a=anchorIndex(geography,options); return new Map([...a].map(([id,p])=>[id,projectPoint(p,projection)])); }

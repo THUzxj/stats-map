@@ -1,11 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { once } from 'node:events';
 import { mkdtemp, readFile, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { createPreviewServer } from '../scripts/examples/server.js';
 import * as lib from '../src/index.js';
+import { interiorPoint } from '../src/core/anchors.js';
 import { preparePreviewGrids } from '../scripts/prepare-preview-grids.js';
 import { galleryFixture, gallerySpec, galleryTypes } from './fixtures/gallery.js';
 
@@ -17,6 +19,88 @@ async function serve(t, options) {
   const base = `http://127.0.0.1:${server.address().port}`;
   return route => fetch(base + route);
 }
+
+test('China and Hainan can inset or hide offshore geometry without changing the selected region or values', async t => {
+  const get = await serve(t);
+  for (const [sample, regionId] of [['china', '460000'], ['hainan', '460300']]) {
+    const bytes = Buffer.from(await (await get(`/examples/preview/geometry/${sample}.geojson`)).arrayBuffer());
+    if (sample === 'hainan') {
+      const source = await (await get('/examples/preview/geometry/hainan.source.json')).json();
+      assert.equal(createHash('sha256').update(bytes).digest('hex'), source.derived.sha256);
+    }
+    const features = JSON.parse(bytes);
+    const regions = features.features.filter(({ properties }) => properties.name).map(({ properties }) => ({
+      code: String(properties.adcode), name: properties.name,
+    }));
+    const original = lib.chinaGeography({ id: sample, regions, features });
+    const { geography, inset } = lib.chinaSouthChinaSeaInset(original);
+    assert.deepEqual(geography.regions, original.regions);
+    const dataset = lib.chinaDataset({
+      periods: ['p1'], metrics: [{ id: 'value' }],
+      records: regions.map(({ code }, index) => ({ region_code: code, period: 'p1', values: { value: index } })),
+    }, geography);
+    const map = lib.createMap(null, { geography, dataset, width: 920, height: 540 });
+    const { spec } = map;
+    t.after(() => map.destroy());
+    const fullScale = map.projection.scale;
+    const full = map.render();
+    const csv = map.export('csv');
+    map.setSpec({ ...spec, insets: [inset] });
+    const result = map.lastRender;
+    const detail = result.insets[0];
+    assert.ok(map.projection.scale > fullScale);
+    assert.deepEqual(result.renders[0].domain.breaks, detail.renders[0].domain.breaks);
+    assert.equal(map.export('csv'), csv);
+    if (sample === 'china') {
+      assert.match(full.svg, /data-map-boundary="region-100000_JD"/);
+      assert.doesNotMatch(result.svg.split('<svg data-inset-id=')[0], /region-100000_JD/);
+      assert.match(result.svg.split('<svg data-inset-id=')[1], /data-map-boundary="region-100000_JD"/);
+      assert.equal(detail.geography.features.features.length, 2);
+    } else {
+      assert.doesNotMatch(result.renders[0].svg, /data-region-id="460300"/);
+      assert.equal(detail.geography.features.features.length, 1);
+    }
+    const offshore = detail.geography.features.features.find(({ properties }) => properties.region_id === regionId);
+    const local = lib.projectPoint(interiorPoint(offshore.geometry.coordinates[0]), detail.projection);
+    const point = [detail.inset.x + local[0], detail.inset.y + 20 + local[1]];
+    assert.equal(map.hitTest(point)?.regionId, regionId);
+    assert.equal(map.hitTest(point)?.insetId, inset.id);
+    map.setSelection([regionId]);
+    assert.match(map.export('svg').split('<svg data-inset-id=')[1], new RegExp(`data-selection-region-id="${regionId}"`));
+    map.zoomAt(point, 1.5, inset.id);
+    assert.ok(Math.abs(map.lastRender.insets[0].projection.scale / detail.projection.scale - 1.5) < 1e-12);
+    const fitted = map.projection;
+    map.toggleInset(inset.id, false);
+    assert.deepEqual(map.projection, fitted);
+    map.toggleInset(inset.id, true);
+    map.setViewport({ width: 390, height: 500 });
+    const positioned = map.lastRender.insets[0].inset;
+    assert.equal(positioned.x + positioned.width + inset.x, 390);
+    assert.equal(positioned.y + positioned.height + 20 + inset.y, 500);
+    assert.deepEqual(map.getState().selection, [regionId]);
+
+    const insetProjection = map.projection;
+    const hidden = map.setSpec({ ...spec, insets: [{ ...inset, visible: false, controls: false }] });
+    assert.ok(map.projection.scale >= insetProjection.scale);
+    assert.notDeepEqual(map.projection, insetProjection);
+    assert.equal(hidden.insets.length, 0);
+    const hiddenSvg = map.export('svg');
+    assert.doesNotMatch(hiddenSvg, /data-inset-(id|toggle)=|data-map-boundary="region-100000_JD"/);
+    const regionShapes = hiddenSvg.match(new RegExp(`data-region-id="${regionId}"`, 'g')) ?? [];
+    assert.equal(regionShapes.length, sample === 'china' ? 1 : 0);
+    const offshorePoint = lib.projectPoint(interiorPoint(offshore.geometry.coordinates[0]), map.projection);
+    assert.equal(map.hitTest(offshorePoint), null);
+    assert.equal(map.export('csv'), csv);
+    assert.deepEqual(map.getState().selection, [regionId]);
+
+    map.setSpec({ ...spec, insets: [inset] });
+    assert.deepEqual(map.projection, insetProjection);
+    assert.equal(map.lastRender.insets.length, 1);
+    map.setViewport({ width: 920, height: 540 });
+    map.setSpec(spec);
+    assert.equal(map.projection.scale, fullScale);
+  }
+});
 
 test('configured fictional preview serves package-only resources and renders all gallery types', async t => {
   const get = await serve(t, { configPath: new URL('../scripts/examples/config.json', import.meta.url) });

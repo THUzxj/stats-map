@@ -110,10 +110,18 @@ export function validatePresentation(spec,geography) {
   }
   if(spec.insets!=null){
     requireValue(Array.isArray(spec.insets),'insets must be an array');const seen=new Set();
+    const featureIds=geography&&new Set(geography.features.features.map(feature=>String(feature.id)));
     for(const inset of spec.insets){
       object(inset,'inset');requireValue(typeof inset.id==='string'&&inset.id.length>0&&!seen.has(inset.id),'inset ids must be distinct');seen.add(inset.id);
       requireValue([inset.x,inset.y,inset.width,inset.height].every(Number.isFinite)&&inset.width>0&&inset.height>0,'inset needs a finite rectangle with positive dimensions');
       if(inset.region_ids!=null)ids(inset.region_ids,'inset.region_ids');
+      if(inset.anchor!=null)requireValue(inset.anchor==='bottom-right'&&inset.x>=0&&inset.y>=0,'inset.anchor requires bottom-right and non-negative offsets');
+      if(inset.feature_ids!=null){
+        const ids=inset.feature_ids;
+        requireValue(Array.isArray(ids)&&ids.length>0&&ids.every(id=>typeof id==='string'&&id.length>0)&&new Set(ids).size===ids.length,'inset.feature_ids must contain distinct feature ids');
+        if(featureIds)requireValue(ids.every(id=>featureIds.has(id)),'inset.feature_ids references an unknown feature');
+        requireValue((inset.layout?.type??'geographic')==='geographic','inset.feature_ids requires a geographic inset');
+      }
       if(inset.layout?.type!=null)requireValue(['geographic','grid-square','grid-hex','dorling'].includes(inset.layout.type),'unsupported inset layout');
       if(inset.layout?.type==='dorling')validateDorlingOptions(inset.layout);
       if(inset.visible!=null)requireValue(typeof inset.visible==='boolean','inset.visible must be boolean');

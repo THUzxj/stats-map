@@ -1,1 +1,1 @@
-export { chinaGeography, chinaDataset, chinaBundle, createChinaBundle } from '../types/index.js';
+export { chinaGeography, chinaDataset, chinaBundle, createChinaBundle, chinaSouthChinaSeaInset } from '../types/index.js';
